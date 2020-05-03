@@ -1,4 +1,4 @@
-package com.binduinfo.sports.ui
+package com.binduinfo.sports.ui.activity
 
 import android.os.Bundle
 import android.os.PersistableBundle

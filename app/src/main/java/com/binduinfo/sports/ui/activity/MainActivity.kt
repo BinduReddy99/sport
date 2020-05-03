@@ -1,8 +1,7 @@
-package com.binduinfo.sports.ui
+package com.binduinfo.sports.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
@@ -11,34 +10,34 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
 
-    private lateinit var mobileNumber: String
-    private lateinit var passwordEdt: String
+//    private lateinit var mobileNumber: String
+//    private lateinit var passwordEdt: String
 
     override fun uiHandle() {
         //login_edt_password.transformationMethod = PasswordTransformationMethod()
         //val bundle = Bundle()
-        val intent: Intent = Intent(this, SecondActivity::class.java)
-        sign_in.setOnClickListener {
-            mobileNumber = login_edt_mob_num.text.toString() //edittext
-            passwordEdt = login_edt_password.text.toString()
-            when {
-                mobileNumber.length != 10 -> {
-                    showToast("Enter valid mobile number")
-                    return@setOnClickListener
-                }
-
-                passwordEdt.length !in 5..8 -> {
-                    showToast("Enter password between 5 to 8 character")
-                    return@setOnClickListener
-                }
-                else ->{
-
-                }
-            }
-
-            intent.putExtra("mobile_Number", mobileNumber)
-            startActivity(intent)
-        }
+//        val intent: Intent = Intent(this, SecondActivity::class.java)
+//        sign_in.setOnClickListener {
+//            mobileNumber = login_edt_mob_num.text.toString() //edittext
+//            passwordEdt = login_edt_password.text.toString()
+//            when {
+//                mobileNumber.length != 10 -> {
+//                    showToast("Enter valid mobile number")
+//                    return@setOnClickListener
+//                }
+//
+//                passwordEdt.length !in 5..8 -> {
+//                    showToast("Enter password between 5 to 8 character")
+//                    return@setOnClickListener
+//                }
+//                else ->{
+//
+//                }
+//            }
+//
+//            intent.putExtra("mobile_Number", mobileNumber)
+//            startActivity(intent)
+     //   }
 
     }
 

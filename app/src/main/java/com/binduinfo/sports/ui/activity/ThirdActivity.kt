@@ -1,4 +1,4 @@
-package com.binduinfo.sports.ui
+package com.binduinfo.sports.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
