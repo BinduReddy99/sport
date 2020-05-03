@@ -5,6 +5,7 @@ import android.os.PersistableBundle
 import android.util.Log
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
+import kotlinx.android.synthetic.main.activity_second.*
 
 class SecondActivity: BaseActivity() {
     override fun uiHandle() {
@@ -14,6 +15,9 @@ class SecondActivity: BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_second)
+        val mobileNumber = intent.getStringExtra("mobile_Number")
+        mobile_number.text = mobileNumber
+        Log.d("mobile ==========", mobileNumber)
         uiHandle()
     }
 

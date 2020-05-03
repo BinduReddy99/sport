@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_mobile_number"
+            android:imeOptions="actionNext"
             android:inputType="number"
             android:maxLength="10" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -31,6 +32,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:inputType="textPassword"
+        app:endIconMode="password_toggle"
+        app:endIconCheckable="false"
         app:layout_constraintEnd_toEndOf="@+id/login_mobile_number_lay"
         app:layout_constraintStart_toStartOf="@+id/login_mobile_number_lay"
         app:layout_constraintTop_toBottomOf="@+id/login_mobile_number_lay">
@@ -39,8 +43,9 @@
             android:id="@+id/login_edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:maxLength="12"
+            android:imeOptions= "actionDone"
+            android:maxLength="8"
+            android:singleLine="true"
             android:hint="@string/password_hint" />
     </com.google.android.material.textfield.TextInputLayout>
 
