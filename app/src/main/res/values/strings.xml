@@ -10,4 +10,9 @@
     <string name="enter_first_name">Enter First Name</string>
     <string name="name">Name</string>
     <string name="emailId">Email Id</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="e_mail">E mail</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

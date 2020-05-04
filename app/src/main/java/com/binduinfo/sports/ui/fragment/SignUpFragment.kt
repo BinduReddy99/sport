@@ -1,14 +1,18 @@
 package com.binduinfo.sports.ui.fragment
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.navigation.fragment.findNavController
 
 import com.binduinfo.sports.R
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_sign_up.*
 
 /**
  * A simple [Fragment] subclass.
@@ -29,32 +33,74 @@ class SignUpFragment : Fragment() {
     }
 
     private fun uiHandle() {
-        //login_edt_password.transformationMethod = PasswordTransformationMethod()
-        //val bundle = Bundle()
-        sign_in.setOnClickListener {
-            name = login_edt_mob_num.text.toString() //edittext
-            emailId = login_edt_password.text.toString()
-            when {
-                name.length >= 50-> {
-                    showToast("Enter valid name")
-                    return@setOnClickListener
-                }
-
-                emailId.length >= 150 -> {
-                    showToast("Enter valid email id")
-                    return@setOnClickListener
-                }
-                else -> {
-
+        //val edt = view?.findViewById<EditText>(R.id.sign_up_edit_name)
+        sign_up_edit_name.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if(sign_up_edit_name.text.toString().length < 2){
+                    sign_up_lay_name.error = "Enter valid name"
+                }else{
+                    sign_up_lay_name.isErrorEnabled = false
                 }
             }
 
-            fun showToast(s: String) {
-           // findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-            //findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-        }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
-    }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+
+        sign_up_edit_mobile.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if(sign_up_edit_mobile.text.toString().length != 10){
+                    sign_up_lay_mobile.error = "Enter valid mobile number"
+                }else{
+                    sign_up_lay_mobile.isErrorEnabled = false
+                }
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        })
+//        (sign_up_edit_name as EditText).addTextChangedListener(object : TextWatcher{
+//            override fun afterTextChanged(s: Editable?) {
+//                sign_up_lay_name.setError("errror")
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//
+//        })
+//        sign_in.setOnClickListener {
+//            name = login_edt_mob_num.text.toString() //edittext
+//            emailId = login_edt_password.text.toString()
+//            when {
+//                name.length >= 50-> {
+//                    showToast("Enter valid name")
+//                    return@setOnClickListener
+//                }
+//
+//                emailId.length >= 150 -> {
+//                    showToast("Enter valid email id")
+//                    return@setOnClickListener
+//                }
+//                else -> {
+//
+//                }
+//            }
+//
+//            fun showToast(s: String) {
+//           // findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+//            //findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+//        }
+//
+//    }
 
     }
 
