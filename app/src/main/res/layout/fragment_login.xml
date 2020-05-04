@@ -20,7 +20,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_edt_mob_num"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="41dp"
                 android:hint="@string/enter_mobile_number"
                 android:imeOptions="actionNext"
                 android:inputType="number"
