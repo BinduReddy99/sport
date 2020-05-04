@@ -1,65 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sin_up"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragment.LoginFragment">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_mobile_number_lay"
-            android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_mobile_number_lay"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="213dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_edt_mob_num"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:hint="@string/enter_mobile_number"
+            android:imeOptions="actionNext"
+            android:inputType="number"
+            android:maxLength="10" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/login_text_input_password"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/login_mobile_number_lay"
+        app:layout_constraintStart_toStartOf="@+id/login_mobile_number_lay"
+        app:layout_constraintTop_toBottomOf="@+id/login_mobile_number_lay"
+        app:passwordToggleEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/login_edt_password"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="213dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:hint="@string/password_hint"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:maxLength="8"
+            android:singleLine="true" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_edt_mob_num"
-                android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:hint="@string/enter_mobile_number"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:maxLength="10" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_text_input_password"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            app:passwordToggleEnabled="true"
-            app:layout_constraintEnd_toEndOf="@+id/login_mobile_number_lay"
-            app:layout_constraintStart_toStartOf="@+id/login_mobile_number_lay"
-            app:layout_constraintTop_toBottomOf="@+id/login_mobile_number_lay">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/login_edt_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions= "actionDone"
-                android:maxLength="8"
-                android:inputType="textPassword"
-                android:singleLine="true"
-                android:hint="@string/password_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sign_in"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:paddingStart="32dp"
-            android:paddingEnd="32dp"
-            android:textStyle="bold"
-            android:text="@string/sign_in"
-            android:textColor="@color/colorWhite"
-            android:background="@drawable/button_oval"
-            app:layout_constraintEnd_toEndOf="@+id/login_text_input_password"
-            app:layout_constraintTop_toBottomOf="@+id/login_text_input_password" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/sign_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_oval"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:text="@string/sign_in"
+        android:textColor="@color/colorWhite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/login_text_input_password"
+        app:layout_constraintTop_toBottomOf="@+id/login_text_input_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

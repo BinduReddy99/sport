@@ -75,6 +75,7 @@
                 android:hint="@string/e_mail" />
         </com.google.android.material.textfield.TextInputLayout>
 
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sign_up_lay_confirm"
             android:layout_width="0dp"
