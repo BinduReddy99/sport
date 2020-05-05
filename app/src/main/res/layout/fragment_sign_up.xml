@@ -33,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:maxLength="50"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
                 android:imeOptions="actionNext"
                 android:hint="@string/name" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +93,7 @@
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLength="8"
+                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@#$^%\&amp;\*.,"
                 android:hint="@string/password" />
         </com.google.android.material.textfield.TextInputLayout>
 
