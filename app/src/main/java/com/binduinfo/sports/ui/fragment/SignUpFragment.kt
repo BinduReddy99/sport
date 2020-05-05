@@ -9,8 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.navigation.fragment.findNavController
-
 import com.binduinfo.sports.R
+import com.binduinfo.sports.base.BaseFragment
+import com.binduinfo.sports.util.MyTextWater
+import com.binduinfo.sports.util.TextLayoutViewErrorHandle
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlin.text.contains as contains1
@@ -18,7 +21,7 @@ import kotlin.text.contains as contains1
 /**
  * A simple [Fragment] subclass.
  */
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
     private lateinit var name:String
     private lateinit var emailId:String
     private lateinit var password : String
@@ -37,66 +40,42 @@ class SignUpFragment : Fragment() {
 
     private fun uiHandle() {
         //val edt = view?.findViewById<EditText>(R.id.sign_up_edit_name)
-        sign_up_edit_mobile.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-                if(sign_up_edit_mobile.text.toString().length != 10){
-                    sign_up_lay_mobile.error = "Enter valid mobile number"
-                }else{
-                    sign_up_lay_mobile.isErrorEnabled = false
-                }
-            }
+//        object : TextWatcher{
+//            override fun afterTextChanged(s: Editable?) {
+//                if(sign_up_lay_edt_pass.text.toString().length < 4)
+//                {
+//                    sign_up_lay_confirm.error = "Your password is too short"
+//
+//                }else{
+//                    sign_up_lay_confirm.isErrorEnabled = false
+//                }
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//            }
+//        }
+        sign_up_edit_mobile.addTextChangedListener(MyTextWater(sign_up_lay_mobile, this))
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
+        sign_up_edit_name.addTextChangedListener(MyTextWater(sign_up_lay_name, this))
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-        sign_up_edit_name.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-                if(sign_up_edit_name.text.toString().length < 2){
-                    sign_up_lay_name.error = "Enter valid name"
+        sign_up_lay_edt_pass.addTextChangedListener(MyTextWater(sign_up_lay_confirm, this))
 
-                }else{
-                    sign_up_lay_name.isErrorEnabled = false
-                }
-            }
+        sign_up_edt_confirm_pass.addTextChangedListener(MyTextWater(sign_up_lay_confirm_pass, this))
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
-        sign_up_lay_edt_pass.addTextChangedListener(object : TextWatcher{
-            override fun afterTextChanged(s: Editable?) {
-                if(sign_up_lay_edt_pass.text.toString().length < 4)
-                {
-                    sign_up_lay_confirm.error = "Your password is too short"
-
-                }else{
-                    sign_up_lay_confirm.isErrorEnabled = false
-                }
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
         sign_up_btn.setOnClickListener {
-          password = sign_up_lay_edt_pass.text.toString()
-            confirmPassword = sign_up_edt_confirm_pass.text.toString()
-           //checking whether password==confirm_password
-            if (password !=confirmPassword){
-                showToast("the password should match with above typed")
-                return@setOnClickListener
-            }
-            else
-            {
-
-            }
+//          password = sign_up_lay_edt_pass.text.toString()
+//            confirmPassword = sign_up_edt_confirm_pass.text.toString()
+//            if (password !=confirmPassword){
+//                showToast("the password should match with above typed")
+//                return@setOnClickListener
+//            }
+//            else
+//            {
+//
+//            }
 
         }
 
@@ -143,8 +122,30 @@ class SignUpFragment : Fragment() {
 
     }
 
-    private fun showToast(s: String) {
+
+    override fun errHandle(inputValue: String, testLayotInput: TextInputLayout?) {
+        when(testLayotInput?.id){
+            R.id.sign_up_lay_mobile -> {
+                validateMobileNumber(inputValue, testLayotInput)
+            }
+
+            R.id.sign_up_lay_name -> {
+                validateName(inputValue, testLayotInput)
+            }
+
+            R.id.sign_up_lay_confirm ->{
+                password = inputValue
+                validatePassword(inputValue, testLayotInput)
+            }
+
+            R.id.sign_up_lay_confirm_pass -> {
+                comparePassword(password, inputValue, testLayotInput)
+            }
+
+        }
 
     }
+
+
 
 }

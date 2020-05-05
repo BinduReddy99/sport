@@ -1,21 +1,21 @@
 package com.binduinfo.sports.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.text.method.PasswordTransformationMethod
-import androidx.fragment.app.Fragment
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
+import com.binduinfo.sports.util.MyTextWater
+import com.binduinfo.sports.util.TextLayoutViewErrorHandle
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 
 
-class LoginFragment : BaseFragment() {
+class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
     private lateinit var mobileNumber: String
     private lateinit var passwordEdt: String
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,24 +38,8 @@ class LoginFragment : BaseFragment() {
     }
 
     private fun uiHandle() {
-        //login_edt_password.transformationMethod = PasswordTransformationMethod()
-        //val bundle = Bundle()
-        login_edt_mob_num.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                //val abc = "\"hghbh\""
-                if(login_edt_mob_num.text.toString().length != 10){
-                    login_mobile_number_lay.error = "Enter valid mobile number"
-                }else{
-                    login_mobile_number_lay.isErrorEnabled = false
-                }
-            }
+        login_edt_mob_num.addTextChangedListener(MyTextWater(login_mobile_number_lay, this))
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-        })
         sign_in.setOnClickListener {
             mobileNumber = login_edt_mob_num.text.toString() //edittext
             passwordEdt = login_edt_password.text.toString()
@@ -73,27 +57,18 @@ class LoginFragment : BaseFragment() {
 
                 }
             }
-            login_edt_mob_num.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    if(login_edt_mob_num.text.toString().length != 10){
-                        login_mobile_number_lay.error = "Enter valid mobile number"
-                    }else{
-                        login_mobile_number_lay.isErrorEnabled = false
-                    }
-                }
-
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-            })
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-            //findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
         }
 
     }
 
+    override fun errHandle(inputValue: String, testLayotInput: TextInputLayout?) {
+        when(testLayotInput?.id){
+            R.id.login_mobile_number_lay ->{
+                validateMobileNumber(inputValue, testLayotInput)
+            }
+        }
+    }
 
 
 }
