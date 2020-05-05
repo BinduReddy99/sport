@@ -42,6 +42,7 @@ class LoginFragment : BaseFragment() {
         //val bundle = Bundle()
         login_edt_mob_num.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
+                //val abc = "\"hghbh\""
                 if(login_edt_mob_num.text.toString().length != 10){
                     login_mobile_number_lay.error = "Enter valid mobile number"
                 }else{
