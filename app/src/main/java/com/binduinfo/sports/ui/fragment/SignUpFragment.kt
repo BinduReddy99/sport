@@ -13,7 +13,14 @@ import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.util.MyTextWater
 import com.binduinfo.sports.util.TextLayoutViewErrorHandle
+import com.binduinfo.sports.util.network.model.GenerateOTP
+import com.binduinfo.sports.util.network.model.ResponseOTP
+import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
 import com.google.android.material.textfield.TextInputLayout
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
 import kotlin.text.contains as contains1
@@ -26,6 +33,12 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
     private lateinit var emailId:String
     private lateinit var password : String
     private lateinit var confirmPassword : String
+    private var mCompositeDisposable: CompositeDisposable? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mCompositeDisposable = CompositeDisposable()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,17 +78,10 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
 
         sign_up_edt_confirm_pass.addTextChangedListener(MyTextWater(sign_up_lay_confirm_pass, this))
 
+
+
         sign_up_btn.setOnClickListener {
-//          password = sign_up_lay_edt_pass.text.toString()
-//            confirmPassword = sign_up_edt_confirm_pass.text.toString()
-//            if (password !=confirmPassword){
-//                showToast("the password should match with above typed")
-//                return@setOnClickListener
-//            }
-//            else
-//            {
-//
-//            }
+            serverRequest(sign_up_edit_mobile.text.toString())
 
         }
 
@@ -146,6 +152,26 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
 
     }
 
+    fun serverRequest(mobileNumber: String){
+         val networkCall = NetworkInterFace.retrofitConnection().create(NetworkInterFace::class.java)
+        mCompositeDisposable!!.add(networkCall.requestOtp(GenerateOTP(mobileNumber))
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribe(this::handleResponse, this::handleError))
+    }
 
+
+    fun handleResponse(response: ResponseOTP){
+
+    }
+
+    fun  handleError(err: Throwable){
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mCompositeDisposable!!.clear()
+    }
 
 }
