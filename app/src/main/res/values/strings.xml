@@ -15,4 +15,8 @@
     <string name="password">Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="male">Male</string>
+    <string name="custom">Custom</string>
+    <string name="female">Female</string>
+    <string name="select_gender">Select Gender</string>
 </resources>

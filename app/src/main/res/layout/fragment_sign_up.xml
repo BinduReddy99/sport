@@ -21,9 +21,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.51"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -58,34 +59,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/sign_up_edit_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:maxLength="50"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-                android:imeOptions="actionNext"
-                android:hint="@string/name" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/sign_up_lay_mobile"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="24dp"
-                        app:layout_constraintEnd_toEndOf="@+id/sign_up_lay_name"
-                        app:layout_constraintStart_toStartOf="@+id/sign_up_lay_name"
-                        app:layout_constraintTop_toBottomOf="@+id/sign_up_lay_name">
-
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/sign_up_edit_mobile"
+                            android:id="@+id/sign_up_edit_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/mobile_number"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                            android:hint="@string/name"
                             android:imeOptions="actionNext"
-                            android:inputType="number"
-                            android:maxLength="10" />
+                            android:inputType="textPersonName"
+                            android:maxLength="50" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -117,16 +99,16 @@
                         app:layout_constraintStart_toStartOf="@+id/sign_up_lay_email"
                         app:layout_constraintTop_toBottomOf="@+id/sign_up_lay_email">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/sign_up_lay_edt_pass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionNext"
-                android:inputType="textPassword"
-                android:maxLength="8"
-                android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@#$^%\&amp;\*.,"
-                android:hint="@string/password" />
-        </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_lay_edt_pass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890@#$^%\&amp;\*.,"
+                            android:hint="@string/password"
+                            android:imeOptions="actionNext"
+                            android:inputType="textPassword"
+                            android:maxLength="8" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/sign_up_lay_confirm_pass"
@@ -160,6 +142,87 @@
                         android:text="@string/sign_up"
                         android:textColor="@color/colorWhite"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sign_up_lay_confirm_pass" />
+
+                    <RadioGroup
+                        android:id="@+id/signup_gender_radio"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="@+id/sign_up_lay_name"
+                        app:layout_constraintStart_toStartOf="@+id/sign_up_lay_name"
+                        app:layout_constraintTop_toBottomOf="@+id/sign_up_title_gender_txt">
+
+                        <RadioButton
+                            android:id="@+id/sign_up_gender_male_radio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:checked="false"
+                            android:background="@drawable/radio_left_corner"
+                            style="@style/radio_button_custom"
+                            android:text="@string/male" />
+
+                        <RadioButton
+                            android:id="@+id/sign_up_gender_female_radio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/radio_center"
+                            style="@style/radio_button_custom"
+                            android:text="@string/female" />
+
+                        <RadioButton
+                            android:id="@+id/sign_up_gender_others_radio"
+                            android:layout_width="match_parent"
+                            style="@style/radio_button_custom"
+                            android:background="@drawable/radio_right_corner"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/custom" />
+                    </RadioGroup>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/sign_up_lay_mobile"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        app:layout_constraintEnd_toEndOf="@+id/sign_up_lay_name"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/sign_up_lay_name"
+                        app:layout_constraintTop_toBottomOf="@+id/signup_gender_radio">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sign_up_edit_mobile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/mobile_number"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="10" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <TextView
+                        android:id="@+id/sign_up_title_gender_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/select_gender"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="@+id/sign_up_lay_name"
+                        app:layout_constraintTop_toBottomOf="@+id/sign_up_lay_name" />
+
+                    <ProgressBar
+                        android:id="@+id/sign_up_progress_bar"
+                        style="?android:attr/progressBarStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:layout_marginEnd="32dp"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="@+id/sign_up_btn"
                         app:layout_constraintTop_toBottomOf="@+id/sign_up_lay_confirm_pass" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>

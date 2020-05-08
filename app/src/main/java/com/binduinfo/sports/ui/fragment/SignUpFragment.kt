@@ -1,29 +1,22 @@
 package com.binduinfo.sports.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.util.MyTextWater
 import com.binduinfo.sports.util.TextLayoutViewErrorHandle
 import com.binduinfo.sports.util.network.model.GenerateOTP
-import com.binduinfo.sports.util.network.model.ResponseOTP
+import com.binduinfo.sports.util.network.model.SportResponse
 import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
 import com.google.android.material.textfield.TextInputLayout
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_sign_up.*
-import kotlin.text.contains as contains1
 
 /**
  * A simple [Fragment] subclass.
@@ -33,6 +26,8 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
     private lateinit var emailId:String
     private lateinit var password : String
     private lateinit var confirmPassword : String
+    private lateinit var mobileNumber: String
+    private lateinit var gender: String
     private var mCompositeDisposable: CompositeDisposable? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,24 +47,7 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
     }
 
     private fun uiHandle() {
-        //val edt = view?.findViewById<EditText>(R.id.sign_up_edit_name)
-//        object : TextWatcher{
-//            override fun afterTextChanged(s: Editable?) {
-//                if(sign_up_lay_edt_pass.text.toString().length < 4)
-//                {
-//                    sign_up_lay_confirm.error = "Your password is too short"
-//
-//                }else{
-//                    sign_up_lay_confirm.isErrorEnabled = false
-//                }
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//        }
+
         sign_up_edit_mobile.addTextChangedListener(MyTextWater(sign_up_lay_mobile, this))
 
         sign_up_edit_name.addTextChangedListener(MyTextWater(sign_up_lay_name, this))
@@ -78,53 +56,13 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
 
         sign_up_edt_confirm_pass.addTextChangedListener(MyTextWater(sign_up_lay_confirm_pass, this))
 
-
-
         sign_up_btn.setOnClickListener {
             serverRequest(sign_up_edit_mobile.text.toString())
-
         }
 
+    }
 
-
-
-
-//        (sign_up_edit_name as EditText).addTextChangedListener(object : TextWatcher{
-//            override fun afterTextChanged(s: Editable?) {
-//                sign_up_lay_name.setError("errror")
-//            }
-//
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-//            }
-//
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//            }
-//
-//        })
-//        sign_in.setOnClickListener {
-//            name = login_edt_mob_num.text.toString() //edittext
-//            emailId = login_edt_password.text.toString()
-//            when {
-//                name.length >= 50-> {
-//                    showToast("Enter valid name")
-//                    return@setOnClickListener
-//                }
-//
-//                emailId.length >= 150 -> {
-//                    showToast("Enter valid email id")
-//                    return@setOnClickListener
-//                }
-//                else -> {
-//
-//                }
-//            }
-//
-//            fun showToast(s: String) {
-//           // findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-//            //findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-//        }
-//
-//    }
+    private  fun otpRequest(){
 
     }
 
@@ -152,6 +90,7 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
 
     }
 
+
     fun serverRequest(mobileNumber: String){
          val networkCall = NetworkInterFace.retrofitConnection().create(NetworkInterFace::class.java)
         mCompositeDisposable!!.add(networkCall.requestOtp(GenerateOTP(mobileNumber))
@@ -161,7 +100,7 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle {
     }
 
 
-    fun handleResponse(response: ResponseOTP){
+    fun handleResponse(response: SportResponse){
 
     }
 

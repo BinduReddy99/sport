@@ -2,7 +2,8 @@ package com.binduinfo.sports.util.network.retrofit
 
 import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.util.network.model.GenerateOTP
-import com.binduinfo.sports.util.network.model.ResponseOTP
+import com.binduinfo.sports.util.network.model.SportResponse
+import com.binduinfo.sports.util.network.model.SignUpRequest
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,10 +14,17 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
+const val BASE_URL: String = "https://ssport.herokuapp.com/api/"
 interface NetworkInterFace {
 
     @POST("anonymous/generate-otp")
-    fun requestOtp(@Body requestOTP: GenerateOTP): Observable<ResponseOTP>
+    fun requestOtp(@Body requestOTP: GenerateOTP): Observable<SportResponse>
+
+    @POST("/anonymous/sign-up")
+    fun signUp(@Body signUpRequest: SignUpRequest): Observable<SportResponse>
+
+
+
 
 
     companion object {
@@ -24,13 +32,13 @@ interface NetworkInterFace {
 
             val httpClient = OkHttpClient.Builder()
                 .addInterceptor(logsInterceptor())
-                .readTimeout(30, TimeUnit.SECONDS)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl("https://hosur-sports.herokuapp.com/api/")
+                .baseUrl(BASE_URL)
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())//{"success": 1}
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
