@@ -46,7 +46,7 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
     private var isNameValid: Boolean = false
     private var isEmailValid: Boolean = true
     private var isMobileValid: Boolean = false
-    private var isConfirmPasswordValid: Boolean = falsez
+    private var isConfirmPasswordValid: Boolean = false
     private var isPasswordValid: Boolean = false
     val networkCall = NetworkInterFace.povideApi(NetworkInterFace.retrofitConnection())
     private var mCompositeDisposable: CompositeDisposable? = null
