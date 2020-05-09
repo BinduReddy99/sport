@@ -20,7 +20,7 @@ interface NetworkInterFace {
     @POST("anonymous/generate-otp")
     fun requestOtp(@Body requestOTP: GenerateOTP): Observable<SportResponse>
 
-    @POST("/anonymous/sign-up")
+    @POST("anonymous/sign-up")
     fun signUp(@Body signUpRequest: SignUpRequest): Observable<SportResponse>
 
 
@@ -43,6 +43,11 @@ interface NetworkInterFace {
                 .addConverterFactory(GsonConverterFactory.create())//{"success": 1}
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
+        }
+
+
+        fun povideApi(retrofit: Retrofit): NetworkInterFace{
+            return retrofit.create(NetworkInterFace::class.java)
         }
 
 

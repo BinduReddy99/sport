@@ -19,4 +19,11 @@
     <string name="custom">Custom</string>
     <string name="female">Female</string>
     <string name="select_gender">Select Gender</string>
+    <string name="verify">Verify</string>
+    <string name="enter_the_otp">Enter the OTP</string>
+    <string name="otp_will_receive_to">OTP will receive to</string>
+    <string name="edit_mobile_number"><u>Edit mobile number</u></string>
+    <string name="sign_up_title_txt">Here\'s your first step with us!</string>
+    <string name="cancel"><u>Cancel</u></string>
+
 </resources>
