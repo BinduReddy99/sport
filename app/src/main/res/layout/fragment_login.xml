@@ -12,7 +12,6 @@
         android:id="@+id/login_title_text"
         android:layout_width="381dp"
         android:layout_height="41dp"
-        android:layout_marginBottom="24dp"
         android:fontFamily="monospace"
         android:gravity="center"
         android:text="Welcome To The Sports World"
@@ -126,16 +125,28 @@
                 android:id="@+id/login_sign_up_btn"
                 android:layout_width="263dp"
                 android:layout_height="42dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="48dp"
                 android:background="@drawable/button_oval"
                 android:text="Sign Up"
                 android:textColor="@color/colorWhite"
-
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/sign_in"
                 app:layout_constraintHorizontal_bias="0.473"
                 app:layout_constraintStart_toStartOf="@+id/sign_in"
                 app:layout_constraintTop_toBottomOf="@+id/login_text_view_forgot_pass" />
+
+            <TextView
+                android:id="@+id/text_view_new_useer"
+                android:layout_width="123dp"
+                android:layout_height="20dp"
+                android:fontFamily="sans-serif-condensed-medium"
+                android:text="Are you a anew user?"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@+id/login_sign_up_btn"
+                app:layout_constraintHorizontal_bias="0.328"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="323dp"
+                tools:ignore="MissingConstraints" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
