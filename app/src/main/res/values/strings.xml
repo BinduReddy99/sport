@@ -8,12 +8,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="enter_first_name">Enter First Name</string>
-    <string name="name">Name</string>
+    <string name="name">Name*</string>
     <string name="emailId">Email Id</string>
-    <string name="mobile_number">Mobile number</string>
+    <string name="mobile_number">Mobile number*</string>
     <string name="e_mail">E mail</string>
-    <string name="password">Password</string>
-    <string name="confirm_password">Confirm Password</string>
+    <string name="password">Password*</string>
+    <string name="confirm_password">Confirm Password*</string>
     <string name="sign_up">Sign Up</string>
     <string name="male">Male</string>
     <string name="custom">Custom</string>
@@ -25,5 +25,11 @@
     <string name="edit_mobile_number"><u>Edit mobile number</u></string>
     <string name="sign_up_title_txt">Here\'s your first step with us!</string>
     <string name="cancel"><u>Cancel</u></string>
+    <string name="welcome_to_the_sports_world">Welcome To The Sports World</string>
+    <string name="are_you_a_anew_user">Are you a anew user?</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
 </resources>

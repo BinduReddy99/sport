@@ -1,4 +1,4 @@
-package com.binduinfo.sports.ui.fragment
+package com.binduinfo.sports.ui.fragment.signup
 
 import android.app.Activity
 import android.os.Bundle
@@ -6,13 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.ui.bottomSheet.BottomSheetOtp
