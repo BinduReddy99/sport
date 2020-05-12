@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
+import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.ui.activity.HomeActivity
 import com.binduinfo.sports.util.MyTextWater
@@ -16,6 +17,9 @@ import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
 import com.binduinfo.sports.util.network.model.LoginResponse
 import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
+import com.binduinfo.sports.util.preference.IS_LOGGED_IN
+import com.binduinfo.sports.util.preference.LOGIN_TOKEN
+import com.binduinfo.sports.util.preference.PreferenceProvider
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -29,6 +33,7 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -77,25 +82,47 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
 
     private fun login(){
         hideKeyBoard(requireActivity())
-        sign_in_progress_bar.show()
-        sign_in_btn.hide()
-        val networkCall = NetworkInterFace.povideApi(NetworkInterFace.retrofitConnection(mobileNumber, passwordEdt))
-        mCompositeDisposable.add(networkCall.signIn().observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(this::handleResponse, this::handleError))
+        if(isInternetAvailable(requireContext())) {
+            sign_in_progress_bar.show()
+            sign_in_btn.hide()
+            val networkCall = NetworkInterFace.povideApi(
+                NetworkInterFace.retrofitConnection(
+                    mobileNumber,
+                    passwordEdt
+                )
+            )
+            mCompositeDisposable.add(
+                networkCall.signIn().observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponse, this::handleError)
+            )
+        }else{
+            showToast(resources.getString(R.string.internet_check))
+        }
     }
 
      private fun handleResponse(response: LoginResponse){
          if (response.success == 1){
-             val intent = Intent(requireContext(), HomeActivity::class.java)
-             intent.let {
-                 requireActivity().startActivity(it)
-             }
+
+             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(LOGIN_TOKEN, response.token!!)
+             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(IS_LOGGED_IN, true)
+             intent()
+             return
          }
+         textView3.visibility = View.VISIBLE
+         textView3.text = response.message
          sign_in_progress_bar.hide()
          sign_in_btn.show()
 
          //showToast(response.token!!)
+    }
+
+    private fun intent(){
+        val intent = Intent(requireContext(), HomeActivity::class.java)
+        intent.let {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            requireActivity().startActivity(it)
+        }
     }
 
     private fun handleError(throwable: Throwable){
@@ -111,11 +138,13 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
     override fun errHandle(inputValue: String, testLayotInput: TextInputLayout?) {
         when(testLayotInput?.id){
             R.id.login_mobile_number_lay -> {
+                textView3.text = ""
                 mobileNumber = inputValue
                 validateMobileNumber(inputValue, testLayotInput)
             }
             R.id.login_text_input_password -> {
                 passwordEdt = inputValue
+                textView3.text = ""
                 if (passwordEdt.isNotEmpty())
                     testLayotInput.isErrorEnabled = false
             }

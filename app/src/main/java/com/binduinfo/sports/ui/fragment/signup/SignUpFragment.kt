@@ -105,7 +105,7 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
      */
     private var bottomDialog: BottomSheetOtp? = null
     private fun showDialog() {
-         bottomDialog = BottomSheetOtp(this, mobileNumber)
+        bottomDialog = BottomSheetOtp(this, mobileNumber)
         bottomDialog?.show(requireActivity().supportFragmentManager, bottomDialog?.tag)
 //        val dialog = Dialog(requireContext(),  android.R.style.Theme_Translucent_NoTitleBar_Fullscreen)
 //        dialog.setContentView(layoutInflater.inflate(R.layout.otp, null))
@@ -203,12 +203,16 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
     private fun serverRequest(mobileNumber: String) {
         sign_up_btn.hide()
         sign_up_progress_bar.show()
-        mCompositeDisposable!!.add(
-            networkCall.requestOtp(GenerateOTP(mobileNumber))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(this::handleResponse, this::handleError)
-        )
+        if (isInternetAvailable(requireContext())) {
+            mCompositeDisposable!!.add(
+                networkCall.requestOtp(GenerateOTP(mobileNumber))
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe(this::handleResponse, this::handleError)
+            )
+        } else {
+            showToast(resources.getString(R.string.internet_check))
+        }
     }
 
 
@@ -232,31 +236,42 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
         mCompositeDisposable!!.clear()
     }
 
-    override fun clickable(otp: String, progress: ProgressBar, button: AppCompatButton, error_text: TextView) {
+    override fun clickable(
+        otp: String,
+        progress: ProgressBar,
+        button: AppCompatButton,
+        error_text: TextView
+    ) {
         //showToast(otp)
-        progress.show()
-        button.hide()
-        mCompositeDisposable?.add(networkCall.signUp(
-            signUpRequest = SignUpRequest(
-                confirmPassword,
-                emailId,
-                gender,
-                mobileNumber,
-                name,
-                otp,
-                password
+        if (isInternetAvailable(requireContext())) {
+            progress.show()
+            button.hide()
+            mCompositeDisposable?.add(
+                networkCall.signUp(
+                    signUpRequest = SignUpRequest(
+                        confirmPassword,
+                        emailId,
+                        gender,
+                        mobileNumber,
+                        name,
+                        otp,
+                        password
+                    )
+                )
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeOn(Schedulers.io())
+                    .subscribe({
+                        registerHandleResponse(it, progress, button, error_text)
+                    }, {
+                        progress.hide()
+                        button.show()
+                        handleError(it)
+                    })
             )
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe({
-                registerHandleResponse(it, progress, button, error_text)
-            }, {
-                progress.hide()
-                button.show()
-                handleError(it)
-            })
-        )
+
+        } else {
+            showToast(resources.getString(R.string.internet_check))
+        }
 
     }
 
@@ -268,11 +283,11 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
     ) {
         progress.hide()
         button.show()
-        if (response.success == 1){
+        if (response.success == 1) {
             bottomDialog?.dismiss()
             requireActivity().onBackPressed()
             //findNavController().navigate(R.id.)
-        }else{
+        } else {
             error_text.text = response.message
         }
         //showToast(response.message)

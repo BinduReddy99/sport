@@ -8,4 +8,13 @@ abstract class BaseActivity: AppCompatActivity() {
     protected fun showToast(message: String){// String message
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
+
+    protected fun hideToolbar(){
+        try
+        {
+            this.supportActionBar?.hide()
+        } catch (e: NullPointerException) {
+
+        }
+    }
 }
