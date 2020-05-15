@@ -36,6 +36,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val token = BaseApplication.instance!!.getSharedPreferenceObj()?.getSharedString(LOGIN_TOKEN)
-        text_home.text = token
+        //text_home.text = token
     }
 }

@@ -2,10 +2,9 @@ package com.binduinfo.sports.util.network.retrofit
 
 import android.util.Base64
 import com.binduinfo.sports.BuildConfig
-import com.binduinfo.sports.util.network.model.GenerateOTP
-import com.binduinfo.sports.util.network.model.LoginResponse
-import com.binduinfo.sports.util.network.model.SportResponse
-import com.binduinfo.sports.util.network.model.SignUpRequest
+import com.binduinfo.sports.app.BaseApplication
+import com.binduinfo.sports.util.network.model.*
+import com.binduinfo.sports.util.preference.LOGIN_TOKEN
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -13,7 +12,9 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Path
 import java.util.concurrent.TimeUnit
 
 const val BASE_URL: String = "https://ssport.herokuapp.com/api/"
@@ -28,6 +29,9 @@ interface NetworkInterFace {
 
     @POST("anonymous/login")
     fun signIn(): Observable<LoginResponse>
+
+    @GET("user/sport/{page}/{type}")
+    fun getSportsList(@Path(value = "page") page: Int, @Path(value = "type") type: String): Observable<SportsListResponse>
 
 
     companion object {
@@ -73,6 +77,28 @@ interface NetworkInterFace {
                 .build()
         }
 
+        fun retrofitConnectionWithToken(token: String? = BaseApplication.instance?.getSharedPreferenceObj()?.getSharedString(LOGIN_TOKEN)) : Retrofit{
+            val httpClient = OkHttpClient.Builder()
+            httpClient.addInterceptor { chain ->
+                val original = chain.request()
+                val builder = original.newBuilder()
+                    .addHeader("Authorization", "Bearer $token")
+                    .method(original.method, original.body)
+                chain.proceed(builder.build())
+            }.addInterceptor(logsInterceptor())
+                .addInterceptor(logsInterceptor())
+                .readTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build()
+
+            return Retrofit.Builder()
+                .client(httpClient.build())
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
+        }
 
         fun povideApi(retrofit: Retrofit): NetworkInterFace {
             return retrofit.create(NetworkInterFace::class.java)

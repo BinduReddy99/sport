@@ -52,6 +52,11 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
     }
 
     private fun uiHandle() {
+        if(BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(IS_LOGGED_IN)!!){
+            findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
+            return
+        }
+        //action_signUpFragment_to_selectInterestedSports
         login_edt_mob_num.addTextChangedListener(MyTextWater(login_mobile_number_lay, this))
         login_edt_password.addTextChangedListener(MyTextWater(login_text_input_password, this))
         sign_in_btn.setOnClickListener {

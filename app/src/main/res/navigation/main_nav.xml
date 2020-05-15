@@ -18,10 +18,22 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_loginFragment_to_selectInterestedSports"
+            app:destination="@id/selectInterestedSports" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.binduinfo.sports.ui.fragment.signup.SignUpFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_selectInterestedSports"
+            app:destination="@id/selectInterestedSports" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectInterestedSports"
+        android:name="com.binduinfo.sports.ui.fragment.selectinterestedsports.SelectInterestedSportsFragment"
+        android:label="select_interested_sports_fragment"
+        tools:layout="@layout/select_interested_sports_fragment" />
 </navigation>

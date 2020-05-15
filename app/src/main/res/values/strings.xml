@@ -32,5 +32,6 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_profile">Profile</string>
     <string name="internet_check">Check internet Connection</string>
+    <string name="error_tap_to_retry">ERROR !! Tap to retry.</string>
 
 </resources>
