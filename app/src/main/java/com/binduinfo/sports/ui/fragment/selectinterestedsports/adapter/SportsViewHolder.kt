@@ -8,16 +8,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.binduinfo.sports.R
 import com.binduinfo.sports.util.network.model.Sport
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.sport_user_select_item.view.*
 
 class SportsViewHolder(private val view: View): RecyclerView.ViewHolder(view){
-    fun bind(games: Sport?){
+    fun bind(
+        games: Sport?,
+        position: Int,
+        setSelectItem:(position:Int) -> Unit
+    ){
 
-        Log.d("games ===== ", "gamess=== ${games?.name}")
+        Log.d("games ===== ", "gamess=== ${position}")
         if (games != null){
-            itemView.game_name.text = games.name
 
+            itemView.root_clickable.setOnClickListener {
+                Log.d("position ==========", games._id)
+                if (games._id == games._id) {
+                    games.isSeleted = !games.isSeleted
+                    itemView.check_item.visibility =
+                        if (games.isSeleted) View.VISIBLE else View.GONE
+                }
+            }
+
+            itemView.game_name.text = games.name
             Glide.with(view).load(games.imagePath).into(itemView.game_image_view)
         }
     }

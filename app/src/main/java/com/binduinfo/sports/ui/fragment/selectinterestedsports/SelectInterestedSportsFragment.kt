@@ -1,6 +1,7 @@
 package com.binduinfo.sports.ui.fragment.selectinterestedsports
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +58,8 @@ class SelectInterestedSportsFragment : Fragment() {
         sportsAdapter = SportsListAdapter { viewModel.retry() }
         sports_recycler_view.adapter = sportsAdapter
         viewModel.sportList.observe(viewLifecycleOwner, Observer {
+          //  Log.d("Screen===========", it.toString())
+            //it[1]?.isSeleted = true
             sportsAdapter.submitList(it)
         })
     }

@@ -18,7 +18,7 @@ class SportsListAdapter(private val retry: () -> Unit) :
     companion object {
         val SportDiffCalBack = object :DiffUtil.ItemCallback<Sport>(){
             override fun areItemsTheSame(oldItem: Sport, newItem: Sport): Boolean {
-               return oldItem._id === newItem._id
+               return oldItem._id == newItem._id
             }
 
             override fun areContentsTheSame(oldItem: Sport, newItem: Sport): Boolean {
@@ -35,7 +35,7 @@ class SportsListAdapter(private val retry: () -> Unit) :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         Log.d("errrrrrrr---", position.toString())
         if (getItemViewType(position) == DATA_VIEW_TYPE)
-            (holder as SportsViewHolder).bind(getItem(position))
+            (holder as SportsViewHolder).bind(getItem(position) , position, {setSelectItem(position)})
         else(holder as ListFooterViewHolder).bind(state)
     }
 
@@ -58,6 +58,10 @@ class SportsListAdapter(private val retry: () -> Unit) :
         Log.d("setState pos", state.toString())
         this.state = state
         notifyItemChanged(super.getItemCount())
+    }
+
+    fun setSelectItem(position: Int){
+        notifyItemChanged(position)
     }
 
 }

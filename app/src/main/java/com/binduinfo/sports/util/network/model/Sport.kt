@@ -4,5 +4,6 @@ data class Sport(
     val _id: String,
     val imagePath: String,
     val name: String,
-    val sportType: String
+    val sportType: String,
+    var isSeleted: Boolean = false
 )
