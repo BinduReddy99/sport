@@ -1,21 +1,21 @@
 package com.binduinfo.sports.ui.fragment.selectinterestedsports
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.binduinfo.sports.R
-import com.binduinfo.sports.ui.fragment.selectinterestedsports.adapter.SportsListAdapter
-import com.binduinfo.sports.util.enumpackage.State
+import com.binduinfo.sports.base.BaseFragment
+import com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter
+import com.binduinfo.sports.util.extension.hide
+import com.binduinfo.sports.util.extension.show
+import com.binduinfo.sports.util.network.model.Sport
 import kotlinx.android.synthetic.main.select_interested_sports_fragment.*
 
-class SelectInterestedSportsFragment : Fragment() {
+class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener {
 
     companion object {
         fun newInstance() =
@@ -30,38 +30,24 @@ class SelectInterestedSportsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this).get(SelectInterestedSportsViewModel::class.java)
+        viewModel.recyleListFetchListener = this
         return inflater.inflate(R.layout.select_interested_sports_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initAdapter()
-        initstate()
+        sports_list_progress_bar.show()
+        viewModel.serverRequest()
     }
 
-    private fun initstate() {
-        text_error.setOnClickListener { viewModel.retry() }
-        viewModel.getState().observe(viewLifecycleOwner, Observer {state ->
-            sports_list_progress_bar.visibility =  if (viewModel.listIsEmpty() && state == State.LOADING) View.VISIBLE else View.GONE
-            text_error.visibility = if (viewModel.listIsEmpty() && state == State.ERROR) View.VISIBLE else View.GONE
-
-            if (!viewModel.listIsEmpty()) {
-                sportsAdapter.setState(state ?: State.DONE)
-            }
-            }
-        )
-    }
-
-    private fun initAdapter() {
-//        mLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-//        sports_recycler_view.layoutManager = mLayoutManager
-        sportsAdapter = SportsListAdapter { viewModel.retry() }
+    override fun sports(sportsList: List<Sport>) {
+        sportsAdapter = SportsListAdapter(sportsList, requireContext())
         sports_recycler_view.adapter = sportsAdapter
-        viewModel.sportList.observe(viewLifecycleOwner, Observer {
-          //  Log.d("Screen===========", it.toString())
-            //it[1]?.isSeleted = true
-            sportsAdapter.submitList(it)
-        })
+        sports_list_progress_bar.hide()
+    }
+
+    override fun throwable(throwable: Throwable) {
+        sports_list_progress_bar.hide()
     }
 
 
