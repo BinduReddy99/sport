@@ -4,7 +4,7 @@ import android.util.Base64
 import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.util.network.model.*
-import com.binduinfo.sports.util.preference.LOGIN_TOKEN
+import com.binduinfo.sports.data.preference.LOGIN_TOKEN
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

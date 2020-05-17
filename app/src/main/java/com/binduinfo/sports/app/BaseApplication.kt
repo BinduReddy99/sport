@@ -2,7 +2,7 @@ package com.binduinfo.sports.app
 
 import android.app.Application
 import android.util.Log
-import com.binduinfo.sports.util.preference.PreferenceProvider
+import com.binduinfo.sports.data.preference.PreferenceProvider
 
 class BaseApplication : Application() {
 

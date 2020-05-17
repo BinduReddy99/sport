@@ -17,9 +17,8 @@ import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
 import com.binduinfo.sports.util.network.model.LoginResponse
 import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
-import com.binduinfo.sports.util.preference.IS_LOGGED_IN
-import com.binduinfo.sports.util.preference.LOGIN_TOKEN
-import com.binduinfo.sports.util.preference.PreferenceProvider
+import com.binduinfo.sports.data.preference.IS_LOGGED_IN
+import com.binduinfo.sports.data.preference.LOGIN_TOKEN
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable

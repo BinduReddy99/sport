@@ -1,9 +1,8 @@
-package com.binduinfo.sports.util.preference
+package com.binduinfo.sports.data.preference
 
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.binduinfo.sports.app.BaseApplication
 
 const val LOGIN_TOKEN = "login_token"
 const val IS_LOGGED_IN = "is_logged_in"

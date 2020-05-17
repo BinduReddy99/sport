@@ -2,12 +2,8 @@ package com.binduinfo.sports.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import com.binduinfo.sports.R
-import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.base.BaseActivity
-import com.binduinfo.sports.util.preference.IS_LOGGED_IN
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
