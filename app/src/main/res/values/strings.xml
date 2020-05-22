@@ -36,5 +36,6 @@
     <string name="all">ALL</string>
     <string name="indoor">INDOOR</string>
     <string name="outdoor">OUTDOOR</string>
+    <string name="personal_information">Personal Information</string>
 
 </resources>
