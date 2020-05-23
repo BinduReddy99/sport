@@ -38,5 +38,7 @@
     <string name="outdoor">OUTDOOR</string>
     <string name="personal_information">Personal Information</string>
     <string name="Selected_Sports">Selected_sportd</string>
+    <string name="views">Views</string>
+    <string name="comments">Comments</string>
 
 </resources>

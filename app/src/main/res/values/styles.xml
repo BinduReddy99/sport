@@ -25,4 +25,18 @@
         <item name="android:textStyle">bold</item>
         <item name="android:paddingRight">32dp</item>
     </style>
+
+    <style name="lhs_text_name">
+        <item name="android:fontFamily">@font/cola_big</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="rhs_text_name">
+        <item name="android:fontFamily">@font/cola_reg</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@android:color/darker_gray</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 </resources>
