@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.binduinfo.sports.R
 import com.binduinfo.sports.util.network.model.Sport
@@ -16,42 +18,73 @@ import kotlinx.android.synthetic.main.sport_user_select_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SportsListAdapter(private  var sportsList: List<Sport>, private val context: Context, private val clickable: ItemClickable): RecyclerView.Adapter<SportsListAdapter.SportsHolder>(),
+class SportsListAdapter(private val context: Context, private val clickable: ItemClickable): RecyclerView.Adapter<SportsListAdapter.SportsHolder>(),
     Filterable {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SportsHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return SportsHolder(layoutInflater.inflate(R.layout.sport_user_select_item, parent, false))
     }
+    var sportsList: List<Sport> = arrayListOf()
     var sportFilterList: List<Sport> = arrayListOf<Sport>()
     init {
         sportFilterList = sportsList
     }
     override fun getItemCount() = sportFilterList.size
 
+    fun setSports(sportsList: List<Sport>){
+        this.sportsList = sportsList
+        this.sportFilterList = sportsList
+        notifyDataSetChanged()
+    }
+    private var sportType = ""
     override fun onBindViewHolder(holder: SportsHolder, position: Int) {
         val sport = sportFilterList[position]
-
-        sport.run {
-            holder.gameName.text = name
+        if(sportType.isNullOrEmpty()) {
+            sport.run {
+                holder.gameName.text = name
                 //Glide.with(context).load(imagePath).into(holder.gameImageView)
-            if(isSeleted){
-                holder.gameName.background = ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
-                holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.white))
-            }else{
-                holder.gameName.background = ContextCompat.getDrawable(context, R.drawable.sport_unselect_bg)
-                holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
-            }
-            holder.rootClick.setOnClickListener {
-                isSeleted = !isSeleted
-                if(isSeleted){
-                    holder.gameName.background = ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
+                if (isSeleted) {
+                    holder.gameName.background =
+                        ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
                     holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.white))
-                }else{
-                    holder.gameName.background = ContextCompat.getDrawable(context, R.drawable.sport_unselect_bg)
-                    holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.colorAccent))
+                } else {
+                    holder.gameName.background =
+                        ContextCompat.getDrawable(context, R.drawable.sport_unselect_bg)
+                    holder.gameName.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorAccent
+                        )
+                    )
                 }
-                clickable.updateItem(_id, isSeleted)
+                holder.rootClick.setOnClickListener {
+                    isSeleted = !isSeleted
+                    clickable.updateItem(_id, isSeleted)
+                }
+            }
+        }else if(sport.sportType == sportType){
+            sport.run {
+                holder.gameName.text = name
+                //Glide.with(context).load(imagePath).into(holder.gameImageView)
+                if (isSeleted) {
+                    holder.gameName.background =
+                        ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
+                    holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.white))
+                } else {
+                    holder.gameName.background =
+                        ContextCompat.getDrawable(context, R.drawable.sport_unselect_bg)
+                    holder.gameName.setTextColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorAccent
+                        )
+                    )
+                }
+                holder.rootClick.setOnClickListener {
+                    isSeleted = !isSeleted
+                    clickable.updateItem(_id, isSeleted)
+                }
             }
         }
 

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,15 +32,15 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 
 
-class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener, SportsListAdapter.ItemClickable {
-
+class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
+    SportsListAdapter.ItemClickable {
     companion object {
         fun newInstance() =
             SelectInterestedSportsFragment()
     }
-
+    private var sportType = ""
     private lateinit var factory: SelectInterestedSportsViewModelFactory
-    private lateinit var db:AppDataBase
+    private lateinit var db: AppDataBase
     private lateinit var viewModel: SelectInterestedSportsViewModel
     private lateinit var sportsAdapter: SportsListAdapter
     private lateinit var mLayoutManager: LinearLayoutManager
@@ -52,26 +54,42 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener, 
         savedInstanceState: Bundle?
     ): View? {
         preferenceProvider = PreferenceProvider(requireContext())
-        networkConnectionInterceptor = NetworkConnectionInterceptor(requireContext(), preferenceProvider)
+        networkConnectionInterceptor =
+            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
         api = MyApi(networkConnectionInterceptor)
         db = AppDataBase(context = requireContext())
         sportsRepository = SportsRepository(api, db)
         factory = SelectInterestedSportsViewModelFactory(sportsRepository)
-        viewModel = ViewModelProvider(this, factory).get(SelectInterestedSportsViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, factory).get(SelectInterestedSportsViewModel::class.java)
         viewModel.recyleListFetchListener = this
         return inflater.inflate(R.layout.select_interested_sports_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // sports_list_progress_bar.show()
+        // sports_list_progress_bar.show()
+        recyclerViewInit()
         onUIHandle()
+    }
+
+    private fun recyclerViewInit() {
+        val layoutManager = FlexboxLayoutManager(requireContext())
+        layoutManager.flexDirection = FlexDirection.ROW
+        layoutManager.justifyContent = JustifyContent.CENTER
+        sports_recycler_view.layoutManager =
+            layoutManager
+        if (!::sportsAdapter.isInitialized) {
+            sportsAdapter = SportsListAdapter(requireContext(), this)
+            sports_recycler_view.adapter = sportsAdapter
+        }
     }
 
     private fun onUIHandle() {
         sports_list_progress_bar.show()
         CoroutineScope(Main).launch {
             viewModel.sports.await().observe(viewLifecycleOwner, Observer {
+                if (sportType == "")
                 sports(it)
             })
         }
@@ -88,26 +106,37 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener, 
         select_sports_type.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.select_all -> {
+                    sportType = ""
                     Coroutines.main {
                         viewModel.sportType().value.await().observe(viewLifecycleOwner, Observer {
+                            Log.d("working123--======", it.toString())
+                            if(sportType.isNullOrEmpty())
                             sports(it)
                         })
                     }
                 }
 
                 R.id.select_indoor -> {
-                   Coroutines.main {
-                       viewModel.sportType("indoor").value.await().observe(viewLifecycleOwner, Observer {
-                           sports(it)
-                       })
-                   }
+                    sportType = "indoor"
+                    Coroutines.main {
+                        viewModel.sportType("indoor").value.await()
+                            .observe(viewLifecycleOwner, Observer {
+                                Log.d("working123-i======", it.toString())
+                                if (sportType == "indoor")
+                                sports(it)
+                            })
+                    }
                 }
 
                 R.id.select_outdoor -> {
+                    sportType = "outdoor"
                     Coroutines.main {
-                        viewModel.sportType("outdoor").value.await().observe(viewLifecycleOwner, Observer {
-                            sports(it)
-                        })
+                        viewModel.sportType("outdoor").value.await()
+                            .observe(viewLifecycleOwner, Observer {
+                               Log.d("working123-o======", it.toString())
+                                if (sportType == "outdoor")
+                                sports(it)
+                            })
                     }
                 }
 
@@ -116,15 +145,8 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener, 
     }
 
     override fun sports(sportsList: List<Sport>) {
-
-        this.sportList = sportsList
-        val layoutManager = FlexboxLayoutManager(requireContext())
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.justifyContent = JustifyContent.CENTER
-        sports_recycler_view.layoutManager =
-            layoutManager
-        sportsAdapter = SportsListAdapter(sportsList, requireContext(), this)
-        sports_recycler_view.adapter = sportsAdapter
+        Log.d("working======", sportsList.toString())
+        sportsAdapter.setSports(sportsList)
         sports_list_progress_bar.hide()
     }
 
@@ -137,7 +159,14 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener, 
     }
 
     override fun updateItem(_id: String, isSelect: Boolean) {
-        viewModel.updateItem(_id, isSelect)
+        sports_list_progress_bar.show()
+        sports_search.setQuery("", false)
+        sports_search.clearFocus()
+        Coroutines.main {
+            sports_search
+            viewModel.updateItem(_id, isSelect)
+        }
+
     }
 
 
