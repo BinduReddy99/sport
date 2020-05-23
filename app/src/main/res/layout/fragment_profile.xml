@@ -18,6 +18,15 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/apply_profile_changes_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:src="@drawable/ic_check_black_24dp" />
+
+        <ImageView
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -37,7 +46,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="800dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -83,8 +92,8 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_marginEnd="16dp"
-                        android:singleLine="true"
                         android:fontFamily="@font/cola_big"
+                        android:singleLine="true"
                         android:text="Sabarish S"
                         android:textColor="@color/white"
                         android:textSize="20sp"
@@ -120,11 +129,21 @@
                         app:layout_constraintTop_toBottomOf="@+id/address" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/edit_profile_pic_view"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         tools:layout_editor_absoluteX="4dp"
                         tools:layout_editor_absoluteY="175dp">
 
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:src="@drawable/ic_edit_black_24dp"
+                            android:elevation="12dp"
+                            android:layout_gravity="end|bottom"
+                            tools:layout_editor_absoluteX="218dp"
+                            tools:layout_editor_absoluteY="8dp" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -253,8 +272,8 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/personal_card_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="242dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
@@ -267,8 +286,8 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/profile_mobile_num_edt"
                     android:layout_width="match_parent"
-                    android:paddingBottom="8dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:paddingBottom="8dp">
 
                     <View
                         android:id="@+id/view2"
@@ -288,10 +307,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"
-                        android:textStyle="bold"
                         android:text="@string/personal_information"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.05"
                         app:layout_constraintStart_toStartOf="parent"
@@ -299,12 +318,12 @@
 
                     <TextView
                         android:id="@+id/profile_name_text_view"
+                        style="@style/lhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="32dp"
                         android:text="Name:"
-                        style="@style/lhs_text_name"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.052"
                         app:layout_constraintStart_toStartOf="parent"
@@ -312,101 +331,122 @@
 
                     <TextView
                         android:id="@+id/profile_name_value_text"
+                        style="@style/rhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="Sabarish S"
-                        style="@style/rhs_text_name"
                         app:layout_constraintBottom_toBottomOf="@+id/profile_name_text_view"
                         app:layout_constraintStart_toEndOf="@+id/profile_name_text_view"
                         app:layout_constraintTop_toTopOf="@+id/profile_name_text_view" />
 
                     <TextView
                         android:id="@+id/profile_mobile_num"
+                        style="@style/lhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Mobile Number:"
-                        style="@style/lhs_text_name"
                         app:layout_constraintStart_toStartOf="@+id/profile_name_text_view"
                         app:layout_constraintTop_toBottomOf="@+id/profile_name_text_view" />
 
                     <TextView
                         android:id="@+id/textView10"
+                        style="@style/lhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="E-Mail:"
-                        style="@style/lhs_text_name"
                         app:layout_constraintStart_toStartOf="@+id/profile_mobile_num"
                         app:layout_constraintTop_toBottomOf="@+id/profile_mobile_num" />
 
                     <TextView
                         android:id="@+id/textView11"
+                        style="@style/rhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="1234567893"
-                        style="@style/rhs_text_name"
                         app:layout_constraintBottom_toBottomOf="@+id/profile_mobile_num"
                         app:layout_constraintStart_toEndOf="@+id/profile_mobile_num"
                         app:layout_constraintTop_toTopOf="@+id/profile_mobile_num" />
 
                     <TextView
                         android:id="@+id/profile_edit_email"
+                        style="@style/rhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="sport123@gmail.com"
-                        style="@style/rhs_text_name"
                         app:layout_constraintBottom_toBottomOf="@+id/textView10"
                         app:layout_constraintStart_toEndOf="@+id/textView10"
                         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
                     <TextView
                         android:id="@+id/textView15"
+                        style="@style/lhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="Gender:"
-                        style="@style/lhs_text_name"
                         app:layout_constraintStart_toStartOf="@+id/textView10"
                         app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                     <TextView
                         android:id="@+id/profle_edit_gender_text"
+                        style="@style/rhs_text_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/male"
-                        style="@style/rhs_text_name"
                         app:layout_constraintBottom_toBottomOf="@+id/textView15"
                         app:layout_constraintStart_toEndOf="@+id/textView15"
                         app:layout_constraintTop_toTopOf="@+id/textView15" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/textView17"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:text="Change Password:"-->
-<!--                        style="@style/lhs_text_name"-->
-<!--                        app:layout_constraintStart_toStartOf="@+id/textView15"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/textView15" />-->
+                    <TextView
+                        android:id="@+id/textView4"
+                        style="@style/lhs_text_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Age"
+                        app:layout_constraintStart_toStartOf="@+id/textView15"
+                        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
-<!--                    <TextView-->
-<!--                        android:id="@+id/profile_edt_password"-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="8dp"-->
-<!--                        android:inputType="textPassword"-->
-<!--                        android:text="12345"-->
-<!--                        android:textColor="@color/black"-->
-<!--                        android:textSize="16sp"-->
+                    <TextView
+                        android:id="@+id/profile_age_edit"
+                        style="@style/rhs_text_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="30"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                        app:layout_constraintStart_toEndOf="@+id/textView4"
+                        app:layout_constraintTop_toTopOf="@+id/textView4" />
 
-<!--                        app:layout_constraintBottom_toBottomOf="@+id/textView17"-->
-<!--                        app:layout_constraintStart_toEndOf="@+id/textView17"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/textView17" />-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/textView17"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginTop="16dp"-->
+                    <!--                        android:text="Change Password:"-->
+                    <!--                        style="@style/lhs_text_name"-->
+                    <!--                        app:layout_constraintStart_toStartOf="@+id/textView15"-->
+                    <!--                        app:layout_constraintTop_toBottomOf="@+id/textView15" />-->
+
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/profile_edt_password"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_marginStart="8dp"-->
+                    <!--                        android:inputType="textPassword"-->
+                    <!--                        android:text="12345"-->
+                    <!--                        android:textColor="@color/black"-->
+                    <!--                        android:textSize="16sp"-->
+
+                    <!--                        app:layout_constraintBottom_toBottomOf="@+id/textView17"-->
+                    <!--                        app:layout_constraintStart_toEndOf="@+id/textView17"-->
+                    <!--                        app:layout_constraintTop_toTopOf="@+id/textView17" />-->
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -465,6 +505,65 @@
                         app:spanCount="3"
                         tools:listitem="@layout/sport_user_select_item" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/description_card_view_profile"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="@+id/card_view_selected_sports"
+                app:layout_constraintStart_toStartOf="@+id/card_view_selected_sports"
+                app:layout_constraintTop_toBottomOf="@+id/card_view_selected_sports">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/view4"
+                        android:layout_width="0dp"
+                        android:layout_height="1"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView6"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/description"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.05"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/edit_describe_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:ems="10"
+                        android:inputType="textPostalAddress"
+                        android:text="qwertyuiopasdfghjklzxcvbnm"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/view4" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 

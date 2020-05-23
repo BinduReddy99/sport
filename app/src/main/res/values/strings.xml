@@ -40,5 +40,7 @@
     <string name="Selected_Sports">Selected_sportd</string>
     <string name="views">Views</string>
     <string name="comments">Comments</string>
+    <string name="Description">Description</string>
+    <string name="description">Description</string>
 
 </resources>
