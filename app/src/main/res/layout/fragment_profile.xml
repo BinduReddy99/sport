@@ -365,7 +365,7 @@
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:background="@color/colorLightGray"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -374,10 +374,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/selected_spot_head" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="593dp"
-                android:layout_height="290dp"
-                tools:layout_editor_absoluteX="1dp"
-                tools:layout_editor_absoluteY="37dp" />
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view3"
+                tools:listitem="@layout/sport_user_select_item" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
