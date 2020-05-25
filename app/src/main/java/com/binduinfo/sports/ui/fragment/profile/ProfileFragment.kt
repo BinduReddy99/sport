@@ -75,11 +75,6 @@ class ProfileFragment : Fragment() {
                 }
 
             }).check()
-//            CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
-//                .setMaxCropResultSize(1240,1240)
-//                .setMinCropResultSize(820, 820)
-//                .start(requireActivity(), CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)
-            /*.start(requireContext(), CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE)*/
         }
     }
 
