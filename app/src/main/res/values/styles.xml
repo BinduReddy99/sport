@@ -27,16 +27,24 @@
     </style>
 
     <style name="lhs_text_name">
-        <item name="android:fontFamily">@font/cola_big</item>
+        <item name="android:fontFamily">@font/arimakoshi_bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="rhs_text_name">
-        <item name="android:fontFamily">@font/cola_reg</item>
+        <item name="android:fontFamily">@font/arimakoshi_light</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@android:color/darker_gray</item>
         <item name="android:textStyle">normal</item>
+    </style>
+    <style name="card_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginStart">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+        <item name="elevation">8dp</item>
+        <item name="cardCornerRadius">8dp</item>
     </style>
 </resources>
