@@ -38,6 +38,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -109,6 +113,11 @@ dependencies {
     //Permission Handling
     def dexter = '5.0.0'
     implementation "com.karumi:dexter:$dexter"
+
+    //DataBinding recyclerView
+    implementation 'com.xwray:groupie:2.3.0'
+    implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
+    implementation 'com.xwray:groupie-databinding:2.3.0'
 
     //ImageCrop
    // api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'

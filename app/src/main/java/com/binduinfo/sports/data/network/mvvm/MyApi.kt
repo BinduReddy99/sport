@@ -2,14 +2,20 @@ package com.miziontrix.kmo.data.network.api.mvvm
 
 
 import com.binduinfo.sports.BuildConfig
+import com.binduinfo.sports.data.model.BasicModel
+import com.binduinfo.sports.data.model.ProfileInfo
 import com.binduinfo.sports.util.network.model.SportResponse
 import com.binduinfo.sports.util.network.model.SportsListResponse
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.PUT
+import retrofit2.http.Part
 import java.util.concurrent.TimeUnit
 
 const val BASE_URL: String = "https://ssport.herokuapp.com/api/"
@@ -17,6 +23,13 @@ const val BASE_URL: String = "https://ssport.herokuapp.com/api/"
 interface MyApi {
     @GET("user/sport")
     suspend fun getSportsList(): Response<SportsListResponse>
+
+    @Multipart
+    @PUT("user/profile-pic")
+    suspend fun uploadProfilePic(@Part file: MultipartBody.Part?): Response<BasicModel>
+
+    @GET("user/profile")
+    suspend fun getUserInfo(): Response<ProfileInfo>
 
     companion object {
         operator fun invoke(

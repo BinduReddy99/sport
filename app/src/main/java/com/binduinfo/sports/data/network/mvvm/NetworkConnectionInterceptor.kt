@@ -18,7 +18,7 @@ class NetworkConnectionInterceptor(context: Context, val preferenceHelper: Prefe
 
         val original = chain.request()
         val builder = original.newBuilder()
-            .addHeader("Authorization", "Bearer ${preferenceHelper.getSharedString(LOGIN_TOKEN)}")//x-access-token
+            .addHeader("Authorization", "Bearer ${preferenceHelper.getSharedString(LOGIN_TOKEN)}")
             .method(original.method, original.body)
         return chain.proceed(builder.build())
     }
