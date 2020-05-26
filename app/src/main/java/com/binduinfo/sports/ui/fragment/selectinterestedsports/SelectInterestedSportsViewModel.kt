@@ -3,6 +3,7 @@ package com.binduinfo.sports.ui.fragment.selectinterestedsports
 import android.annotation.SuppressLint
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.repositores.SportsRepository
@@ -12,11 +13,18 @@ import com.example.mvvmsample.util.Coroutines
 import com.example.mvvmsample.util.lazyDeferred
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
 import java.lang.Appendable
+import java.lang.Exception
+import java.lang.NullPointerException
 
 class SelectInterestedSportsViewModel(val repository: SportsRepository) : ViewModel() {
     var recyleListFetchListener: RecyleListFetchListener? = null
+
+    val mutableLiveData: MutableLiveData<String> = MutableLiveData<String>().apply {
+
+    }
 
     val sports by lazyDeferred{
         repository.getSports()
@@ -40,31 +48,18 @@ class SelectInterestedSportsViewModel(val repository: SportsRepository) : ViewMo
         }
     }
 
+    suspend fun sendSelectedSportList(){
+        try {
+            repository.sendSelectedSportList().let {
+                recyleListFetchListener?.sportSelectedUpdate(it)
+            }
+        }catch (e: CancellationException){
+            recyleListFetchListener?.throwable(e)
+        }catch (e: Exception){
+            recyleListFetchListener?.throwable(e)
+        }
 
-    //val sports
-//    @SuppressLint("CheckResult")
-//    fun serverRequest(){
-//        networkInterFace.getSportsList(1, "all").observeOn(AndroidSchedulers.mainThread())
-//            .subscribeOn(Schedulers.io())
-//            .subscribe({
-//                recyleListFetchListener?.sports(it.sports)
-//
-//            },{
-//                recyleListFetchListener?.throwable(it)
-//            })
-//    }
-//
-//     fun filterBasedOnType(sports: List<Sport>, filterType: String){
-//        var sportsList= arrayListOf<Sport>()
-//         if (filterType.isNotEmpty())
-//        sports.forEachIndexed { _, sport ->
-//            if(sport.sportType == filterType)
-//                sportsList.add(sport)
-//        }
-//         else
-//             sportsList.addAll(sports)
-//        recyleListFetchListener?.filter(sportsList)
-//
-//    }
+    }
+
 
 }

@@ -10,7 +10,7 @@
 
     <include
         android:id="@+id/tool_bar"
-        layout="@layout/tool_bar"
+        layout="@layout/sport_list_toolbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

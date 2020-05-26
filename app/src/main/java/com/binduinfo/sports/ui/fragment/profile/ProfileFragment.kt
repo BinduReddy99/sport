@@ -10,15 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.PermissionRequest
 import com.xwray.groupie.ViewHolder
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.binduinfo.sports.R
 import com.binduinfo.sports.data.model.Sport
 import com.binduinfo.sports.data.preference.PreferenceProvider
@@ -41,7 +38,6 @@ import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import com.xwray.groupie.GroupAdapter
 import kotlinx.android.synthetic.main.user_profile_layout.*
-import java.util.Collections.addAll
 
 class ProfileFragment : Fragment(), ProfileHandler {
 
@@ -130,7 +126,7 @@ class ProfileFragment : Fragment(), ProfileHandler {
         val mLayoutManager = FlexboxLayoutManager(requireContext())
         mLayoutManager.flexDirection = FlexDirection.ROW
         mLayoutManager.justifyContent = JustifyContent.CENTER
-        val mAdapter = GroupAdapter<RecyclerView.ViewHolder>().apply {
+        val mAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(sports)
         }
         sports_selected_list.apply {

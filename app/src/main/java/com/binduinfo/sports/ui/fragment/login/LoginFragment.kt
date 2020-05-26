@@ -19,6 +19,7 @@ import com.binduinfo.sports.util.network.model.LoginResponse
 import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
 import com.binduinfo.sports.data.preference.IS_LOGGED_IN
 import com.binduinfo.sports.data.preference.LOGIN_TOKEN
+import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -52,7 +53,8 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
 
     private fun uiHandle() {
         if(BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(IS_LOGGED_IN)!!){
-            intent()
+            //intent()
+            mapIntent()
             //findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
             return
         }
@@ -124,6 +126,14 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
 
     private fun intent(){
         val intent = Intent(requireContext(), HomeActivity::class.java)
+        intent.let {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            requireActivity().startActivity(it)
+        }
+    }
+
+    private fun mapIntent(){
+        val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
         intent.let {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             requireActivity().startActivity(it)

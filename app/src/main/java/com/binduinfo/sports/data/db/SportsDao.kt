@@ -19,4 +19,8 @@ interface SportsDao {
 
     @Query("UPDATE Sport SET isSeleted=:isSelected WHERE _id = :id ")
      fun updateItem(id: String, isSelected: Boolean)
+
+    @Query("SELECT _id FROM Sport WHERE isSeleted = :isSelected ")
+    fun selectSelectedSports(isSelected: Boolean = true):List<String>
+
 }

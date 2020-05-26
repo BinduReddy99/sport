@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.db.entity.AppDataBase
+import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.data.repositores.SportsRepository
 import com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter
@@ -27,8 +28,11 @@ import com.google.android.flexbox.JustifyContent
 import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import kotlinx.android.synthetic.main.select_interested_sports_fragment.*
+import kotlinx.android.synthetic.main.sport_list_toolbar.*
+import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
@@ -38,6 +42,7 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
         fun newInstance() =
             SelectInterestedSportsFragment()
     }
+    private lateinit var job: CompletableJob
     private var sportType = ""
     private lateinit var factory: SelectInterestedSportsViewModelFactory
     private lateinit var db: AppDataBase
@@ -93,6 +98,11 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
                 sports(it)
             })
         }
+        selected_item.setOnClickListener {
+            Coroutines.io {
+                viewModel.sendSelectedSportList()
+            }
+        }
         sports_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -144,6 +154,7 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
         }
     }
 
+
     override fun sports(sportsList: List<Sport>) {
         Log.d("working======", sportsList.toString())
         sportsAdapter.setSports(sportsList)
@@ -152,10 +163,30 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
 
     override fun throwable(throwable: Throwable) {
         sports_list_progress_bar.hide()
+        var message = ""
+        throwable.let {
+            message = it.message!!
+        }
+        Coroutines.main {
+            showToast(message)
+        }
+
     }
 
     override fun filter(sportsList: List<Sport>) {
         sportsAdapter.updateList(sportsList)
+    }
+
+    override fun sportSelectedUpdate(basicModel: BasicModel) {
+        Coroutines.main {
+            if(basicModel.success == 1){
+
+            }else{
+
+            }
+            showToast(basicModel.message)
+        }
+
     }
 
     override fun updateItem(_id: String, isSelect: Boolean) {
