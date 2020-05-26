@@ -40,6 +40,7 @@ import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import com.xwray.groupie.GroupAdapter
 import kotlinx.android.synthetic.main.user_profile_layout.*
+import java.util.Collections.addAll
 
 class ProfileFragment : Fragment(), ProfileHandler {
 
@@ -128,7 +129,7 @@ class ProfileFragment : Fragment(), ProfileHandler {
         val mLayoutManager = FlexboxLayoutManager(requireContext())
         mLayoutManager.flexDirection = FlexDirection.ROW
         mLayoutManager.justifyContent = JustifyContent.CENTER
-        val mAdapter = GroupAdapter<ViewHolder>().apply {
+        val mAdapter = GroupAdapter<RecyclerView.ViewHolder>().apply {
             addAll(sports)
         }
         sports_selected_list.apply {
