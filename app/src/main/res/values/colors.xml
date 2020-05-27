@@ -12,4 +12,8 @@
     <color name="colorLightGray">#e1e1e1</color>
     <color name="colorBlack">#000000</color>
     <color name="background">#f1f0f5</color>
+    <!-- A really bright Holo shade of blue -->
+    <color name="holo_blue_bright">#1E90FF</color>
+    <color name="colorGreen">#03c04a</color>
+
 </resources>

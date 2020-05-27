@@ -39,7 +39,8 @@
 
         <activity
             android:name=".ui.activity.UserPlaceSelectActivity"
-            android:label="@string/title_activity_user_place_select"></activity>
+            android:label="@string/title_activity_user_place_select">
+        </activity>
         <activity
             android:name=".ui.activity.HomeActivity"
             android:label="@string/title_activity_home" />
