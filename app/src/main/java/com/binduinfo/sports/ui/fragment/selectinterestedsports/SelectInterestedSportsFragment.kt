@@ -91,6 +91,8 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
     }
 
     private fun onUIHandle() {
+        sports_list_layout.visibility = View.GONE
+        selected_item.visibility = View.GONE
         sports_list_progress_bar.show()
         CoroutineScope(Main).launch {
             viewModel.sports.await().observe(viewLifecycleOwner, Observer {
@@ -99,6 +101,9 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
             })
         }
         selected_item.setOnClickListener {
+            sports_list_layout.visibility = View.GONE
+            selected_item.visibility = View.GONE
+            sports_list_progress_bar.visibility = View.VISIBLE
             Coroutines.io {
                 viewModel.sendSelectedSportList()
             }
@@ -158,10 +163,15 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
     override fun sports(sportsList: List<Sport>) {
         Log.d("working======", sportsList.toString())
         sportsAdapter.setSports(sportsList)
+        sports_list_layout.visibility = View.VISIBLE
+        selected_item.visibility = View.VISIBLE
         sports_list_progress_bar.hide()
     }
 
     override fun throwable(throwable: Throwable) {
+        sports_list_layout.visibility = View.VISIBLE
+        selected_item.visibility = View.VISIBLE
+        //sports_list_progress_bar.visibility = View.VISIBLE
         sports_list_progress_bar.hide()
         var message = ""
         throwable.let {
@@ -185,6 +195,9 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
 
             }
             showToast(basicModel.message)
+            sports_list_layout.visibility = View.VISIBLE
+            selected_item.visibility = View.VISIBLE
+            sports_list_progress_bar.hide()
         }
 
     }
