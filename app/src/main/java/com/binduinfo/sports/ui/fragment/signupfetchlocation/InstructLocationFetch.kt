@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,9 @@ import androidx.lifecycle.ViewModelProvider
 
 import com.binduinfo.sports.R
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
+import com.binduinfo.sports.util.map.MapSupport.isServiceOk
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -20,6 +24,7 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.instruct_location_fetch_fragment.*
 const val LOCATION_REQUEST_CODE = 0x001
+private val ERROR_DIALOG_REQUEST = 9001
 class InstructLocationFetch : Fragment() {
 
     companion object {
@@ -44,6 +49,7 @@ class InstructLocationFetch : Fragment() {
     }
 
     private fun checkLocationPermission() {
+        if (isServiceOk(requireActivity(), ERROR_DIALOG_REQUEST))
         Dexter.withActivity(requireActivity()).withPermissions(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -70,7 +76,10 @@ class InstructLocationFetch : Fragment() {
             }
 
         }).check()
+
     }
+
+
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
