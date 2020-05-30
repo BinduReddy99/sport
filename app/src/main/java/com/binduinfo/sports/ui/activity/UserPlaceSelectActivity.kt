@@ -1,7 +1,14 @@
 package com.binduinfo.sports.ui.activity
 
 import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -10,18 +17,25 @@ import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
 import com.binduinfo.sports.ui.activity.locationAdapter.AutoCompleteAdapter
 import com.binduinfo.sports.util.map.MapSupport.isServiceOk
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
@@ -32,7 +46,8 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_user_place_select.*
-import java.lang.Exception
+
+const val LOCATION_SETTINGS_REQUEST = 0x001
 
 class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
     AdapterView.OnItemClickListener {
@@ -43,6 +58,8 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var fusedLocationCallback: LocationCallback
     private val CAMERA_ZOOM = 15f
+    private lateinit var locationRequest: LocationRequest
+    private var isCurrentLocationSet = false
     override fun uiHandle() {
 
     }
@@ -65,8 +82,9 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
 
     private fun initlizePlaceAutoComplete() {
         input_search.threshold = 3
-        adapter = AutoCompleteAdapter(this, placesClient)
+        adapter = AutoCompleteAdapter(this, R.layout.auto_complete_place_picker_item, placesClient)
         input_search.onItemClickListener = this
+        input_search.dropDownVerticalOffset = 0
         input_search.setAdapter(adapter)
     }
 
@@ -132,45 +150,67 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
         val location = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
         mMap.animateCamera(location)
         val options: MarkerOptions = MarkerOptions().position(latLng).title(title)
-            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN))
+            .icon(bitmapDescriptorFromVector(this, R.drawable.ic_pin))
         mMap.addMarker(options)
 
     }
 
     private fun getMyLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
-        val locationRequest: LocationRequest = LocationRequest()
+        val googleApiClient = GoogleApiClient.Builder(this).addApi(LocationServices.API).build()
+        googleApiClient.connect()
+
+        locationRequest = LocationRequest()
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         locationRequest.interval = 2000
         locationRequest.fastestInterval = 2000
-        locationRequest.smallestDisplacement = 10f
-        try {
-            fusedLocationCallback = object : LocationCallback() {
-                override fun onLocationResult(p0: LocationResult?) {
-                    cameraMove(
-                        LatLng(p0?.lastLocation!!.latitude, p0.lastLocation!!.longitude),
-                        15f,
-                        ""
-                    )
-                }
+        locationRequest.smallestDisplacement = 2000f
 
-                override fun onLocationAvailability(p0: LocationAvailability?) {
-                    Log.d("location Avaability====", p0.toString())
+        val builder: LocationSettingsRequest.Builder =
+            LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+
+        val result = LocationServices.getSettingsClient(this).checkLocationSettings(builder.build())
+
+        result.addOnCompleteListener { p0 ->
+            try {
+                val response = p0.getResult(ApiException::class.java)
+            } catch (ex: ApiException) {
+
+            }
+        }.addOnFailureListener { p0 ->
+            val status = p0
+            val ex = (p0 as ApiException).statusCode
+            when (ex) {
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                    try {
+                        val resolvableApiException: ResolvableApiException =
+                            status as ResolvableApiException
+                        resolvableApiException
+                            .startResolutionForResult(
+                                this@UserPlaceSelectActivity,
+                                LOCATION_SETTINGS_REQUEST
+                            )
+                    } catch (e: IntentSender.SendIntentException) {
+
+                    }
+                }
+                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+
+                }
+                LocationSettingsStatusCodes.SUCCESS -> {
+                    Log.d("Sucesss=====", "Sucesss")
+
                 }
             }
-            fusedLocationProviderClient.requestLocationUpdates(
-                locationRequest,
-                fusedLocationCallback,
-                Looper.getMainLooper()
-            )
+        }.addOnCanceledListener {
 
-        } catch (e: SecurityException) {
-            // Log.e(TAG, "getDeviceLocation: SecurityException" + e.message)
         }
+        getLocation()
     }
 
     private fun changeMyLocationButtonPosition(mapView: View) {
-        if (mapView?.findViewById<View>(Integer.parseInt("1")) != null
+        if (mapView.findViewById<View>(Integer.parseInt("1")) != null
         ) {
             val locationButton: View =
                 (mapView.findViewById<View>("1".toInt())
@@ -188,32 +228,102 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-
         try {
             val item = adapter.getItem(position)
             var placeID = ""
             if (item != null)
                 placeID = item.placeId
 
-            val plaFields = arrayListOf<Place.Field>(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG)
-            var req:FetchPlaceRequest? = null
+            val plaFields =
+                arrayListOf<Place.Field>(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG)
+            var req: FetchPlaceRequest? = null
 
-            if (placeID != null){
+            if (placeID != null) {
                 req = FetchPlaceRequest.builder(placeID, plaFields).build()
             }
 
-            if(req != null){
-                placesClient.fetchPlace(req).addOnSuccessListener ({
-
-                }, {
-                    cameraMove(it.place.latLng!!, CAMERA_ZOOM, "")
-                })
+            if (req != null) {
+                placesClient.fetchPlace(req).addOnSuccessListener {
+                    cameraMove(it.place.latLng!!, 15f, "")
+                }.addOnFailureListener { }
             }
-
-
-
         } catch (e: Exception) {
 
         }
+
+    }
+
+    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor? {
+        return ContextCompat.getDrawable(context, vectorResId)?.run {
+            setBounds(0, 0, intrinsicWidth, intrinsicHeight)
+            val bitmap =
+                Bitmap.createBitmap(intrinsicWidth, intrinsicHeight, Bitmap.Config.ARGB_8888)
+            draw(Canvas(bitmap))
+            BitmapDescriptorFactory.fromBitmap(bitmap)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == LOCATION_SETTINGS_REQUEST) {
+                Log.d("sucess requet", "success request")
+              //  getLocation()
+            }
+        } else {
+
+        }
+    }
+
+    private fun getLocation(){
+        try {
+            fusedLocationCallback = object : LocationCallback() {
+                override fun onLocationResult(p0: LocationResult?) {
+                    val currentLocation = p0?.lastLocation
+                    if (currentLocation != null) {
+                        if (!isCurrentLocationSet) {
+                            isCurrentLocationSet = true
+                            cameraMove(
+                                LatLng(currentLocation.latitude, currentLocation.longitude),
+                                15f,
+                                ""
+                            )
+                        }
+                    }
+                }
+
+                override fun onLocationAvailability(p0: LocationAvailability?) {
+                    Log.d("location Avaability====", p0.toString())
+
+                }
+            }
+            fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,
+                fusedLocationCallback,
+                Looper.getMainLooper()
+            )
+
+        } catch (e: SecurityException) {
+            // Log.e(TAG, "getDeviceLocation: SecurityException" + e.message)
+        }
     }
 }
+
+//   val location = fusedLocationProviderClient.lastLocation
+
+//            location.addOnCompleteListener {
+//                if (it.isSuccessful) {
+//                    if(location != null) {
+//                        val currentLocation = it.result as Location
+//                        cameraMove(
+//                            LatLng(currentLocation.latitude, currentLocation.longitude),
+//                            15f,
+//                            ""
+//                        )
+//                    }
+//                } else {
+//                    Log.d("TAG", "onComplete: current location is null")
+//                    Toast.makeText(this, "Unable to get current location", Toast.LENGTH_LONG)
+//                        .show()
+//                }
+//            }

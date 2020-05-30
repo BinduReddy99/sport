@@ -1,6 +1,7 @@
 package com.binduinfo.sports.ui.activity.locationAdapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.binduinfo.sports.R;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -31,10 +33,12 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
 
     private List<AutocompletePrediction> mResultList;
     private PlacesClient placesClient;
+    private int layout;
 
-    public AutoCompleteAdapter(Context context, PlacesClient placesClient) {
-        super(context, android.R.layout.simple_expandable_list_item_2, android.R.id.text1);
+    public AutoCompleteAdapter(Context context, int layout, PlacesClient placesClient) {
+        super(context, layout, R.id.title);
         this.placesClient = placesClient;
+        this.layout = layout;
     }
 
     @Override
@@ -50,18 +54,32 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
     @NonNull
     @Override
     public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        View row = super.getView(position, convertView, parent);
+//        View row = super.getView(position, convertView, parent);
+//
+//        AutocompletePrediction item = getItem(position);
+//
+//        TextView textView1 = row.findViewById(android.R.id.text1);
+//        TextView textView2 = row.findViewById(android.R.id.text2);
+//        if (item != null) {
+//            textView1.setText(item.getPrimaryText(null));
+//            textView2.setText(item.getSecondaryText(null));
+//        }
+//
+//        return row;
 
-        AutocompletePrediction item = getItem(position);
-
-        TextView textView1 = row.findViewById(android.R.id.text1);
-        TextView textView2 = row.findViewById(android.R.id.text2);
-        if (item != null) {
-            textView1.setText(item.getPrimaryText(null));
-            textView2.setText(item.getSecondaryText(null));
+        View v = convertView;
+        if (v == null) {
+            LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            v = vi.inflate(layout, null);
         }
-
-        return row;
+        AutocompletePrediction item = getItem(position);
+        if (item != null) {
+            TextView title = (TextView) v.findViewById(R.id.title);
+            TextView address = (TextView) v.findViewById(R.id.address);
+            title.setText(item.getPrimaryText(null));
+            address.setText(item.getSecondaryText(null));
+        }
+        return v;
     }
 
     @NonNull
@@ -135,7 +153,7 @@ public class AutoCompleteAdapter extends ArrayAdapter<AutocompletePrediction> im
         final FindAutocompletePredictionsRequest.Builder requestBuilder =
                 FindAutocompletePredictionsRequest.builder()
                         .setQuery(constraint.toString())
-                        .setCountry("") //Use only in specific country
+                        .setCountry("IN") //Use only in specific country
                         // Call either setLocationBias() OR setLocationRestriction().
                         .setLocationBias(bounds)
 //                        .setLocationRestriction(bounds)
