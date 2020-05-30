@@ -55,8 +55,8 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
         if(BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(IS_LOGGED_IN)!!){
             //intent()
             //mapIntent()
-            //findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
-            findNavController().navigate(R.id.action_loginFragment_to_instructLocationFetch)
+            findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
+            //findNavController().navigate(R.id.action_loginFragment_to_instructLocationFetch)
             return
         }
         //action_signUpFragment_to_selectInterestedSports

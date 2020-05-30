@@ -55,5 +55,6 @@
     <string name="crop_image_activity_no_permissions">Cancelling, required permissions are not granted</string>
     <string name="title_activity_user_place_select">Map</string>
     <string name="get_my_location">Get My Location</string>
+    <string name="age">Age</string>
 
 </resources>
