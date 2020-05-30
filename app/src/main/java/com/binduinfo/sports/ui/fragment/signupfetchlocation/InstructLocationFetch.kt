@@ -59,7 +59,7 @@ class InstructLocationFetch : Fragment() {
                 report?.let {
                     if (it.areAllPermissionsGranted()) {
                         val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
-                        startActivityForResult(intent, LOCATION_REQUEST_CODE)
+                        requireActivity().startActivityForResult(intent, LOCATION_REQUEST_CODE)
                     }else{
                         Toast.makeText(requireContext(), "Enable Permission", Toast.LENGTH_SHORT).show()
                     }
@@ -82,6 +82,11 @@ class InstructLocationFetch : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(InstructLocationFetchViewModel::class.java)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
     }
 
 

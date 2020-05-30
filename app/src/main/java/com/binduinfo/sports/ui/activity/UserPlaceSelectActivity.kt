@@ -8,11 +8,14 @@ import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.location.Address
+import android.location.Geocoder
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -20,7 +23,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
+import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.ui.activity.locationAdapter.AutoCompleteAdapter
+import com.binduinfo.sports.ui.dialog.AlertDialogue
 import com.binduinfo.sports.util.map.MapSupport.isServiceOk
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.GoogleApiClient
@@ -30,10 +35,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.api.Places
@@ -46,11 +48,12 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.activity_user_place_select.*
+import java.util.*
 
 const val LOCATION_SETTINGS_REQUEST = 0x001
-
+const val ADDRESS = "address"
 class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
-    AdapterView.OnItemClickListener {
+    AdapterView.OnItemClickListener, GoogleMap.OnMarkerClickListener, AlertDialogue.AlertClickable {
     private lateinit var adapter: AutoCompleteAdapter
     private lateinit var placesClient: PlacesClient
     private lateinit var mMap: GoogleMap
@@ -60,6 +63,18 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
     private val CAMERA_ZOOM = 15f
     private lateinit var locationRequest: LocationRequest
     private var isCurrentLocationSet = false
+    private var addressStr: String = ""
+    private var latitudeDou: Double = 0.0
+    private var longitudeDou: Double = 0.0
+    private var area: String = ""
+    private var city: String = ""
+    private var pincode: String = ""
+    private var state: String = ""
+    private var country: String = ""
+    private lateinit var geoCoder: Geocoder
+    private lateinit var address: List<Address>
+    private lateinit var alertDialogue: AlertDialogue
+    private var addressRequest: AddressRequest? = null
     override fun uiHandle() {
 
     }
@@ -74,10 +89,16 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, getString(R.string.google_maps_key))
         }
+        alertDialogue =
+            AlertDialogue(this, "Would we proceed with selected location ?", alertClick = this)
         placesClient = Places.createClient(this)
         initlizePlaceAutoComplete()
         if (isServiceOk(this, ERROR_DIALOG_REQUEST = 9001))
             permissionCheck()
+
+        if (!::geoCoder.isInitialized) {
+            geoCoder = Geocoder(this, Locale.getDefault())
+        }
     }
 
     private fun initlizePlaceAutoComplete() {
@@ -139,19 +160,31 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
 
             return
         }
+        mMap.setOnMarkerClickListener(this)
         mMap.isMyLocationEnabled = true
         mMap.setOnMapClickListener {
-            cameraMove(it, CAMERA_ZOOM, "Clicked Location")
+            Log.d("latitude", it.latitude.toString())
+            cameraMove(it, CAMERA_ZOOM, "Clicked Location", it.latitude, it.longitude)
         }
     }
 
-    fun cameraMove(latLng: LatLng, zoom: Float, title: String) {
+    fun cameraMove(
+        latLng: LatLng,
+        zoom: Float,
+        title: String,
+        latitude: Double = 0.0,
+        longtited: Double = 0.0
+    ) {
         mMap.clear()
         val location = CameraUpdateFactory.newLatLngZoom(latLng, zoom)
         mMap.animateCamera(location)
         val options: MarkerOptions = MarkerOptions().position(latLng).title(title)
             .icon(bitmapDescriptorFromVector(this, R.drawable.ic_pin))
         mMap.addMarker(options)
+
+        if (latitude > 0.0 && longtited > 0.0) {
+            getAddressFromLatLong(latitude, longtited)
+        }
 
     }
 
@@ -244,7 +277,15 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
 
             if (req != null) {
                 placesClient.fetchPlace(req).addOnSuccessListener {
-                    cameraMove(it.place.latLng!!, 15f, "")
+                    if (it != null)
+                        cameraMove(
+                            it.place.latLng!!,
+                            15f,
+                            "",
+                            it.place.latLng!!.latitude,
+                            it.place.latLng!!.longitude
+                        )
+                    super.hideKeyBoard(this)
                 }.addOnFailureListener { }
             }
         } catch (e: Exception) {
@@ -267,15 +308,13 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LOCATION_SETTINGS_REQUEST) {
-                Log.d("sucess requet", "success request")
-              //  getLocation()
             }
         } else {
 
         }
     }
 
-    private fun getLocation(){
+    private fun getLocation() {
         try {
             fusedLocationCallback = object : LocationCallback() {
                 override fun onLocationResult(p0: LocationResult?) {
@@ -286,7 +325,9 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
                             cameraMove(
                                 LatLng(currentLocation.latitude, currentLocation.longitude),
                                 15f,
-                                ""
+                                "",
+                                currentLocation.latitude,
+                                currentLocation.longitude
                             )
                         }
                     }
@@ -304,9 +345,62 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
             )
 
         } catch (e: SecurityException) {
-            // Log.e(TAG, "getDeviceLocation: SecurityException" + e.message)
+
         }
     }
+
+    fun getAddressFromLatLong(latitude: Double, longtited: Double) {
+        try {
+            addressRequest = null
+            address = geoCoder.getFromLocation(latitude, longtited, 1)
+            if (address[0].getAddressLine(0) != null)
+                addressStr = address[0].getAddressLine(0)
+            if (address[0].subLocality != null)
+                area = address[0].subLocality
+            if (address[0].locality != null)
+                city = address[0].locality
+            if (address[0].adminArea != null)
+                state = address[0].adminArea
+            if (address[0].countryName != null)
+                country = address[0].countryName
+            if (address[0].postalCode != null)
+                pincode = address[0].postalCode
+
+            addressRequest = AddressRequest(addressStr, area, city, country, latitude, longtited, pincode, state)
+
+        } catch (e: Exception) {
+
+        }
+//        Log.d("Address ===", address[0].getAddressLine(0))
+//        Log.d("admin are ===", address[0].adminArea)
+//        Log.d("subAdmin are ===", address[0].subAdminArea)
+//        Log.d("mCountryName ===", address[0].countryName)
+//        Log.d("mFeatureName ===", address[0].featureName)
+//        if(address[0].locality != null)
+//        Log.d("locality are ===", address[0].locality)
+//        if(address[0].subLocality != null)
+//        Log.d("sublocality are ===", address[0].subLocality)
+//        Log.d("country are ===", address[0].countryName)
+//        Log.d("postalCode ===", address[0].postalCode)
+
+    }
+
+    override fun onMarkerClick(p0: Marker?): Boolean {
+        alertDialogue.showdialogue()
+        return false
+    }
+
+    override fun alertClickable() {
+        val intent = Intent()
+        intent.putExtra(ADDRESS, addressRequest)
+        setResult(Activity.RESULT_OK, intent)
+        finish()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
 }
 
 //   val location = fusedLocationProviderClient.lastLocation
