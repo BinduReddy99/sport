@@ -50,11 +50,11 @@ class InstructLocationFetch : Fragment() {
 
     private fun checkLocationPermission() {
         if (isServiceOk(requireActivity(), ERROR_DIALOG_REQUEST))
-        Dexter.withActivity(requireActivity()).withPermissions(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_NETWORK_STATE
-        ).withListener(object : MultiplePermissionsListener {
+            Dexter.withActivity(requireActivity()).withPermissions(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_NETWORK_STATE
+            ).withListener(object : MultiplePermissionsListener {
             override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
                 report?.let {
                     if (it.areAllPermissionsGranted()) {
