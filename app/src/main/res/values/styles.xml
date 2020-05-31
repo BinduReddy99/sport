@@ -47,5 +47,13 @@
         <item name="elevation">8dp</item>
         <item name="cardCornerRadius">8dp</item>
     </style>
+    <style name="splash" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowBackground">"@drawable/splash_background"></item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowContentOverlay">true</item>
 
+
+    </style>
 </resources>
