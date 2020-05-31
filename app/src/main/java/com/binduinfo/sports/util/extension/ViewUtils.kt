@@ -1,6 +1,8 @@
 package com.binduinfo.sports.util.extension
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatButton
 
@@ -18,4 +20,9 @@ fun AppCompatButton.hide() {
 
 fun AppCompatButton.show() {
     visibility = View.VISIBLE
+}
+
+fun View.hideKeyboard() {
+    val inputMethodManager = context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }

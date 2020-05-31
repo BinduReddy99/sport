@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.base.BaseFragment
+import com.binduinfo.sports.data.preference.ADD_ADDRESS
+import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.ui.activity.HomeActivity
 import com.binduinfo.sports.util.MyTextWater
 import com.binduinfo.sports.util.TextLayoutViewErrorHandle
@@ -45,6 +48,17 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
+    override fun onResume() {
+        super.onResume()
+        //activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+    }
+
+    override fun onPause() {
+        super.onPause()
+//        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+//        activity?.window?.decorView?.systemUiVisibility = 0
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,13 +66,6 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
     }
 
     private fun uiHandle() {
-        if(BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(IS_LOGGED_IN)!!){
-            //intent()
-            //mapIntent()
-            //findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
-            findNavController().navigate(R.id.action_loginFragment_to_instructLocationFetch)
-            return
-        }
         //action_signUpFragment_to_selectInterestedSports
         login_edt_mob_num.addTextChangedListener(MyTextWater(login_mobile_number_lay, this))
         login_edt_password.addTextChangedListener(MyTextWater(login_text_input_password, this))
@@ -111,10 +118,17 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
 
      private fun handleResponse(response: LoginResponse){
          if (response.success == 1){
-
              BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(LOGIN_TOKEN, response.token!!)
              BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(IS_LOGGED_IN, true)
-             intent()
+             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(ADD_ADDRESS, response.isLocationAvailablr)
+             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(ADD_INTERESTED_SPORT, response.isInterestedSport)
+             if (!response.isInterestedSport){
+                 findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
+             }else if (!response.isLocationAvailablr){
+                 findNavController().navigate(R.id.action_loginFragment_to_instructLocationFetch)
+             }else if(response.isInterestedSport && response.isLocationAvailablr) {
+                 intent()
+             }
              return
          }
          textView3.visibility = View.VISIBLE
@@ -127,14 +141,6 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
 
     private fun intent(){
         val intent = Intent(requireContext(), HomeActivity::class.java)
-        intent.let {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            requireActivity().startActivity(it)
-        }
-    }
-
-    private fun mapIntent(){
-        val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
         intent.let {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             requireActivity().startActivity(it)

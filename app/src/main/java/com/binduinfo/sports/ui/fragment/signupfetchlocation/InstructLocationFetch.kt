@@ -1,6 +1,7 @@
 package com.binduinfo.sports.ui.fragment.signupfetchlocation
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -13,8 +14,20 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 
 import com.binduinfo.sports.R
+import com.binduinfo.sports.app.BaseApplication
+import com.binduinfo.sports.base.BaseFragment
+import com.binduinfo.sports.data.model.address.AddressRequest
+import com.binduinfo.sports.data.preference.ADD_ADDRESS
+import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
+import com.binduinfo.sports.data.preference.PreferenceProvider
+import com.binduinfo.sports.data.repositores.LocationUpdateRepository
+import com.binduinfo.sports.data.repositores.ProfileRepository
+import com.binduinfo.sports.ui.activity.ADDRESS
+import com.binduinfo.sports.ui.activity.HomeActivity
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
+import com.binduinfo.sports.ui.fragment.profile.ProfileViewModelFactory
 import com.binduinfo.sports.util.map.MapSupport.isServiceOk
+import com.example.mvvmsample.util.Coroutines
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.karumi.dexter.Dexter
@@ -22,23 +35,35 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
+import com.miziontrix.kmo.data.network.api.mvvm.MyApi
+import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import kotlinx.android.synthetic.main.instruct_location_fetch_fragment.*
 const val LOCATION_REQUEST_CODE = 0x001
 private val ERROR_DIALOG_REQUEST = 9001
-class InstructLocationFetch : Fragment() {
-
+class InstructLocationFetch : BaseFragment() {
+    private lateinit var viewModel: InstructLocationFetchViewModel
+    private lateinit var api: MyApi
+    private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
+    private lateinit var preferenceProvider: PreferenceProvider
+    private lateinit var repository: LocationUpdateRepository
+    private lateinit var factory: InstructLocationFetchViewModelFactory
     companion object {
         fun newInstance() = InstructLocationFetch()
     }
 
-    private lateinit var viewModel: InstructLocationFetchViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        preferenceProvider = PreferenceProvider(requireContext())
+        networkConnectionInterceptor =
+            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
+        api = MyApi(networkConnectionInterceptor)
+        repository = LocationUpdateRepository(api)
+        factory = InstructLocationFetchViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory).get(InstructLocationFetchViewModel::class.java)
         return inflater.inflate(R.layout.instruct_location_fetch_fragment, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,13 +104,40 @@ class InstructLocationFetch : Fragment() {
 
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(InstructLocationFetchViewModel::class.java)
-    }
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Log.d("err====", requestCode.toString())
+        if (resultCode == Activity.RESULT_OK){
+            if (requestCode == LOCATION_REQUEST_CODE){
+                Log.d("err====", requestCode.toString())
+                val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
+                if(address is AddressRequest){
+                    address_load_progress.visibility = View.VISIBLE
+                    get_my_location.visibility = View.GONE
+                    Coroutines.main {
+                        viewModel.updateLocation(address).value.await().run {
+                            if (success == 1){
+                                BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(
+                                    ADD_ADDRESS, true)
+                                val intent = Intent(requireContext(), HomeActivity::class.java)
+                                intent.let {
+                                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    requireActivity().startActivity(it)
+                                }
+                            }else{
+                                showToast(message)
+                            }
+                            address_load_progress.visibility = View.GONE
+                            get_my_location.visibility = View.VISIBLE
+                        }
+                    }
+                }
+            }
+        }
 
     }
 

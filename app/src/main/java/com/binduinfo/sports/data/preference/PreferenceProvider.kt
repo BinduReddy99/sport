@@ -6,6 +6,8 @@ import androidx.preference.PreferenceManager
 
 const val LOGIN_TOKEN = "login_token"
 const val IS_LOGGED_IN = "is_logged_in"
+const val ADD_ADDRESS = "is_address_added"
+const val ADD_INTERESTED_SPORT = "is_interested_sport_added"
 class PreferenceProvider(private val context: Context) {
     private val appContext = context.applicationContext
 
@@ -19,8 +21,7 @@ class PreferenceProvider(private val context: Context) {
         preference.edit().putBoolean(key, value).apply()
     }
 
-    fun getsharedBoolean(key: String): Boolean
-        = preference.getBoolean(key, false)
+    fun getsharedBoolean(key: String): Boolean = preference.getBoolean(key, false)
 
     fun getSharedString(key: String): String = preference.getString(key, "")!!
 

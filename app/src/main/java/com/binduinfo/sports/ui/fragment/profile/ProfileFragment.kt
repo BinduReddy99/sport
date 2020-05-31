@@ -146,8 +146,8 @@ class ProfileFragment : Fragment(), ProfileHandler {
                 report?.let {
                     if (it.areAllPermissionsGranted()) {
                         CropImage.activity(null).setGuidelines(CropImageView.Guidelines.ON)
-                            .setMaxCropResultSize(1240, 1240)
-                            .setMinCropResultSize(820, 820)
+                            .setMaxCropResultSize(4096, 4096)
+                            .setMinCropResultSize(2048, 2048)
                             .start(
                                 requireActivity(),
                                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE

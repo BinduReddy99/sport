@@ -10,6 +10,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.ui.bottomSheet.BottomSheetOtp
@@ -275,6 +276,17 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
 
     }
 
+    override fun onResume() {
+        super.onResume()
+     //   activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+    }
+
+//    override fun onPause() {
+//        super.onPause()
+//        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+//        activity?.window?.decorView?.systemUiVisibility = 0
+//    }
+
     private fun registerHandleResponse(
         response: SportResponse,
         progress: ProgressBar,
@@ -285,8 +297,8 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
         button.show()
         if (response.success == 1) {
             bottomDialog?.dismiss()
-            requireActivity().onBackPressed()
-            //findNavController().navigate(R.id.)
+            //requireActivity().onBackPressed()
+            findNavController().navigate(R.id.action_signUpFragment_to_loginFragment)
         } else {
             error_text.text = response.message
         }

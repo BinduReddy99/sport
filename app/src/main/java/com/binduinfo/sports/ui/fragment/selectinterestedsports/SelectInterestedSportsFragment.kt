@@ -10,11 +10,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binduinfo.sports.R
+import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.model.BasicModel
+import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.data.repositores.SportsRepository
 import com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter
@@ -190,7 +193,10 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
     override fun sportSelectedUpdate(basicModel: BasicModel) {
         Coroutines.main {
             if(basicModel.success == 1){
+                BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(ADD_INTERESTED_SPORT, true)
 
+                findNavController().navigate(R.id.action_selectInterestedSports_to_instructLocationFetch)
+                return@main
             }else{
 
             }

@@ -15,5 +15,6 @@
     <!-- A really bright Holo shade of blue -->
     <color name="holo_blue_bright">#1E90FF</color>
     <color name="colorGreen">#03c04a</color>
+    <color name="black_overlay">#66000000</color>
 
 </resources>

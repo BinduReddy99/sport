@@ -81,6 +81,7 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        hideToolbar()
         setContentView(R.layout.activity_user_place_select)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         mapFragment = supportFragmentManager

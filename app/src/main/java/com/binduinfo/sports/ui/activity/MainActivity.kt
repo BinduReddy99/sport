@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
+import androidx.fragment.app.Fragment
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
 import com.binduinfo.sports.data.model.address.AddressRequest
@@ -11,38 +13,32 @@ import com.binduinfo.sports.ui.fragment.signupfetchlocation.LOCATION_REQUEST_COD
 
 
 class MainActivity : BaseActivity() {
+    private  var fragment: Fragment? = null
     override fun uiHandle() {
 
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        if(BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(IS_LOGGED_IN)!!){
-//            intent()
-//        }
         hideToolbar()
-
         setContentView(R.layout.activity_main)
+       // window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         uiHandle()
 
     }
 
-
-    private fun intent(){
-        val intent = Intent(this, HomeActivity::class.java)
-        intent.let {
-            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(it)
-        }
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        //Log.d("Location Request", data.toString())
+        //Log.d("err===", data.toString())
+        if(fragment == null)
+            fragment = this.supportFragmentManager.findFragmentById(R.id.main_nav_host)
+                ?.childFragmentManager?.fragments?.get(0)
         if (resultCode == Activity.RESULT_OK){
             if (requestCode == LOCATION_REQUEST_CODE){
-                val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
-                Log.d("Location Request", address.toString())
+                Log.d("err===", data.toString())
+                fragment?.onActivityResult(requestCode, resultCode, data)
+//                val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
+//                Log.d("Location Request", address.toString())
             }
         }
     }

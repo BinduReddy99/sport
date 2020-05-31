@@ -4,6 +4,7 @@ package com.miziontrix.kmo.data.network.api.mvvm
 import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.model.ProfileInfo
+import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.data.model.sport.RequestInterestSport
 import com.binduinfo.sports.util.network.model.SportResponse
 import com.binduinfo.sports.util.network.model.SportsListResponse
@@ -31,6 +32,9 @@ interface MyApi {
 
     @PUT("user/interested")
     suspend fun updateInterestedSport(@Body sportSelectRequest: RequestInterestSport): Response<BasicModel>
+
+    @PUT("user/address")
+    suspend fun updateAddress(@Body addressRequest: AddressRequest): Response<BasicModel>
 
     companion object {
         operator fun invoke(

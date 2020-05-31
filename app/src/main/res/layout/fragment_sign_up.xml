@@ -5,7 +5,7 @@
     android:id="@+id/sign_up_password_root_lay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimaryDark"
     tools:context=".ui.fragment.signup.SignUpFragment">
 
     <TextView
