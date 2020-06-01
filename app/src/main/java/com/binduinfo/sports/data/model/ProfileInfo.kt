@@ -23,13 +23,3 @@ fun loadImage(imageView: CircleImageView, logo: String?){
     Glide.with(imageView.context.applicationContext).load(logo).apply(RequestOptions.circleCropTransform()).placeholder(ContextCompat.getDrawable(imageView.context, R.drawable.ic_use_white)).into(imageView)
 }
 
-@BindingAdapter("location")
-    fun setLocation(mapView: MapView, location:List<Double>){
-    if (mapView != null) {
-        mapView.onCreate(Bundle())
-        mapView.getMapAsync { googleMap -> // Add a marker
-            googleMap.addMarker(MarkerOptions().position(LatLng(location[0], location[1])).title("Marker in India"))
-        }
-    }
-
-}

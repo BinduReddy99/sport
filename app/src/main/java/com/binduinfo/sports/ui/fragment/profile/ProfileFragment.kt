@@ -78,6 +78,7 @@ class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable
 //        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
 //            textView.text = it
 //        })
+
         return binding.root
     }
 
