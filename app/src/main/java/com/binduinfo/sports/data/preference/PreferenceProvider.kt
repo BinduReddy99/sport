@@ -25,5 +25,9 @@ class PreferenceProvider(private val context: Context) {
 
     fun getSharedString(key: String): String = preference.getString(key, "")!!
 
+    fun clearAllData(){
+        preference.edit().clear().apply()
+    }
+
 
 }

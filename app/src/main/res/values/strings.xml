@@ -60,5 +60,7 @@
     <string name="shall_we_proceed_with_selected_location">Shall we proceed with selected location?</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="logout">Logout</string>
+    <string name="location">Location</string>
 
 </resources>

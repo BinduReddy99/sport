@@ -2,6 +2,7 @@ package com.binduinfo.sports.ui.fragment.profile
 
 import android.Manifest
 import android.app.Activity
+import android.app.ActivityOptions
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -17,10 +18,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
+import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.data.model.Sport
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.databinding.FragmentProfileBinding
+import com.binduinfo.sports.ui.activity.MainActivity
+import com.binduinfo.sports.ui.dialog.AlertDialogue
 import com.binduinfo.sports.ui.fragment.profile.adapter.SportSelectedItem
 import com.binduinfo.sports.util.cropimage.CropImage
 import com.binduinfo.sports.util.cropimage.CropImageView
@@ -29,6 +33,8 @@ import com.example.mvvmsample.util.Coroutines
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
@@ -39,7 +45,7 @@ import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import com.xwray.groupie.GroupAdapter
 import kotlinx.android.synthetic.main.user_profile_layout.*
 
-class ProfileFragment : Fragment(), ProfileHandler {
+class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable, OnMapReadyCallback {
 
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
@@ -48,6 +54,7 @@ class ProfileFragment : Fragment(), ProfileHandler {
     private lateinit var preferenceProvider: PreferenceProvider
     private lateinit var profileRepository: ProfileRepository
     private lateinit var factory: ProfileViewModelFactory
+    private var dialogue: AlertDialogue? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -171,6 +178,27 @@ class ProfileFragment : Fragment(), ProfileHandler {
     }
 
     override fun profilePicUpdate() {
+
+    }
+
+    override fun logout() {
+        if(dialogue == null)
+        dialogue =
+            AlertDialogue(context = requireContext(), negativeButton = "NO", positiveButton = "YES", message = "Would you like logout from app ?", alertClick = this)
+
+        dialogue?.showdialogue()
+    }
+
+    override fun alertClickable() {
+        BaseApplication.instance?.getSharedPreferenceObj()?.clearAllData()
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        intent.let {
+            it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            requireActivity().startActivity(it, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+        }
+    }
+
+    override fun onMapReady(p0: GoogleMap?) {
 
     }
 

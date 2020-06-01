@@ -28,14 +28,12 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         }
     }
 
-
-//    private val _text = MutableLiveData<String>().apply {
-//        value = "This is notifications Fragment"
-//    }
-//    val text: LiveData<String> = _text
-
     fun imageSelect(view: View){
         profileHandler?.profilePic()
+    }
+
+    fun logout(view: View){
+        profileHandler?.logout()
     }
 
     suspend fun uploadImage(context: Context, uri: Uri): BasicModel{
