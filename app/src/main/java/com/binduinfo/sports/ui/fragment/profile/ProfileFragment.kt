@@ -43,6 +43,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import com.xwray.groupie.GroupAdapter
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
 
 class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable, OnMapReadyCallback {
@@ -188,6 +189,12 @@ class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable
             AlertDialogue(context = requireContext(), negativeButton = "NO", positiveButton = "YES", message = "Would you like logout from app ?", alertClick = this)
 
         dialogue?.showdialogue()
+    }
+
+    override fun selectSport() {
+
+        return inflater.inflate(R.layout.select_interested_sports_fragment, container, false)
+
     }
 
     override fun alertClickable() {

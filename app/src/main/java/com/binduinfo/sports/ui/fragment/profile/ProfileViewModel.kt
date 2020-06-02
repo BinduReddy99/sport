@@ -36,9 +36,14 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
            value = repository.loadInfo()
         }
     }
-
     fun imageSelect(view: View){
         profileHandler?.profilePic()
+    }
+
+
+    fun editSelectedSport(view: View){
+        profileInfo.profile.show()
+        profileHandler?.selectSport()
     }
 
     fun logout(view: View){

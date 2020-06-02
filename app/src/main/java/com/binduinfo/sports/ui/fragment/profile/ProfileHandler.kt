@@ -4,4 +4,5 @@ interface ProfileHandler {
     fun profilePic()
     fun profilePicUpdate()
     fun logout()
+    fun selectSport()
 }
