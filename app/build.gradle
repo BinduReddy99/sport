@@ -122,9 +122,15 @@ dependencies {
     implementation 'com.xwray:groupie-kotlin-android-extensions:2.3.0'
     implementation 'com.xwray:groupie-databinding:2.3.0'
 
-    implementation "com.google.android.gms:play-services-location:17.0.0"
+    def goole_location_service = '17.0.0'
+    implementation "com.google.android.gms:play-services-location:$goole_location_service"
     implementation 'com.google.android.libraries.places:places:2.3.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
+    implementation "com.google.android.gms:play-services-maps:$goole_location_service"
+
+    def kodein = '6.2.1'
+    //Kodein Dependency Injection
+    implementation "org.kodein.di:kodein-di-generic-jvm:$kodein"
+    implementation "org.kodein.di:kodein-di-framework-android-x:$kodein"
 
 
     //ImageCrop

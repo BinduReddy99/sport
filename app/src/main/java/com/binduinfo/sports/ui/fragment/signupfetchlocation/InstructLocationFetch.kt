@@ -38,9 +38,15 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import kotlinx.android.synthetic.main.instruct_location_fetch_fragment.*
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
+
 const val LOCATION_REQUEST_CODE = 0x001
 private val ERROR_DIALOG_REQUEST = 9001
-class InstructLocationFetch : BaseFragment() {
+class InstructLocationFetch : BaseFragment(), KodeinAware {
+    override val kodein by kodein()
+    private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private lateinit var viewModel: InstructLocationFetchViewModel
     private lateinit var api: MyApi
     private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
@@ -121,7 +127,7 @@ class InstructLocationFetch : BaseFragment() {
                     Coroutines.main {
                         viewModel.updateLocation(address).value.await().run {
                             if (success == 1){
-                                BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(
+                                preference?.storeValue(
                                     ADD_ADDRESS, true)
                                 val intent = Intent(requireContext(), HomeActivity::class.java)
                                 intent.let {

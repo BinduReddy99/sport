@@ -37,37 +37,45 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
 
 class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
-    SportsListAdapter.ItemClickable {
+    SportsListAdapter.ItemClickable, KodeinAware {
+
+    override val kodein by kodein()
+    private val preference: PreferenceProvider by instance<PreferenceProvider>()
+    private val factory: SelectInterestedSportsViewModelFactory by instance<SelectInterestedSportsViewModelFactory>()
+
     companion object {
         fun newInstance() =
             SelectInterestedSportsFragment()
     }
     private lateinit var job: CompletableJob
     private var sportType = ""
-    private lateinit var factory: SelectInterestedSportsViewModelFactory
-    private lateinit var db: AppDataBase
+//    private lateinit var factory: SelectInterestedSportsViewModelFactory
+//    private lateinit var db: AppDataBase
     private lateinit var viewModel: SelectInterestedSportsViewModel
     private lateinit var sportsAdapter: SportsListAdapter
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var sportList: List<Sport>
-    private lateinit var api: MyApi
-    private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
-    private lateinit var preferenceProvider: PreferenceProvider
-    private lateinit var sportsRepository: SportsRepository
+//    private lateinit var api: MyApi
+//    private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
+//    private lateinit var preferenceProvider: PreferenceProvider
+//    private lateinit var sportsRepository: SportsRepository
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        preferenceProvider = PreferenceProvider(requireContext())
-        networkConnectionInterceptor =
-            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
-        api = MyApi(networkConnectionInterceptor)
-        db = AppDataBase(context = requireContext())
-        sportsRepository = SportsRepository(api, db)
-        factory = SelectInterestedSportsViewModelFactory(sportsRepository)
+//        preferenceProvider = PreferenceProvider(requireContext())
+//        networkConnectionInterceptor =
+//            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
+//        api = MyApi(networkConnectionInterceptor)
+//        db = AppDataBase(context = requireContext())
+//        sportsRepository = SportsRepository(api, db)
+//        factory = SelectInterestedSportsViewModelFactory(sportsRepository)
         viewModel =
             ViewModelProvider(this, factory).get(SelectInterestedSportsViewModel::class.java)
         viewModel.recyleListFetchListener = this
@@ -193,7 +201,7 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
     override fun sportSelectedUpdate(basicModel: BasicModel) {
         Coroutines.main {
             if(basicModel.success == 1){
-                BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(ADD_INTERESTED_SPORT, true)
+                preference.storeValue(ADD_INTERESTED_SPORT, true)
 
                 findNavController().navigate(R.id.action_selectInterestedSports_to_instructLocationFetch)
                 return@main

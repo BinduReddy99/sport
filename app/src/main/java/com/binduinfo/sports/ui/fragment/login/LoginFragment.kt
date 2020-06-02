@@ -6,13 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
-import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.base.BaseFragment
-import com.binduinfo.sports.data.preference.ADD_ADDRESS
-import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
+import com.binduinfo.sports.data.preference.*
 import com.binduinfo.sports.ui.activity.HomeActivity
 import com.binduinfo.sports.util.MyTextWater
 import com.binduinfo.sports.util.TextLayoutViewErrorHandle
@@ -20,20 +17,24 @@ import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
 import com.binduinfo.sports.util.network.model.LoginResponse
 import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
-import com.binduinfo.sports.data.preference.IS_LOGGED_IN
-import com.binduinfo.sports.data.preference.LOGIN_TOKEN
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
 import com.google.android.material.textfield.TextInputLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
 
-class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
+class LoginFragment() : BaseFragment(), TextLayoutViewErrorHandle, KodeinAware {
+    override val kodein by kodein()
     private  var mobileNumber: String = ""
     private  var passwordEdt: String = ""
     private val mCompositeDisposable: CompositeDisposable = CompositeDisposable()
+    private val sharedPreference: PreferenceProvider by instance<PreferenceProvider>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -118,10 +119,10 @@ class LoginFragment : BaseFragment(), TextLayoutViewErrorHandle{
 
      private fun handleResponse(response: LoginResponse){
          if (response.success == 1){
-             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(LOGIN_TOKEN, response.token!!)
-             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(IS_LOGGED_IN, true)
-             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(ADD_ADDRESS, response.isLocationAvailablr)
-             BaseApplication.instance!!.getSharedPreferenceObj()?.storeValue(ADD_INTERESTED_SPORT, response.isInterestedSport)
+             sharedPreference.storeValue(LOGIN_TOKEN, response.token!!)
+             sharedPreference.storeValue(IS_LOGGED_IN, true)
+             sharedPreference.storeValue(ADD_ADDRESS, response.isLocationAvailablr)
+             sharedPreference.storeValue(ADD_INTERESTED_SPORT, response.isInterestedSport)
              if (!response.isInterestedSport){
                  findNavController().navigate(R.id.action_loginFragment_to_selectInterestedSports)
              }else if (!response.isLocationAvailablr){

@@ -5,23 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
-import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.preference.ADD_ADDRESS
 import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.IS_LOGGED_IN
+import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.ui.activity.HomeActivity
 import com.example.mvvmsample.util.Coroutines
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class SplashScreenFragment : BaseFragment() {
+class SplashScreenFragment : BaseFragment(), KodeinAware {
+    override val kodein by kodein()
+    private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private var job: Job? = null
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,15 +41,19 @@ class SplashScreenFragment : BaseFragment() {
 
     private suspend fun handleFragments() {
         delay(3000)
-        if(BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(IS_LOGGED_IN)!!){
-            if(!BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(
-                    ADD_INTERESTED_SPORT)!!){
-                findNavController().navigate(R.id.action_splashScreenFragment_to_selectInterestedSports)
-            }else if(!BaseApplication.instance!!.getSharedPreferenceObj()?.getsharedBoolean(
-                    ADD_ADDRESS)!!){
-                findNavController().navigate(R.id.action_splashScreenFragment_to_instructLocationFetch)
-            }else{
-                intent()
+        if(preference.getsharedBoolean(IS_LOGGED_IN)){
+            when {
+                !preference.getsharedBoolean(
+                    ADD_INTERESTED_SPORT) -> {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_selectInterestedSports)
+                }
+                !preference.getsharedBoolean(
+                    ADD_ADDRESS) -> {
+                    findNavController().navigate(R.id.action_splashScreenFragment_to_instructLocationFetch)
+                }
+                else -> {
+                    intent()
+                }
             }
         }else{
             findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)

@@ -9,9 +9,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
 import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.data.preference.LOGIN_TOKEN
+import com.binduinfo.sports.data.preference.PreferenceProvider
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class HomeFragment : Fragment() {
-
+class HomeFragment : Fragment(), KodeinAware {
+    override val kodein by kodein()
+    private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
@@ -31,7 +36,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val token = BaseApplication.instance!!.getSharedPreferenceObj()?.getSharedString(LOGIN_TOKEN)
+        val token = preference.getSharedString(LOGIN_TOKEN)
         //text_home.text = token
     }
 }

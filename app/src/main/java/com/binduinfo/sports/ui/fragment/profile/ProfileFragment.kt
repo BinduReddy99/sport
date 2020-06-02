@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.data.model.Sport
@@ -45,8 +46,15 @@ import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import com.xwray.groupie.GroupAdapter
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
+import org.kodein.di.Kodein
+import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 
-class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable, OnMapReadyCallback {
+class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickable, OnMapReadyCallback, KodeinAware {
+    override val kodein by kodein()
+
+    private val preference: PreferenceProvider by instance<PreferenceProvider>()
 
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
@@ -192,13 +200,12 @@ class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable
     }
 
     override fun selectSport() {
-
-        return inflater.inflate(R.layout.select_interested_sports_fragment, container, false)
+        findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
 
     }
 
     override fun alertClickable() {
-        BaseApplication.instance?.getSharedPreferenceObj()?.clearAllData()
+        preference.clearAllData()
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.let {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -209,5 +216,7 @@ class ProfileFragment : Fragment(), ProfileHandler, AlertDialogue.AlertClickable
     override fun onMapReady(p0: GoogleMap?) {
 
     }
+
+
 
 }

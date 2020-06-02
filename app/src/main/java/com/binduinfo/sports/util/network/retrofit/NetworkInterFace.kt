@@ -5,9 +5,12 @@ import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.util.network.model.*
 import com.binduinfo.sports.data.preference.LOGIN_TOKEN
+import com.binduinfo.sports.data.preference.PreferenceProvider
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -77,7 +80,8 @@ interface NetworkInterFace {
                 .build()
         }
 
-        fun retrofitConnectionWithToken(token: String? = BaseApplication.instance?.getSharedPreferenceObj()?.getSharedString(LOGIN_TOKEN)) : Retrofit{
+        fun retrofitConnectionWithToken(preferenceProvider: PreferenceProvider) : Retrofit{
+            val token: String? = preferenceProvider.getSharedString(LOGIN_TOKEN)
             val httpClient = OkHttpClient.Builder()
             httpClient.addInterceptor { chain ->
                 val original = chain.request()

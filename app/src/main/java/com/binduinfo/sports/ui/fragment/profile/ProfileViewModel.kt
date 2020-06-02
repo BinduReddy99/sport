@@ -25,9 +25,12 @@ import kotlinx.coroutines.Dispatchers.Main
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import org.kodein.di.KodeinAware
+import org.kodein.di.generic.instance
 import java.io.File
 
 class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() {
+
     val progMutable: MutableLiveData<Boolean> = MutableLiveData()
     val serverRequest: MutableLiveData<Boolean> = MutableLiveData()
     var profileHandler: ProfileHandler? = null
@@ -42,7 +45,6 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
 
 
     fun editSelectedSport(view: View){
-        profileInfo.profile.show()
         profileHandler?.selectSport()
     }
 
