@@ -5,4 +5,6 @@ interface ProfileHandler {
     fun profilePicUpdate()
     fun logout()
     fun selectSport()
+    fun updateProfileInfo()
+    fun profileLocationEdit()
 }

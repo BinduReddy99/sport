@@ -54,15 +54,17 @@ import org.kodein.di.generic.instance
 class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickable, OnMapReadyCallback, KodeinAware {
     override val kodein by kodein()
 
+
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
+    private val factory: ProfileViewModelFactory by instance<ProfileViewModelFactory>()
 
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var api: MyApi
-    private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
+   // private lateinit var api: MyApi
+    //private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
     private lateinit var preferenceProvider: PreferenceProvider
     private lateinit var profileRepository: ProfileRepository
-    private lateinit var factory: ProfileViewModelFactory
+   // private lateinit var factory: ProfileViewModelFactory
     private var dialogue: AlertDialogue? = null
 
     override fun onCreateView(
@@ -70,12 +72,12 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        preferenceProvider = PreferenceProvider(requireContext())
-        networkConnectionInterceptor =
-            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
-        api = MyApi(networkConnectionInterceptor)
-        profileRepository = ProfileRepository(api)
-        factory = ProfileViewModelFactory(profileRepository)
+//        preferenceProvider = PreferenceProvider(requireContext())
+//        networkConnectionInterceptor =
+//            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
+        //api = MyApi(networkConnectionInterceptor)
+       // profileRepository = ProfileRepository(api)
+        //factory = ProfileViewModelFactory(profileRepository)
          binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         profileViewModel =
             ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
@@ -202,6 +204,14 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     override fun selectSport() {
         findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
 
+    }
+
+    override fun updateProfileInfo() {
+        TODO("Not yet implemented")
+    }
+
+    override fun profileLocationEdit() {
+        findNavController().navigate(R.id.action_navigation_profile_to_instructLocationFetch2)
     }
 
     override fun alertClickable() {

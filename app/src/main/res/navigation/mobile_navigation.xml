@@ -24,11 +24,27 @@
         tools:layout="@layout/fragment_profile" >
         <action
             android:id="@+id/action_navigation_profile_to_selectInterestedSportsFragment"
-            app:destination="@id/selectInterestedSportsFragment" />
+            app:destination="@id/selectInterestedSportsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_profile_to_instructLocationFetch2"
+            app:destination="@id/instructLocationFetch2"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/selectInterestedSportsFragment"
         android:name="com.binduinfo.sports.ui.fragment.selectinterestedsports.SelectInterestedSportsFragment"
         android:label="select_interested_sports_fragment"
         tools:layout="@layout/select_interested_sports_fragment" />
+    <fragment
+        android:id="@+id/instructLocationFetch2"
+        android:name="com.binduinfo.sports.ui.fragment.signupfetchlocation.InstructLocationFetch"
+        android:label="instruct_location_fetch_fragment"
+        tools:layout="@layout/instruct_location_fetch_fragment" />
 </navigation>

@@ -47,12 +47,13 @@ private val ERROR_DIALOG_REQUEST = 9001
 class InstructLocationFetch : BaseFragment(), KodeinAware {
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
+    private val factory: InstructLocationFetchViewModelFactory by instance<InstructLocationFetchViewModelFactory>()
     private lateinit var viewModel: InstructLocationFetchViewModel
-    private lateinit var api: MyApi
-    private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
-    private lateinit var preferenceProvider: PreferenceProvider
-    private lateinit var repository: LocationUpdateRepository
-    private lateinit var factory: InstructLocationFetchViewModelFactory
+    //private lateinit var api: MyApi
+    //private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
+//    private lateinit var preferenceProvider: PreferenceProvider
+//    private lateinit var repository: LocationUpdateRepository
+//    private lateinit var factory: InstructLocationFetchViewModelFactory
     companion object {
         fun newInstance() = InstructLocationFetch()
     }
@@ -62,12 +63,12 @@ class InstructLocationFetch : BaseFragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        preferenceProvider = PreferenceProvider(requireContext())
-        networkConnectionInterceptor =
-            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
-        api = MyApi(networkConnectionInterceptor)
-        repository = LocationUpdateRepository(api)
-        factory = InstructLocationFetchViewModelFactory(repository)
+//        preferenceProvider = PreferenceProvider(requireContext())
+//        networkConnectionInterceptor =
+//            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
+//        api = MyApi(networkConnectionInterceptor)
+//        repository = LocationUpdateRepository(api)
+//        factory = InstructLocationFetchViewModelFactory(repository)
         viewModel = ViewModelProvider(this, factory).get(InstructLocationFetchViewModel::class.java)
         return inflater.inflate(R.layout.instruct_location_fetch_fragment, container, false)
     }

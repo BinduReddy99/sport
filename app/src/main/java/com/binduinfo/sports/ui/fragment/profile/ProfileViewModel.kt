@@ -37,10 +37,21 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
     var profileInfo: MutableLiveData<ProfileInfo> =  MutableLiveData<ProfileInfo>().apply {
         CoroutineScope(Main).launch {
            value = repository.loadInfo()
+
+
+
         }
     }
     fun imageSelect(view: View){
         profileHandler?.profilePic()
+    }
+
+//    fun uploadProfileInfo(view: View){
+//        profileInfo.
+//        profileHandler?.updateProfileInfo()
+   // }
+    fun editLocation(view: View){
+        profileHandler?.profileLocationEdit()
     }
 
 
@@ -66,6 +77,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         }
 
     }
+
 
     suspend fun imageUploadToServer(compressFile: File): BasicModel{
         return withContext(IO){
