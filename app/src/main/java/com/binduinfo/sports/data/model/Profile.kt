@@ -7,5 +7,6 @@ data class Profile(
     val mobileNumber: String,
     val name: String,
     val profilePic: String,
-    val sports: List<Sport>
+    val sports: List<Sport>,
+    val about: String = ""
 )
