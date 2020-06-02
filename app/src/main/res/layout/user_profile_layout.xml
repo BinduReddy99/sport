@@ -490,12 +490,15 @@
                             android:id="@+id/edit_selected_sport_profile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="240dp"
+                            android:layout_marginEnd="16dp"
+
+                            android:onClick="@{profileViewModel::editSelectedSport}"
                             app:layout_constraintBottom_toBottomOf="@+id/selected_spot_head"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toEndOf="@+id/selected_spot_head"
                             app:layout_constraintTop_toTopOf="@+id/selected_spot_head"
-                            app:srcCompat="@drawable/ic_edit_black_24dp"/>
+                            app:srcCompat="@drawable/ic_edit_black_24dp" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -555,9 +558,10 @@
                             android:id="@+id/edit_description_profile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="250dp"
+                            android:layout_marginEnd="16dp"
                             app:layout_constraintBottom_toBottomOf="@+id/textView6"
                             app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="1.0"
                             app:layout_constraintStart_toEndOf="@+id/textView6"
                             app:layout_constraintTop_toTopOf="@+id/textView6"
                             app:srcCompat="@drawable/ic_edit_black_24dp" />
