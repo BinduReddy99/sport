@@ -4,9 +4,11 @@ import android.app.Application
 import android.util.Log
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.preference.PreferenceProvider
+import com.binduinfo.sports.data.repositores.EditProfileRepository
 import com.binduinfo.sports.data.repositores.LocationUpdateRepository
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.data.repositores.SportsRepository
+import com.binduinfo.sports.ui.fragment.editprofile.ProfileEditFactory
 import com.binduinfo.sports.ui.fragment.profile.ProfileFragment
 import com.binduinfo.sports.ui.fragment.profile.ProfileHandler
 import com.binduinfo.sports.ui.fragment.profile.ProfileViewModelFactory
@@ -26,16 +28,18 @@ class BaseApplication() : Application(), KodeinAware {
 
     override val kodein = Kodein.lazy {
         import(androidXModule(this@BaseApplication))
-        bind() from singleton { PreferenceProvider(instance())}
+        bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { NetworkConnectionInterceptor(instance(), instance()) }
         bind() from singleton { MyApi(instance()) }
         bind() from singleton { AppDataBase(instance()) }
-        bind() from  provider { SportsRepository(instance(), instance()) }
+        bind() from provider { SportsRepository(instance(), instance()) }
         bind() from provider { SelectInterestedSportsViewModelFactory(instance()) }
-        bind() from provider {ProfileRepository(instance())}
-        bind() from provider {ProfileViewModelFactory(instance())}
-        bind() from provider {LocationUpdateRepository(instance())}
-        bind() from provider {InstructLocationFetchViewModelFactory(instance())}
+        bind() from provider { ProfileRepository(instance()) }
+        bind() from provider { ProfileViewModelFactory(instance()) }
+        bind() from provider { LocationUpdateRepository(instance()) }
+        bind() from provider { InstructLocationFetchViewModelFactory(instance()) }
+        bind() from provider { EditProfileRepository(instance()) }
+        bind() from provider { ProfileEditFactory(instance()) }
 
     }
 

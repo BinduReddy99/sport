@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.R
 import com.binduinfo.sports.data.model.BasicModel
+import com.binduinfo.sports.data.model.Profile
 import com.binduinfo.sports.data.model.ProfileInfo
+import com.binduinfo.sports.data.model.UpdateProfile
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.util.imagecompessorsupportmodule.Compressor
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -46,9 +48,11 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         profileHandler?.profilePic()
     }
 
-    fun uploadProfileInfo(view: View){
-        profileInfo.value
-        profileHandler?.updateProfileInfo()
+    fun uploadProfileInfo(view: View, profile: Profile){
+        profile.run {
+            profileHandler?.updateProfileInfo(UpdateProfile(email, gender, mobileNumber, name))
+        }
+
     }
     fun editLocation(view: View){
         profileHandler?.profileLocationEdit()

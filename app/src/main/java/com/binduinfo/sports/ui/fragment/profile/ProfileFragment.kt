@@ -21,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.data.model.Sport
+import com.binduinfo.sports.data.model.UpdateProfile
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.databinding.FragmentProfileBinding
@@ -206,8 +207,9 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
 
     }
 
-    override fun updateProfileInfo() {
-
+    override fun updateProfileInfo(updateProfileInfo: UpdateProfile) {
+        val action = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateProfileInfo)
+        findNavController().navigate(action)
     }
 
     override fun profileLocationEdit() {
