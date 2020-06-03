@@ -4,12 +4,14 @@ import android.app.Application
 import android.util.Log
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.preference.PreferenceProvider
+import com.binduinfo.sports.data.repositores.LocationUpdateRepository
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.data.repositores.SportsRepository
 import com.binduinfo.sports.ui.fragment.profile.ProfileFragment
 import com.binduinfo.sports.ui.fragment.profile.ProfileHandler
 import com.binduinfo.sports.ui.fragment.profile.ProfileViewModelFactory
 import com.binduinfo.sports.ui.fragment.selectinterestedsports.SelectInterestedSportsViewModelFactory
+import com.binduinfo.sports.ui.fragment.signupfetchlocation.InstructLocationFetchViewModelFactory
 import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import org.kodein.di.Kodein
@@ -32,6 +34,9 @@ class BaseApplication() : Application(), KodeinAware {
         bind() from provider { SelectInterestedSportsViewModelFactory(instance()) }
         bind() from provider {ProfileRepository(instance())}
         bind() from provider {ProfileViewModelFactory(instance())}
+        bind() from provider {LocationUpdateRepository(instance())}
+        bind() from provider {InstructLocationFetchViewModelFactory(instance())}
+
     }
 
     override fun onCreate() {

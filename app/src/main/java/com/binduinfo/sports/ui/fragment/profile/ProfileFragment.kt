@@ -207,7 +207,7 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun updateProfileInfo() {
-        TODO("Not yet implemented")
+
     }
 
     override fun profileLocationEdit() {

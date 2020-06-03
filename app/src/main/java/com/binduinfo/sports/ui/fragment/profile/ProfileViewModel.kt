@@ -46,10 +46,10 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         profileHandler?.profilePic()
     }
 
-//    fun uploadProfileInfo(view: View){
-//        profileInfo.
-//        profileHandler?.updateProfileInfo()
-   // }
+    fun uploadProfileInfo(view: View){
+        profileInfo.value
+        profileHandler?.updateProfileInfo()
+    }
     fun editLocation(view: View){
         profileHandler?.profileLocationEdit()
     }
