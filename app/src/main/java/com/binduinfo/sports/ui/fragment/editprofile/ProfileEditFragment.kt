@@ -20,7 +20,7 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class ProfileEditFragment : BaseFragment(), KodeinAware {
+class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
     override val kodein by kodein()
 
     private val factory: ProfileEditFactory by instance<ProfileEditFactory>()
@@ -35,6 +35,7 @@ class ProfileEditFragment : BaseFragment(), KodeinAware {
         binding = DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.viewModel = viewModel
       //  binding.viewModel =
+        viewModel.editProfileHandler = this
         return binding.root
     }
 
@@ -49,6 +50,9 @@ class ProfileEditFragment : BaseFragment(), KodeinAware {
 
     }
 
+    override fun radio() {
+        showToast("Checking")
+    }
 
 
 }

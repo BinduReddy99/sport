@@ -76,36 +76,38 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal"
-                    android:onCheckedChanged="@{viewModel.onSplitTypeChanged}"
+                    android:onCheckedChanged = "@{viewModel.onSplitTypeChanged}"
                     app:layout_constraintEnd_toEndOf="@+id/profile_lay_name"
                     app:layout_constraintStart_toStartOf="@+id/profile_lay_name"
                     app:layout_constraintTop_toBottomOf="@+id/profile_title_gender_txt">
 
                     <RadioButton
-                        android:id="@+id/profile_gender_male_radio"
+                        android:id="@+id/edit_gender_male_radio"
                         style="@style/radio_button_custom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/radio_left_corner"
-                        android:checked="false"
+                        android:checked="@{viewModel.updateProfile.gender.equals(`male`)}"
                         android:text="@string/male" />
 
                     <RadioButton
-                        android:id="@+id/profile_gender_female_radio"
+                        android:id="@+id/edit_gender_female_radio"
                         style="@style/radio_button_custom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/radio_center"
+                        android:checked="@{viewModel.updateProfile.gender.equals(`female`)}"
                         android:text="@string/female" />
 
                     <RadioButton
-                        android:id="@+id/profile_gender_others_radio"
+                        android:id="@+id/edit_gender_others_radio"
                         style="@style/radio_button_custom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:checked="@{viewModel.updateProfile.gender.equals(`other`)}"
                         android:background="@drawable/radio_right_corner"
                         android:text="@string/custom" />
                 </RadioGroup>

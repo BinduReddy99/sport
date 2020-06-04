@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class UpdateProfile(
     val email: String,
-    val gender: String,
+    var gender: String,
     val mobileNumber: String,
     val name: String
 ): Parcelable

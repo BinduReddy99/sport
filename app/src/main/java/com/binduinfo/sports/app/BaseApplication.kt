@@ -2,6 +2,7 @@ package com.binduinfo.sports.app
 
 import android.app.Application
 import android.util.Log
+import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.data.repositores.EditProfileRepository
@@ -23,6 +24,7 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
+import timber.log.Timber
 
 class BaseApplication() : Application(), KodeinAware {
 
@@ -45,6 +47,9 @@ class BaseApplication() : Application(), KodeinAware {
 
     override fun onCreate() {
         super.onCreate()
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 
 }

@@ -24,8 +24,9 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
        // window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
         uiHandle()
-
     }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
