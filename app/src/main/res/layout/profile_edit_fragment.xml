@@ -76,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:orientation="horizontal"
+                    android:onCheckedChanged="@{viewModel.onSplitTypeChanged}"
                     app:layout_constraintEnd_toEndOf="@+id/profile_lay_name"
                     app:layout_constraintStart_toStartOf="@+id/profile_lay_name"
                     app:layout_constraintTop_toBottomOf="@+id/profile_title_gender_txt">
@@ -124,6 +125,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/mobile_number"
+                        android:text="@{viewModel.updateProfile.mobileNumber}"
                         android:imeOptions="actionNext"
                         android:inputType="number"
                         android:maxLength="10" />
@@ -144,6 +146,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail"
                         android:imeOptions="actionNext"
+                        android:text="@{viewModel.updateProfile.email}"
                         android:inputType="textEmailAddress"
                         android:maxLength="50" />
                 </com.google.android.material.textfield.TextInputLayout>
