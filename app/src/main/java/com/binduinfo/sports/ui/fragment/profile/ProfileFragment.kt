@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
 import com.binduinfo.sports.app.BaseApplication
+import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.Sport
 import com.binduinfo.sports.data.model.UpdateProfile
 import com.binduinfo.sports.data.preference.PreferenceProvider
@@ -210,6 +211,11 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     override fun updateProfileInfo(updateProfileInfo: UpdateProfile) {
         val action = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateProfileInfo)
         findNavController().navigate(action)
+    }
+
+    override fun updateAboutInProfile(updateAboutMe: About) {
+        val action1 = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateAboutMe)
+        findNavController().navigate(action1)
     }
 
     override fun profileLocationEdit() {

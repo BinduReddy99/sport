@@ -257,7 +257,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/personal_card_view"
                     style="@style/card_view"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@+id/card_comment_views"
                     app:layout_constraintStart_toStartOf="@+id/card_comment_views"

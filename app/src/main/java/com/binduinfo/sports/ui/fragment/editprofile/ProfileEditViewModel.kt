@@ -5,6 +5,7 @@ import android.widget.RadioGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.R
+import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.UpdateProfile
 import com.binduinfo.sports.data.repositores.EditProfileRepository
 import timber.log.Timber
@@ -12,11 +13,15 @@ import timber.log.Timber
 
 class ProfileEditViewModel(private val repository: EditProfileRepository) : ViewModel() {
     var updateProfile: MutableLiveData<UpdateProfile> = MutableLiveData()
+        var aboutMe: MutableLiveData<About> = MutableLiveData()
 
     var editProfileHandler:EditProfileHandler? = null
     fun setData(updateProfile: UpdateProfile){
         this.updateProfile.value = updateProfile
         Log.d("updatpro", updateProfile.toString())
+    }
+    fun setAbout(about: About){
+        this.aboutMe.value =about
     }
     fun onSplitTypeChanged(radioGroup: RadioGroup?, id: Int) {
         //editProfileHandler?.radio()

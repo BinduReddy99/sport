@@ -43,10 +43,15 @@ class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
         super.onViewCreated(view, savedInstanceState)
 
         val updateInfo = args.updateProfile
+        val aboutInfo =args.aboutMe
         if(updateInfo != null) {
           //  binding.userInfo = updateInfo
             viewModel.setData(updateInfo)
         }
+        if(aboutInfo !=null){
+            viewModel.setAbout(aboutInfo)
+        }
+
 
     }
 
