@@ -9,6 +9,6 @@ interface ProfileHandler {
     fun logout()
     fun selectSport()
     fun updateProfileInfo(updateProfileInfo: UpdateProfile)
-    fun updateAboutInProfile(updateAboutMe:About)
+    fun updateAboutInProfile(updateAboutInProfile:About)
     fun profileLocationEdit()
 }

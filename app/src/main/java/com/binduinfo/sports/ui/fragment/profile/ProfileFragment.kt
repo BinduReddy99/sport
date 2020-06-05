@@ -19,7 +19,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
-import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.Sport
 import com.binduinfo.sports.data.model.UpdateProfile
@@ -43,12 +42,8 @@ import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-import com.miziontrix.kmo.data.network.api.mvvm.MyApi
-import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import com.xwray.groupie.GroupAdapter
-import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
@@ -213,8 +208,8 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         findNavController().navigate(action)
     }
 
-    override fun updateAboutInProfile(updateAboutMe: About) {
-        val action1 = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateAboutMe)
+    override fun updateAboutInProfile(updateAboutInProfile: About) {
+        val action1 = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateAboutInProfile)
         findNavController().navigate(action1)
     }
 
