@@ -62,5 +62,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="logout">Logout</string>
     <string name="location">Location</string>
+    <string name="add">ADD</string>
+    <string name="select_sport">Select Sport</string>
 
 </resources>

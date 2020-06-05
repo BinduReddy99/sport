@@ -19,7 +19,7 @@ class ProfileEditViewModel(private val repository: EditProfileRepository) : View
         Log.d("updatpro", updateProfile.toString())
     }
     fun onSplitTypeChanged(radioGroup: RadioGroup?, id: Int) {
-        //editProfileHandler?.radio()
+        editProfileHandler?.radio()
         when(id){
             R.id.edit_gender_male_radio ->{
                 updateProfile.value?.gender = "male"

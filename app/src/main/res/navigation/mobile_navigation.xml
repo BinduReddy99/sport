@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.binduinfo.sports.ui.fragment.dashboard.DashboardFragment"
+        android:name="com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_sports_request" />
 
     <fragment
         android:id="@+id/navigation_profile"

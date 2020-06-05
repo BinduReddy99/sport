@@ -21,15 +21,16 @@ class HomeActivity : BaseActivity() {
     override fun uiHandle() {
 
     }
-    private lateinit var navController:NavController
-    private  var fragment: Fragment? = null
+
+    private lateinit var navController: NavController
+    private var fragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hideToolbar()
         setContentView(R.layout.activity_home)
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
-        if(!::navController.isInitialized)
-        navController = findNavController(R.id.nav_host_fragment)
+        if (!::navController.isInitialized)
+            navController = findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_profile
@@ -43,11 +44,11 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun handleBottomNavigation(navView: BottomNavigationView) {
-        if(::navController.isInitialized){
-            navController.addOnDestinationChangedListener{ controller, destination, arguments ->
+        if (::navController.isInitialized) {
+            navController.addOnDestinationChangedListener { controller, destination, arguments ->
                 Timber.d("ccc label id=== $arguments ======== ${destination.id}")
-                when(destination.id){
-                    R.id.navigation_home ->{
+                when (destination.id) {
+                    R.id.navigation_home -> {
                         if (navView.visibility == View.GONE) {
                             navView.show()
                             showAnim(navView)
@@ -73,8 +74,6 @@ class HomeActivity : BaseActivity() {
                         }
                     }
                 }
-//                Timber.d("ccc class=== $arguments ======== ${destination.javaClass}")
-//                Timber.d("ccc === controller ======== $controller")
             }
         }
     }
@@ -89,7 +88,7 @@ class HomeActivity : BaseActivity() {
         navView.visibility = View.GONE
     }
 
-    private fun showAnim(navView: BottomNavigationView){
+    private fun showAnim(navView: BottomNavigationView) {
         navView.startAnimation(
             AnimationUtils.loadAnimation(
                 this,
@@ -101,8 +100,8 @@ class HomeActivity : BaseActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(fragment == null)
-         fragment = this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+        if (fragment == null)
+            fragment = this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
                 ?.childFragmentManager?.fragments?.get(0)
 
         fragment?.onActivityResult(requestCode, resultCode, data)
