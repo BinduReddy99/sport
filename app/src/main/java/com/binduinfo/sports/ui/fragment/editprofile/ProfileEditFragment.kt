@@ -1,8 +1,6 @@
 package com.binduinfo.sports.ui.fragment.editprofile
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +30,9 @@ class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
         savedInstanceState: Bundle?
     ): View? {
         viewModel = ViewModelProvider(this, factory).get(ProfileEditViewModel::class.java)
-        binding = DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)
+        //binding = DataBindingUtil.inflate(inflater, R.layout.profile_descrip_lay_edt, container, false)
+        //DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.viewModel = viewModel
       //  binding.viewModel =
         viewModel.editProfileHandler = this
@@ -43,14 +43,14 @@ class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
         super.onViewCreated(view, savedInstanceState)
 
         val updateInfo = args.updateProfile
-        val aboutInfo =args.aboutMe
+   //     val aboutInfo =args.about
         if(updateInfo != null) {
           //  binding.userInfo = updateInfo
             viewModel.setData(updateInfo)
-        }
-        if(aboutInfo !=null){
-            viewModel.setAbout(aboutInfo)
-        }
+       }
+//        if(aboutInfo !=null){
+//           viewModel.setAbout(aboutInfo)
+//       }
 
 
     }

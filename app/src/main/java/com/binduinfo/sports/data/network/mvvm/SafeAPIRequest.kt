@@ -1,9 +1,10 @@
-package com.miziontrix.kmo.data.network.api.mvvm
+package com.binduinfo.sports.data.network.mvvm
 
 import com.miziontrix.kmo.utils.exception.ApiException
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response
+
 
 abstract class SafeAPIRequest {
     suspend fun <T : Any> apiRequest(call: suspend () -> Response<T>): T {

@@ -1,7 +1,6 @@
 package com.binduinfo.sports.app
 
 import android.app.Application
-import android.util.Log
 import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.preference.PreferenceProvider
@@ -10,12 +9,10 @@ import com.binduinfo.sports.data.repositores.LocationUpdateRepository
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.data.repositores.SportsRepository
 import com.binduinfo.sports.ui.fragment.editprofile.ProfileEditFactory
-import com.binduinfo.sports.ui.fragment.profile.ProfileFragment
-import com.binduinfo.sports.ui.fragment.profile.ProfileHandler
 import com.binduinfo.sports.ui.fragment.profile.ProfileViewModelFactory
 import com.binduinfo.sports.ui.fragment.selectinterestedsports.SelectInterestedSportsViewModelFactory
 import com.binduinfo.sports.ui.fragment.signupfetchlocation.InstructLocationFetchViewModelFactory
-import com.miziontrix.kmo.data.network.api.mvvm.MyApi
+import com.binduinfo.sports.data.network.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware

@@ -23,7 +23,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/personal_card_view"
         style="@style/card_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -33,13 +32,12 @@
         app:layout_constraintTop_toBottomOf="@+id/tool_bar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/profile_mobile_num_edt"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingBottom="8dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/profile_lay_name"
+                android:id="@+id/describe_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -48,7 +46,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/profile_edit_name"
+                    android:id="@+id/edit_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/description"

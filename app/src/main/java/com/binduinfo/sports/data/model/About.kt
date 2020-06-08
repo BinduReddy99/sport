@@ -5,5 +5,5 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class About(
-   val about:String
+    val about: String.Companion
 ) : Parcelable
