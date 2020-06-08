@@ -1,5 +1,6 @@
 package com.binduinfo.sports.ui.fragment.profile
 
+import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.UpdateProfile
 
 interface ProfileHandler {
@@ -8,5 +9,6 @@ interface ProfileHandler {
     fun logout()
     fun selectSport()
     fun updateProfileInfo(updateProfileInfo: UpdateProfile)
+    fun updateAboutInProfile(updateAboutInProfile:About)
     fun profileLocationEdit()
 }

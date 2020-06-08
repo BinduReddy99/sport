@@ -2,9 +2,8 @@ package com.binduinfo.sports.data.repositores
 
 import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.model.address.AddressRequest
-import com.example.mvvmsample.util.Coroutines
-import com.miziontrix.kmo.data.network.api.mvvm.MyApi
-import com.miziontrix.kmo.data.network.api.mvvm.SafeAPIRequest
+import com.binduinfo.sports.data.network.mvvm.MyApi
+import com.binduinfo.sports.data.network.mvvm.SafeAPIRequest
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 

@@ -256,7 +256,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/personal_card_view"
                     style="@style/card_view"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintEnd_toEndOf="@+id/card_comment_views"
                     app:layout_constraintStart_toStartOf="@+id/card_comment_views"
@@ -558,6 +558,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginEnd="16dp"
+                            android:onClick="@{(view) -> profileViewModel.uploadProfileInfo(view, userInfo.profile)}"
                             app:layout_constraintBottom_toBottomOf="@+id/textView6"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="1.0"

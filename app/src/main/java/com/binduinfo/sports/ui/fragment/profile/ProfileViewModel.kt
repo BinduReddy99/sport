@@ -8,11 +8,7 @@ import android.view.View
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.binduinfo.sports.R
-import com.binduinfo.sports.data.model.BasicModel
-import com.binduinfo.sports.data.model.Profile
-import com.binduinfo.sports.data.model.ProfileInfo
-import com.binduinfo.sports.data.model.UpdateProfile
+import com.binduinfo.sports.data.model.*
 import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.util.imagecompessorsupportmodule.Compressor
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -27,8 +23,6 @@ import kotlinx.coroutines.Dispatchers.Main
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
 import java.io.File
 
 class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() {
@@ -54,6 +48,11 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         }
 
     }
+//    fun updateAboutInProfile(view: View,profile: Profile){
+//        profile.run{
+//            profileHandler?.updateAboutInProfile(About(about))
+//        }
+   // }
     fun editLocation(view: View){
         profileHandler?.profileLocationEdit()
     }

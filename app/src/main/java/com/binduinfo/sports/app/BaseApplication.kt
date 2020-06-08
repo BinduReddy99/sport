@@ -15,6 +15,7 @@ import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListFactory
 import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListFragment
 import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListListener
 import com.miziontrix.kmo.data.network.api.mvvm.MyApi
+import com.binduinfo.sports.data.network.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware

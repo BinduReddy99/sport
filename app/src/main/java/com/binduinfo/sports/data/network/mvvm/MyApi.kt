@@ -1,4 +1,4 @@
-package com.miziontrix.kmo.data.network.api.mvvm
+package com.binduinfo.sports.data.network.mvvm
 
 
 import com.binduinfo.sports.BuildConfig
@@ -6,8 +6,9 @@ import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.model.ProfileInfo
 import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.data.model.sport.RequestInterestSport
-import com.binduinfo.sports.util.network.model.SportResponse
 import com.binduinfo.sports.util.network.model.SportsListResponse
+import com.binduinfo.sports.util.network.model.UpdateEditPersonalInfo
+import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,6 +36,9 @@ interface MyApi {
 
     @PUT("user/address")
     suspend fun updateAddress(@Body addressRequest: AddressRequest): Response<BasicModel>
+
+    @PUT("user/profile")
+    suspend fun updatePersonalInfo(@Body updateEditPersonalInfo: UpdateEditPersonalInfo):Response<BasicModel>
 
     companion object {
         operator fun invoke(
