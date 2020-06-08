@@ -1,20 +1,19 @@
 package com.binduinfo.sports.app
 
 import android.app.Application
-import android.util.Log
 import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.data.db.entity.AppDataBase
 import com.binduinfo.sports.data.preference.PreferenceProvider
-import com.binduinfo.sports.data.repositores.EditProfileRepository
-import com.binduinfo.sports.data.repositores.LocationUpdateRepository
-import com.binduinfo.sports.data.repositores.ProfileRepository
-import com.binduinfo.sports.data.repositores.SportsRepository
+import com.binduinfo.sports.data.repositores.*
+import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportRequestListener
+import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportsRequestBottomSheet
 import com.binduinfo.sports.ui.fragment.editprofile.ProfileEditFactory
-import com.binduinfo.sports.ui.fragment.profile.ProfileFragment
-import com.binduinfo.sports.ui.fragment.profile.ProfileHandler
 import com.binduinfo.sports.ui.fragment.profile.ProfileViewModelFactory
 import com.binduinfo.sports.ui.fragment.selectinterestedsports.SelectInterestedSportsViewModelFactory
 import com.binduinfo.sports.ui.fragment.signupfetchlocation.InstructLocationFetchViewModelFactory
+import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListFactory
+import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListFragment
+import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListListener
 import com.miziontrix.kmo.data.network.api.mvvm.MyApi
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
 import org.kodein.di.Kodein
@@ -42,6 +41,17 @@ class BaseApplication() : Application(), KodeinAware {
         bind() from provider { InstructLocationFetchViewModelFactory(instance()) }
         bind() from provider { EditProfileRepository(instance()) }
         bind() from provider { ProfileEditFactory(instance()) }
+
+        /**
+         * Sports post
+         */
+      //  bind() from provider { SportsRequestRepository(instance()) }
+        //bind() from singleton { SportsRequestBottomSheet() }
+        bind<SportsRequestListListener>() with   singleton { SportsRequestListFragment() }
+       // bind() from singleton { SportsRequestListFragment() }
+
+        bind() from provider { SportsRequestListFactory(instance()) }
+
 
     }
 

@@ -58,14 +58,8 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
 
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private val factory: ProfileViewModelFactory by instance<ProfileViewModelFactory>()
-
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
-   // private lateinit var api: MyApi
-    //private lateinit var networkConnectionInterceptor: NetworkConnectionInterceptor
-    private lateinit var preferenceProvider: PreferenceProvider
-    private lateinit var profileRepository: ProfileRepository
-   // private lateinit var factory: ProfileViewModelFactory
     private var dialogue: AlertDialogue? = null
 
     override fun onCreateView(
@@ -73,24 +67,12 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-//        preferenceProvider = PreferenceProvider(requireContext())
-//        networkConnectionInterceptor =
-//            NetworkConnectionInterceptor(requireContext(), preferenceProvider)
-        //api = MyApi(networkConnectionInterceptor)
-       // profileRepository = ProfileRepository(api)
-        //factory = ProfileViewModelFactory(profileRepository)
          binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         profileViewModel =
             ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         profileViewModel.profileHandler = this
         binding.lifecycleOwner = this
         binding.profileViewModel =  profileViewModel
-
-//        val textView: TextView = root.findViewById(R.id.text_notifications)
-//        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-//            textView.text = it
-//        })
-
         return binding.root
     }
 
