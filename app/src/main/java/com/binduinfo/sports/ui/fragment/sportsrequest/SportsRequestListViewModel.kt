@@ -5,8 +5,9 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportRequestListener
 
-class SportsRequestListViewModel(private val listener: SportsRequestListListener) : ViewModel(), SportRequestListener {
-//loadTimingResponse
+class SportsRequestListViewModel() : ViewModel(), SportRequestListener {
+var listListener: SportsRequestListListener? = null
+
     override fun cancel() {
 
     }
@@ -16,7 +17,7 @@ class SportsRequestListViewModel(private val listener: SportsRequestListListener
 
     fun bottomSheetClick(view: View){
 
-       listener.showBottomSheet()
+        listListener?.showBottomSheet()
     }
 
 }

@@ -6,10 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.R
 import com.binduinfo.sports.data.model.About
-import com.binduinfo.sports.data.model.ProfileInfo
 import com.binduinfo.sports.data.model.UpdateProfile
 import com.binduinfo.sports.data.repositores.EditProfileRepository
-import com.binduinfo.sports.util.network.model.UpdateEditPersonalInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,7 +17,7 @@ import timber.log.Timber
 class ProfileEditViewModel(private val repository: EditProfileRepository) : ViewModel() {
     var updateProfile: MutableLiveData<UpdateProfile> = MutableLiveData<UpdateProfile>().apply{
         CoroutineScope(Dispatchers.Main).launch {
-            value = repository.loadPersonalInfo()
+         //   value = repository.loadPersonalInfo()
     }
     }
         var about: MutableLiveData<About> = MutableLiveData()

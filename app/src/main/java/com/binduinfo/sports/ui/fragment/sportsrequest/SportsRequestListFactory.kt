@@ -6,10 +6,10 @@ import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportRequestListener
 import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportsRequestBottomSheet
 import com.binduinfo.sports.ui.fragment.profile.ProfileViewModel
 
-class SportsRequestListFactory(private val listener: SportsRequestListListener): ViewModelProvider.NewInstanceFactory() {
+class SportsRequestListFactory(): ViewModelProvider.NewInstanceFactory() {
 //listener = listener
     //private val listener: SportsRequestListListener
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return SportsRequestListViewModel(listener) as T
+        return SportsRequestListViewModel() as T
     }
 }

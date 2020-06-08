@@ -65,5 +65,8 @@
     <string name="Apply">Apply</string>
     <string name="add">ADD</string>
     <string name="select_sport">Select Sport</string>
+    <string name="select_location">Select Location</string>
+    <string name="event_date_and_time">Event date and time</string>
+    <string name="select_number_of_team_mates">Select number of team-mates</string>
 
 </resources>

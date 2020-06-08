@@ -36,7 +36,7 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
             binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sports_request_list, container, false)
 
         binding.lifecycleOwner = this
-        //viewModel.listListener = this
+        viewModel.listListener = this
         binding.viewModel = viewModel
         return binding.root//binding.root
     }
@@ -51,9 +51,7 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
 
     }
     override fun showBottomSheet() {
-        Log.d("clickkkkk","clickkkkkk")
-
-        Toast.makeText(requireContext(), "Hi", Toast.LENGTH_SHORT).show()
-        //bottomSheet.show(requireActivity().supportFragmentManager, SportsRequestBottomSheet::class.java.simpleName)
+        if(!(bottomSheet.isAdded))
+        bottomSheet.show(requireActivity().supportFragmentManager, SportsRequestListFragment::class.java.simpleName)
     }
 }

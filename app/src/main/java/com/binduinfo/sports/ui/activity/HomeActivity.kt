@@ -1,7 +1,9 @@
 package com.binduinfo.sports.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
 import com.google.android.material.bottomnavigation.BottomNavigationView
