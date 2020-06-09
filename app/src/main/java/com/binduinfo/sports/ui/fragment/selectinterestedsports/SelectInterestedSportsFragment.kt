@@ -1,5 +1,6 @@
 package com.binduinfo.sports.ui.fragment.selectinterestedsports
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,6 +16,7 @@ import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.PreferenceProvider
+import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity
 import com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter
 import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
@@ -40,17 +42,18 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private val factory: SelectInterestedSportsViewModelFactory by instance<SelectInterestedSportsViewModelFactory>()
-
-    companion object {
-        fun newInstance() =
-            SelectInterestedSportsFragment()
-    }
-    private lateinit var job: CompletableJob
-    private var sportType = ""
     private lateinit var viewModel: SelectInterestedSportsViewModel
-    private lateinit var sportsAdapter: SportsListAdapter
-    private lateinit var mLayoutManager: LinearLayoutManager
-    private lateinit var sportList: List<Sport>
+
+
+    //    companion object {
+//        fun newInstance() =
+//            SelectInterestedSportsFragment()
+//    }
+//    private lateinit var job: CompletableJob
+//    private var sportType = ""
+//    private lateinit var sportsAdapter: SportsListAdapter
+//    private lateinit var mLayoutManager: LinearLayoutManager
+//    private lateinit var sportList: List<Sport>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -66,147 +69,158 @@ class SelectInterestedSportsFragment : BaseFragment(), RecyleListFetchListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerViewInit()
+     //   recyclerViewInit()
         onUIHandle()
     }
 
-    private fun recyclerViewInit() {
-        val layoutManager = FlexboxLayoutManager(requireContext())
-        layoutManager.flexDirection = FlexDirection.ROW
-        layoutManager.justifyContent = JustifyContent.CENTER
-        sports_recycler_view.layoutManager =
-            layoutManager
-        if (!::sportsAdapter.isInitialized) {
-            sportsAdapter = SportsListAdapter(requireContext(), this)
-            sports_recycler_view.adapter = sportsAdapter
-        }
-    }
+//    private fun recyclerViewInit() {
+//        val layoutManager = FlexboxLayoutManager(requireContext())
+//        layoutManager.flexDirection = FlexDirection.ROW
+//        layoutManager.justifyContent = JustifyContent.CENTER
+//        sports_recycler_view.layoutManager =
+//            layoutManager
+//        if (!::sportsAdapter.isInitialized) {
+//            sportsAdapter = SportsListAdapter(requireContext(), this)
+//            sports_recycler_view.adapter = sportsAdapter
+//        }
+//    }
 
     private fun onUIHandle() {
-        sports_list_layout.visibility = View.GONE
-        selected_item.visibility = View.GONE
-        sports_list_progress_bar.show()
-        CoroutineScope(Main).launch {
-            viewModel.sports.await().observe(viewLifecycleOwner, Observer {
-                if (sportType == "")
-                sports(it)
-            })
+        select_spots_btn.setOnClickListener {
+            val intent = Intent(requireActivity(), SelectInterestedSportActivity::class.java)
+            requireActivity().startActivityForResult(intent, 100)
         }
-        selected_item.setOnClickListener {
-            sports_list_layout.visibility = View.GONE
-            selected_item.visibility = View.GONE
-            sports_list_progress_bar.visibility = View.VISIBLE
-            Coroutines.io {
-                viewModel.sendSelectedSportList()
-            }
-        }
-        sports_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                sportsAdapter.filter.filter(newText)
-                return false
-            }
-        })
-        select_sports_type.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.select_all -> {
-                    sportType = ""
-                    Coroutines.main {
-                        viewModel.sportType().value.await().observe(viewLifecycleOwner, Observer {
-                            Log.d("working123--======", it.toString())
-                            if(sportType.isNullOrEmpty())
-                            sports(it)
-                        })
-                    }
-                }
-
-                R.id.select_indoor -> {
-                    sportType = "indoor"
-                    Coroutines.main {
-                        viewModel.sportType("indoor").value.await()
-                            .observe(viewLifecycleOwner, Observer {
-                                Log.d("working123-i======", it.toString())
-                                if (sportType == "indoor")
-                                sports(it)
-                            })
-                    }
-                }
-
-                R.id.select_outdoor -> {
-                    sportType = "outdoor"
-                    Coroutines.main {
-                        viewModel.sportType("outdoor").value.await()
-                            .observe(viewLifecycleOwner, Observer {
-                               Log.d("working123-o======", it.toString())
-                                if (sportType == "outdoor")
-                                sports(it)
-                            })
-                    }
-                }
-
-            }
-        }
+//        sports_list_layout.visibility = View.GONE
+//        selected_item.visibility = View.GONE
+//        sports_list_progress_bar.show()
+//        CoroutineScope(Main).launch {
+//            viewModel.sports.await().observe(viewLifecycleOwner, Observer {
+//                if (sportType == "")
+//                sports(it)
+//            })
+//        }
+//
+//        back_press.setOnClickListener {
+//            requireActivity().onBackPressed()
+//        }
+//        selected_item.setOnClickListener {
+//            sports_list_layout.visibility = View.GONE
+//            selected_item.visibility = View.GONE
+//            sports_list_progress_bar.visibility = View.VISIBLE
+//            Coroutines.io {
+//                viewModel.sendSelectedSportList()
+//            }
+//        }
+//        sports_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(query: String?): Boolean {
+//                return false
+//            }
+//
+//            override fun onQueryTextChange(newText: String?): Boolean {
+//                sportsAdapter.filter.filter(newText)
+//                return false
+//            }
+//        })
+//        select_sports_type.setOnCheckedChangeListener { group, checkedId ->
+//            when (checkedId) {
+//                R.id.select_all -> {
+//                    sportType = ""
+//                    Coroutines.main {
+//                        viewModel.sportType().value.await().observe(viewLifecycleOwner, Observer {
+//                            Log.d("working123--======", it.toString())
+//                            if(sportType.isNullOrEmpty())
+//                            sports(it)
+//                        })
+//                    }
+//                }
+//
+//                R.id.select_indoor -> {
+//                    sportType = "indoor"
+//                    Coroutines.main {
+//                        viewModel.sportType("indoor").value.await()
+//                            .observe(viewLifecycleOwner, Observer {
+//                                Log.d("working123-i======", it.toString())
+//                                if (sportType == "indoor")
+//                                sports(it)
+//                            })
+//                    }
+//                }
+//
+//                R.id.select_outdoor -> {
+//                    sportType = "outdoor"
+//                    Coroutines.main {
+//                        viewModel.sportType("outdoor").value.await()
+//                            .observe(viewLifecycleOwner, Observer {
+//                               Log.d("working123-o======", it.toString())
+//                                if (sportType == "outdoor")
+//                                sports(it)
+//                            })
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
 
     override fun sports(sportsList: List<Sport>) {
-        Log.d("working======", sportsList.toString())
-        sportsAdapter.setSports(sportsList)
-        sports_list_layout.visibility = View.VISIBLE
-        selected_item.visibility = View.VISIBLE
-        sports_list_progress_bar.hide()
+//        Log.d("working======", sportsList.toString())
+//        sportsAdapter.setSports(sportsList)
+//        sports_list_layout.visibility = View.VISIBLE
+//        selected_item.visibility = View.VISIBLE
+//        sports_list_progress_bar.hide()
     }
 
     override fun throwable(throwable: Throwable) {
-        sports_list_layout.visibility = View.VISIBLE
-        selected_item.visibility = View.VISIBLE
-        //sports_list_progress_bar.visibility = View.VISIBLE
-        sports_list_progress_bar.hide()
-        var message = ""
-        throwable.let {
-            message = it.message!!
-        }
-        Coroutines.main {
-            showToast(message)
-        }
+//        sports_list_layout.visibility = View.VISIBLE
+//        selected_item.visibility = View.VISIBLE
+//        //sports_list_progress_bar.visibility = View.VISIBLE
+//        sports_list_progress_bar.hide()
+//        var message = ""
+//        throwable.let {
+//            message = it.message!!
+//        }
+//        Coroutines.main {
+//            showToast(message)
+//        }
 
     }
 
     override fun filter(sportsList: List<Sport>) {
-        sportsAdapter.updateList(sportsList)
+//        sportsAdapter.updateList(sportsList)
     }
 
     override fun sportSelectedUpdate(basicModel: BasicModel) {
-        Coroutines.main {
-            if(basicModel.success == 1){
-                preference.storeValue(ADD_INTERESTED_SPORT, true)
-
-                findNavController().navigate(R.id.action_selectInterestedSports_to_instructLocationFetch)
-                return@main
-            }else{
-
-            }
-            showToast(basicModel.message)
-            sports_list_layout.visibility = View.VISIBLE
-            selected_item.visibility = View.VISIBLE
-            sports_list_progress_bar.hide()
-        }
+//        Coroutines.main {
+//            if(basicModel.success == 1){
+//                preference.storeValue(ADD_INTERESTED_SPORT, true)
+//                findNavController().navigate(R.id.action_selectInterestedSports_to_instructLocationFetch)
+//                return@main
+//            }else{
+//
+//            }
+//            showToast(basicModel.message)
+//            sports_list_layout.visibility = View.VISIBLE
+//            selected_item.visibility = View.VISIBLE
+//            sports_list_progress_bar.hide()
+//        }
 
     }
 
     override fun updateItem(_id: String, isSelect: Boolean) {
-        sports_list_progress_bar.show()
-        sports_search.setQuery("", false)
-        sports_search.clearFocus()
-        Coroutines.main {
-            sports_search
-            viewModel.updateItem(_id, isSelect)
-        }
+//        sports_list_progress_bar.show()
+//        sports_search.setQuery("", false)
+//        sports_search.clearFocus()
+//        Coroutines.main {
+//            sports_search
+//            viewModel.updateItem(_id, isSelect)
+//        }
 
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+    }
 
 }

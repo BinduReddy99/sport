@@ -181,7 +181,7 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun selectSport() {
-        findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
+        //findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
 
     }
 

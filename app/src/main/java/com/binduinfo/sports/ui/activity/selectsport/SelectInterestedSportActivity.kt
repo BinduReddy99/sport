@@ -1,18 +1,14 @@
 package com.binduinfo.sports.ui.activity.selectsport
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
-import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.PreferenceProvider
@@ -24,13 +20,12 @@ import com.example.mvvmsample.util.Coroutines
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
-import kotlinx.android.synthetic.main.select_interested_sports_fragment.*
+import kotlinx.android.synthetic.main.activity_select_interested_sport.*
 import kotlinx.android.synthetic.main.sport_list_toolbar.*
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -42,10 +37,6 @@ SportsListAdapter.ItemClickable, KodeinAware,
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private val factory: SelectInterestedSportsViewModelFactory by instance<SelectInterestedSportsViewModelFactory>()
 
-//    companion object {
-//        fun newInstance() =
-//            SelectInterestedSportsFragment()
-//    }
     private lateinit var job: CompletableJob
     private var sportType = ""
     private lateinit var viewModel: SelectInterestedSportsViewModel
@@ -151,9 +142,7 @@ SportsListAdapter.ItemClickable, KodeinAware,
         }
     }
 
-
     override fun sports(sportsList: List<Sport>) {
-        Log.d("working======", sportsList.toString())
         sportsAdapter.setSports(sportsList)
         sports_list_layout.visibility = View.VISIBLE
         selected_item.visibility = View.VISIBLE
@@ -163,7 +152,6 @@ SportsListAdapter.ItemClickable, KodeinAware,
     override fun throwable(throwable: Throwable) {
         sports_list_layout.visibility = View.VISIBLE
         selected_item.visibility = View.VISIBLE
-        //sports_list_progress_bar.visibility = View.VISIBLE
         sports_list_progress_bar.hide()
         var message = ""
         throwable.let {
@@ -183,7 +171,6 @@ SportsListAdapter.ItemClickable, KodeinAware,
         Coroutines.main {
             if(basicModel.success == 1){
                 preference.storeValue(ADD_INTERESTED_SPORT, true)
-
                // findNavController().navigate(this,R.id.action_selectInterestedSports_to_instructLocationFetch)
                 return@main
             }else{
@@ -205,9 +192,7 @@ SportsListAdapter.ItemClickable, KodeinAware,
             sports_search
             viewModel.updateItem(_id, isSelect)
         }
-
     }
-
 
 }
 
