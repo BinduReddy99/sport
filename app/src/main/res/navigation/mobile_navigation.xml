@@ -46,9 +46,9 @@
     </fragment>
     <fragment
         android:id="@+id/selectInterestedSportsFragment"
-        android:name="com.binduinfo.sports.ui.fragment.selectinterestedsports.SelectInterestedSportsFragment"
-        android:label="select_interested_sports_fragment"
-        tools:layout="@layout/select_interested_sports_fragment" />
+        android:name="com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity"
+        android:label="activity_select_interested_sport"
+        tools:layout="@layout/activity_select_interested_sport" />
     <fragment
         android:id="@+id/instructLocationFetch2"
         android:name="com.binduinfo.sports.ui.fragment.signupfetchlocation.InstructLocationFetch"

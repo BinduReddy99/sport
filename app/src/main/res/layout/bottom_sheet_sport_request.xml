@@ -27,8 +27,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/select_sport"
             android:layout_width="match_parent"
-            android:focusable="false"
-            android:longClickable="false"
+            style="@style/sport_bottom_sheet_edit_text"
             android:layout_height="wrap_content"
             android:hint="@string/select_sport" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -46,8 +45,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/select_location"
             android:layout_width="match_parent"
-            android:focusable="false"
-            android:longClickable="false"
+            style="@style/sport_bottom_sheet_edit_text"
             android:layout_height="wrap_content"
             android:hint="@string/select_location" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -66,8 +64,7 @@
             android:id="@+id/select_date_and_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:focusable="false"
-            android:longClickable="false"
+            style="@style/sport_bottom_sheet_edit_text"
             android:hint="@string/event_date_and_time" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,6 +93,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

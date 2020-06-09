@@ -62,6 +62,18 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
+    <style name="bottom_sheet_layout_selectsport">
+        <item name="android:layout_marginStart">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginTop">8dp</item>
+
+    </style>
+
+    <style name="sport_bottom_sheet_edit_text">
+        <item name="android:focusable">false</item>
+        <item name="android:longClickable">false</item>
+    </style>
+
 
 <!--    <style name="Theme.App" parent="Theme.MaterialComponents">-->
 <!--        <item name="bottomNavigationStyle">@style/Widget.App.BottomNavigationView</item>-->
