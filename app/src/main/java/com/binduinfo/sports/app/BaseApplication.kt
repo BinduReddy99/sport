@@ -13,6 +13,7 @@ import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListFactory
 import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListFragment
 import com.binduinfo.sports.ui.fragment.sportsrequest.SportsRequestListListener
 import com.binduinfo.sports.data.network.mvvm.MyApi
+import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportsViewModelFactoryActivity
 import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportRequestBottomFactory
 import com.binduinfo.sports.ui.bottomSheet.sportrequest.SportsRequestBottomSheet
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
@@ -35,6 +36,11 @@ class BaseApplication() : Application(), KodeinAware {
         bind() from singleton { AppDataBase(instance()) }
         bind() from provider { SportsRepository(instance(), instance()) }
         bind() from provider { SelectInterestedSportsViewModelFactory(instance()) }
+        /**
+         * Sports
+         */
+        bind() from provider { SelectInterestedSportsViewModelFactoryActivity(instance()) }
+
         bind() from provider { ProfileRepository(instance()) }
         bind() from provider { ProfileViewModelFactory(instance()) }
         bind() from provider { LocationUpdateRepository(instance()) }
@@ -47,8 +53,8 @@ class BaseApplication() : Application(), KodeinAware {
          */
         bind() from singleton { SportsRequestListFactory() }
         bind() from singleton { SportsRequestBottomSheet() }
-        bind() from  provider { SportsRequestRepository(instance()) }
-        bind() from  provider { SportRequestBottomFactory(instance()) }
+        bind() from provider { SportsRequestRepository(instance()) }
+        bind() from provider { SportRequestBottomFactory(instance()) }
 
 
     }

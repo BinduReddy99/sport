@@ -54,14 +54,22 @@ class SportsRepository(private val api: MyApi, private val db: AppDataBase): Saf
     }
 
     suspend  fun sendSelectedSportList(): BasicModel{
-      // return withContext(IO){
+
             val selectedItem = retrieveSelectedItem()
             if(selectedItem.isNotEmpty())
              return   apiRequest { api.updateInterestedSport(RequestInterestSport(selectedItem)) }
             else{
                 throw CancellationException("Please select sports and try again")
             }
-     //   }
+    }
+
+    suspend fun isSportsSelected(): Boolean{
+        val selectedItem = retrieveSelectedItem()
+        if(selectedItem.isNotEmpty())
+            return true
+        else{
+            throw CancellationException("Please select sports and try again")
+        }
     }
 
     suspend fun retrieveSelectedItem():List<String>{

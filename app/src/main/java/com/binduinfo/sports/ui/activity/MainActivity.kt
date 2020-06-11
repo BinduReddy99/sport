@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
 import com.binduinfo.sports.data.model.address.AddressRequest
+import com.binduinfo.sports.ui.fragment.selectinterestedsports.SELECT_SPORTS_ACTIVITY
 import com.binduinfo.sports.ui.fragment.signupfetchlocation.LOCATION_REQUEST_CODE
 
 
@@ -35,12 +36,11 @@ class MainActivity : BaseActivity() {
             fragment = this.supportFragmentManager.findFragmentById(R.id.main_nav_host)
                 ?.childFragmentManager?.fragments?.get(0)
         if (resultCode == Activity.RESULT_OK){
-            if (requestCode == LOCATION_REQUEST_CODE){
-                Log.d("err===", data.toString())
+           // if (requestCode == LOCATION_REQUEST_CODE){
                 fragment?.onActivityResult(requestCode, resultCode, data)
-//                val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
-//                Log.d("Location Request", address.toString())
-            }
+           // }else if(requestCode == SELECT_SPORTS_ACTIVITY){
+                fragment?.onActivityResult(requestCode, resultCode, data)
+            //}
         }
     }
 

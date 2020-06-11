@@ -164,7 +164,6 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
         mMap.setOnMarkerClickListener(this)
         mMap.isMyLocationEnabled = true
         mMap.setOnMapClickListener {
-            Log.d("latitude", it.latitude.toString())
             cameraMove(it, CAMERA_ZOOM, "Clicked Location", it.latitude, it.longitude)
         }
     }
@@ -372,18 +371,6 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
         } catch (e: Exception) {
 
         }
-//        Log.d("Address ===", address[0].getAddressLine(0))
-//        Log.d("admin are ===", address[0].adminArea)
-//        Log.d("subAdmin are ===", address[0].subAdminArea)
-//        Log.d("mCountryName ===", address[0].countryName)
-//        Log.d("mFeatureName ===", address[0].featureName)
-//        if(address[0].locality != null)
-//        Log.d("locality are ===", address[0].locality)
-//        if(address[0].subLocality != null)
-//        Log.d("sublocality are ===", address[0].subLocality)
-//        Log.d("country are ===", address[0].countryName)
-//        Log.d("postalCode ===", address[0].postalCode)
-
     }
 
     override fun onMarkerClick(p0: Marker?): Boolean {
@@ -404,21 +391,3 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
 
 }
 
-//   val location = fusedLocationProviderClient.lastLocation
-
-//            location.addOnCompleteListener {
-//                if (it.isSuccessful) {
-//                    if(location != null) {
-//                        val currentLocation = it.result as Location
-//                        cameraMove(
-//                            LatLng(currentLocation.latitude, currentLocation.longitude),
-//                            15f,
-//                            ""
-//                        )
-//                    }
-//                } else {
-//                    Log.d("TAG", "onComplete: current location is null")
-//                    Toast.makeText(this, "Unable to get current location", Toast.LENGTH_LONG)
-//                        .show()
-//                }
-//            }

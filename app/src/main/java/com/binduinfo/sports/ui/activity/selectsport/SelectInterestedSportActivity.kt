@@ -1,5 +1,7 @@
 package com.binduinfo.sports.ui.activity.selectsport
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,8 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseActivity
-import com.binduinfo.sports.data.model.BasicModel
-import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.ui.activity.selectsport.recyclerAdapter.SportsListAdapter
 import com.binduinfo.sports.util.extension.hide
@@ -30,29 +30,27 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 
-class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,                        //BaseFragment()
-SportsListAdapter.ItemClickable, KodeinAware,
-    com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter.ItemClickable {
+class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
+SportsListAdapter.ItemClickable, KodeinAware {
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
-    private val factory: SelectInterestedSportsViewModelFactory by instance<SelectInterestedSportsViewModelFactory>()
-
+    private val factory: SelectInterestedSportsViewModelFactoryActivity by instance<SelectInterestedSportsViewModelFactoryActivity>()
     private lateinit var job: CompletableJob
     private var sportType = ""
-    private lateinit var viewModel: SelectInterestedSportsViewModel
-    private lateinit var sportsAdapter: com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter
+    private lateinit var viewModel: SelectInterestedSportsViewModelActivity
+    private lateinit var sportsAdapter: SportsListAdapter
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var sportList: List<Sport>
     override fun uiHandle() {
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel =
-            ViewModelProvider(this, factory).get(SelectInterestedSportsViewModel::class.java)
-        viewModel.recyleListFetchListener = this
+        hideToolbar()
         setContentView(R.layout.activity_select_interested_sport)
+        viewModel =
+            ViewModelProvider(this, factory).get(SelectInterestedSportsViewModelActivity::class.java)
+        viewModel.recyleListFetchListener = this
         recyclerViewInit()
         onUIHandle()
     }
@@ -65,7 +63,7 @@ SportsListAdapter.ItemClickable, KodeinAware,
             layoutManager
         if (!::sportsAdapter.isInitialized) {
             sportsAdapter =
-                com.binduinfo.sports.ui.fragment.selectinterestedsports.recyclerAdapter.SportsListAdapter(
+                SportsListAdapter(
                     this,
                    this
                 )
@@ -90,6 +88,9 @@ SportsListAdapter.ItemClickable, KodeinAware,
             Coroutines.io {
                 viewModel.sendSelectedSportList()
             }
+        }
+        back_press.setOnClickListener {
+            onBackPressed()
         }
         sports_search.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -150,14 +151,15 @@ SportsListAdapter.ItemClickable, KodeinAware,
     }
 
     override fun throwable(throwable: Throwable) {
-        sports_list_layout.visibility = View.VISIBLE
-        selected_item.visibility = View.VISIBLE
-        sports_list_progress_bar.hide()
+
         var message = ""
         throwable.let {
             message = it.message!!
         }
         Coroutines.main {
+            sports_list_layout.visibility = View.VISIBLE
+            selected_item.visibility = View.VISIBLE
+            sports_list_progress_bar.hide()
             showToast(message)
         }
 
@@ -167,16 +169,22 @@ SportsListAdapter.ItemClickable, KodeinAware,
         sportsAdapter.updateList(sportsList)
     }
 
-    override fun sportSelectedUpdate(basicModel: BasicModel) {
+    override fun sportSelectedUpdate() {
         Coroutines.main {
-            if(basicModel.success == 1){
-                preference.storeValue(ADD_INTERESTED_SPORT, true)
-               // findNavController().navigate(this,R.id.action_selectInterestedSports_to_instructLocationFetch)
-                return@main
-            }else{
+//            if(basicModel.success == 1){
+//                preference.storeValue(ADD_INTERESTED_SPORT, true)
+//               // findNavController().navigate(this,R.id.action_selectInterestedSports_to_instructLocationFetch)
+//                return@main
+//            }else{
+//
+//            }
+//            showToast(basicModel.message)
 
-            }
-            showToast(basicModel.message)
+            val intent = Intent()
+           // intent.putExtra(ADDRESS, addressRequest)
+            setResult(Activity.RESULT_OK, intent)
+            finish()
+
             sports_list_layout.visibility = View.VISIBLE
             selected_item.visibility = View.VISIBLE
             sports_list_progress_bar.hide()
