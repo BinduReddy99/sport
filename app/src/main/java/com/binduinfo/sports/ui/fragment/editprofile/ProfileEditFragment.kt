@@ -6,19 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
-import com.binduinfo.sports.data.model.UpdateProfile
-import com.binduinfo.sports.databinding.FragmentProfileBinding
 import com.binduinfo.sports.databinding.ProfileEditFragmentBinding
-import com.binduinfo.sports.ui.fragment.profile.ProfileFragmentDirections
 import org.kodein.di.android.x.kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
+class
+ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
     override val kodein by kodein()
 
     private val factory: ProfileEditFactory by instance<ProfileEditFactory>()

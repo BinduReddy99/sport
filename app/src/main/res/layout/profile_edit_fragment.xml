@@ -75,8 +75,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
+                    android:onCheckedChanged="@{viewModel.onSplitTypeChanged}"
                     android:orientation="horizontal"
-                    android:onCheckedChanged = "@{viewModel.onSplitTypeChanged}"
                     app:layout_constraintEnd_toEndOf="@+id/profile_lay_name"
                     app:layout_constraintStart_toStartOf="@+id/profile_lay_name"
                     app:layout_constraintTop_toBottomOf="@+id/profile_title_gender_txt">
@@ -107,8 +107,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:checked="@{viewModel.updateProfile.gender.equals(`other`)}"
                         android:background="@drawable/radio_right_corner"
+                        android:checked="@{viewModel.updateProfile.gender.equals(`other`)}"
                         android:text="@string/custom" />
                 </RadioGroup>
 
@@ -127,10 +127,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/mobile_number"
-                        android:text="@{viewModel.updateProfile.mobileNumber}"
                         android:imeOptions="actionNext"
                         android:inputType="number"
-                        android:maxLength="10" />
+                        android:maxLength="10"
+                        android:text="@{viewModel.updateProfile.mobileNumber}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -148,9 +148,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/e_mail"
                         android:imeOptions="actionNext"
-                        android:text="@{viewModel.updateProfile.email}"
                         android:inputType="textEmailAddress"
-                        android:maxLength="50" />
+                        android:maxLength="50"
+                        android:text="@{viewModel.updateProfile.email}" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -167,16 +167,10 @@
                         android:id="@+id/profile_edt_age"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="number"/>
-
+                        android:inputType="number" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <DatePicker
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:layout_editor_absoluteY="410dp" />
+
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>

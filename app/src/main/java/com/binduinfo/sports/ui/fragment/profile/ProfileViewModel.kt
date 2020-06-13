@@ -55,6 +55,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
    // }
     fun editLocation(view: View){
         profileHandler?.profileLocationEdit()
+    //edit_location.setOnClickListener()
     }
 
 
@@ -99,9 +100,6 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
                 .compressToFile(file)
         }
     }
-
-
-
 
 }
 

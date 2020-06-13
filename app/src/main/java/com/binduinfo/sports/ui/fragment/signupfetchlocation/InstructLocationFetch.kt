@@ -38,9 +38,6 @@ class InstructLocationFetch : BaseFragment(), KodeinAware {
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private val factory: InstructLocationFetchViewModelFactory by instance<InstructLocationFetchViewModelFactory>()
     private lateinit var viewModel: InstructLocationFetchViewModel
-    companion object {
-        fun newInstance() = InstructLocationFetch()
-    }
 
 
     override fun onCreateView(

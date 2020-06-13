@@ -6,7 +6,9 @@
         <variable
             name="viewModel"
             type="com.binduinfo.sports.ui.bottomSheet.sportrequest.SportRequestBottomViewModel" />
+
     </data>
+
 <androidx.constraintlayout.widget.ConstraintLayout
 
     android:layout_width="match_parent"
@@ -29,6 +31,7 @@
             android:layout_width="match_parent"
             style="@style/sport_bottom_sheet_edit_text"
             android:layout_height="wrap_content"
+            android:onClick="@{viewModel::selectOneSport}"
             android:hint="@string/select_sport" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -44,10 +47,15 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/select_location"
-            android:layout_width="match_parent"
             style="@style/sport_bottom_sheet_edit_text"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/select_location" />
+            android:inputType="none"
+            android:focusable="false"
+            android:longClickable="false"
+            android:hint="@string/select_location"
+            android:onClick="@{viewModel::locate}"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

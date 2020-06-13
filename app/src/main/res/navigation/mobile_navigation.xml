@@ -37,6 +37,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_profile_to_userPlaceSelectActivity"
+            app:destination="@id/userPlaceSelectActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
 
     <fragment
@@ -44,6 +51,10 @@
         android:name="com.binduinfo.sports.ui.fragment.signupfetchlocation.InstructLocationFetch"
         android:label="instruct_location_fetch_fragment"
         tools:layout="@layout/instruct_location_fetch_fragment" />
+    <activity
+        android:id="@+id/userPlaceSelectActivity"
+        android:name="com.binduinfo.sports.ui.activity.UserPlaceSelectActivity"
+        android:label="UserPlaceSelectActivity" />
     <fragment
         android:id="@+id/profileEditFragment"
         android:name="com.binduinfo.sports.ui.fragment.editprofile.ProfileEditFragment"

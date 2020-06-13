@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.xwray.groupie.ViewHolder
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -23,9 +22,10 @@ import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.Sport
 import com.binduinfo.sports.data.model.UpdateProfile
 import com.binduinfo.sports.data.preference.PreferenceProvider
-import com.binduinfo.sports.data.repositores.ProfileRepository
 import com.binduinfo.sports.databinding.FragmentProfileBinding
 import com.binduinfo.sports.ui.activity.MainActivity
+import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
+import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity
 import com.binduinfo.sports.ui.dialog.AlertDialogue
 import com.binduinfo.sports.ui.fragment.profile.adapter.SportSelectedItem
 import com.binduinfo.sports.util.cropimage.CropImage
@@ -43,6 +43,7 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -182,7 +183,8 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
 
     override fun selectSport() {
         //findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
-
+        val intent = Intent(requireContext(), SelectInterestedSportActivity::class.java)
+        startActivity(intent)
     }
 
     override fun updateProfileInfo(updateProfileInfo: UpdateProfile) {
@@ -198,7 +200,9 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun profileLocationEdit() {
-        findNavController().navigate(R.id.action_navigation_profile_to_instructLocationFetch2)
+       // findNavController().navigate(R.id.action_navigation_profile_to_instructLocationFetch2)
+        val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
+        startActivity(intent)
     }
 
     override fun alertClickable() {
