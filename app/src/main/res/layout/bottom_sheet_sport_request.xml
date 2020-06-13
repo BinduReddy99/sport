@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:inputType="none"
             android:focusable="false"
+            android:text="@{viewModel.address.address}"
             android:longClickable="false"
             android:hint="@string/select_location"
             android:onClick="@{viewModel::locate}"/>

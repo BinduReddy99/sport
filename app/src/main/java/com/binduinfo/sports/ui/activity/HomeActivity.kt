@@ -105,7 +105,7 @@ class HomeActivity : BaseActivity() {
         if (fragment == null)
             fragment = this.supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
                 ?.childFragmentManager?.fragments?.get(0)
-
+        Timber.d("======activity ${requestCode}")
         fragment?.onActivityResult(requestCode, resultCode, data)
 
     }

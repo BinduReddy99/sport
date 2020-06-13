@@ -72,8 +72,7 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LOCATION_REQUEST_CODE){
-                Timber.d("====fragment${data.toString()}")
-                showToast("====fragment${data.toString()}")
+                bottomSheet.onActivityResult(requestCode, resultCode, data)
             }
         }
     }

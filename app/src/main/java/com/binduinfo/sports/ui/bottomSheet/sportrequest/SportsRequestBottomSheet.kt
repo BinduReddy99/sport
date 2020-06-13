@@ -15,7 +15,9 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
+import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.databinding.BottomSheetSportRequestBinding
+import com.binduinfo.sports.ui.activity.ADDRESS
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
 import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity
 import com.binduinfo.sports.ui.fragment.signupfetchlocation.LOCATION_REQUEST_CODE
@@ -71,9 +73,9 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        select_location.setOnClickListener {
-            checkLocationPermission()
-        }
+//        select_location.setOnClickListener {
+//            checkLocationPermission()
+//        }
 
     }
 
@@ -126,7 +128,9 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LOCATION_REQUEST_CODE) {
-                Timber.d("=====bottom${data.toString()}")
+                val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
+                if (address != null)
+                    viewModel.address.value = address
             }
         }
     }
@@ -140,8 +144,7 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
     }
 
     override fun sportLocationFetch() {
-        val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
-        startActivity(intent)
+        checkLocationPermission()
     }
 
     override fun selectSport() {

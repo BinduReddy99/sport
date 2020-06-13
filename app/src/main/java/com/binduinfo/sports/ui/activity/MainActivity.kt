@@ -35,12 +35,9 @@ class MainActivity : BaseActivity() {
         if(fragment == null)
             fragment = this.supportFragmentManager.findFragmentById(R.id.main_nav_host)
                 ?.childFragmentManager?.fragments?.get(0)
+
         if (resultCode == Activity.RESULT_OK){
-           // if (requestCode == LOCATION_REQUEST_CODE){
                 fragment?.onActivityResult(requestCode, resultCode, data)
-           // }else if(requestCode == SELECT_SPORTS_ACTIVITY){
-                fragment?.onActivityResult(requestCode, resultCode, data)
-            //}
         }
     }
 
