@@ -188,6 +188,7 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun updateProfileInfo(updateProfileInfo: UpdateProfile) {
+        
         val action = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateProfileInfo)
         findNavController().navigate(action)
     }

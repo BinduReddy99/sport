@@ -1,14 +1,12 @@
 package com.binduinfo.sports.ui.fragment.sportsrequest
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
@@ -19,7 +17,6 @@ import com.binduinfo.sports.ui.fragment.signupfetchlocation.LOCATION_REQUEST_COD
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestListListener {
 
@@ -47,6 +44,7 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
         binding.lifecycleOwner = this
         viewModel.listListener = this
         binding.viewModel = viewModel
+
         return binding.root//binding.root
     }
 

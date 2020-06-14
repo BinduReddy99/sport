@@ -3,6 +3,7 @@ package com.binduinfo.sports.ui.fragment.selectinterestedsports
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,10 +22,12 @@ import kotlinx.android.synthetic.main.select_interested_sports_fragment.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import timber.log.Timber
 
 const val SELECT_SPORTS_ACTIVITY = 10001
+const val SELECT_SPORT_CONSTANT = 10101
 
-class SelectInterestedSportsFragment : BaseFragment(), KodeinAware, SelectSportsInterface {
+class SelectInterestedSportsFragment(override var selectSport: String?) : BaseFragment(), KodeinAware, SelectSportsInterface {
 
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
@@ -40,7 +43,7 @@ class SelectInterestedSportsFragment : BaseFragment(), KodeinAware, SelectSports
     ): View? {
         viewModel =
             ViewModelProvider(this, factory).get(SelectInterestedSportsViewModel::class.java)
-          viewModel.selectSportInterface = this
+        viewModel.selectSportInterface = this
         return inflater.inflate(R.layout.select_interested_sports_fragment, container, false)
     }
 
@@ -53,7 +56,10 @@ class SelectInterestedSportsFragment : BaseFragment(), KodeinAware, SelectSports
     private fun onUIHandle() {
         select_spots_btn.setOnClickListener {
             val intent = Intent(requireActivity(), SelectInterestedSportActivity::class.java)
+            intent.putExtra("SELECT_SPORTS_ACTIVITY", selectSport);
             requireActivity().startActivityForResult(intent, SELECT_SPORTS_ACTIVITY)
+            Timber.d("infrag${selectSport.toString()}")
+
         }
     }
 

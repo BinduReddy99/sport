@@ -29,9 +29,12 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import timber.log.Timber
+
+const val SELECT_SPORT_CONSTANT = 10101
 
 class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
-SportsListAdapter.ItemClickable, KodeinAware {
+    SportsListAdapter.ItemClickable, KodeinAware {
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
     private val factory: SelectInterestedSportsViewModelFactoryActivity by instance<SelectInterestedSportsViewModelFactoryActivity>()
@@ -49,9 +52,15 @@ SportsListAdapter.ItemClickable, KodeinAware {
         hideToolbar()
         setContentView(R.layout.activity_select_interested_sport)
         viewModel =
-            ViewModelProvider(this, factory).get(SelectInterestedSportsViewModelActivity::class.java)
+            ViewModelProvider(
+                this,
+                factory
+            ).get(SelectInterestedSportsViewModelActivity::class.java)
         viewModel.recyleListFetchListener = this
         recyclerViewInit()
+        val selectSport = intent.getStringExtra("SELECT_SPORT_CONSTANT")
+        Timber.d("infrag${selectSport.toString()}")
+
         onUIHandle()
     }
 
@@ -59,13 +68,12 @@ SportsListAdapter.ItemClickable, KodeinAware {
         val layoutManager = FlexboxLayoutManager(this)
         layoutManager.flexDirection = FlexDirection.ROW
         layoutManager.justifyContent = JustifyContent.CENTER
-        sports_recycler_view.layoutManager =
-            layoutManager
+        sports_recycler_view.layoutManager = layoutManager
         if (!::sportsAdapter.isInitialized) {
             sportsAdapter =
                 SportsListAdapter(
                     this,
-                   this
+                    this
                 )
             sports_recycler_view.adapter = sportsAdapter
         }
@@ -109,7 +117,7 @@ SportsListAdapter.ItemClickable, KodeinAware {
                     Coroutines.main {
                         viewModel.sportType().value.await().observe(this, Observer {
                             Log.d("working123--======", it.toString())
-                            if(sportType.isNullOrEmpty())
+                            if (sportType.isNullOrEmpty())
                                 sports(it)
                         })
                     }
@@ -171,17 +179,9 @@ SportsListAdapter.ItemClickable, KodeinAware {
 
     override fun sportSelectedUpdate() {
         Coroutines.main {
-//            if(basicModel.success == 1){
-//                preference.storeValue(ADD_INTERESTED_SPORT, true)
-//               // findNavController().navigate(this,R.id.action_selectInterestedSports_to_instructLocationFetch)
-//                return@main
-//            }else{
-//
-//            }
-//            showToast(basicModel.message)
 
             val intent = Intent()
-           // intent.putExtra(ADDRESS, addressRequest)
+            // intent.putExtra("SELECT_SPORT_CONSTANT", selectSport)
             setResult(Activity.RESULT_OK, intent)
             finish()
 
