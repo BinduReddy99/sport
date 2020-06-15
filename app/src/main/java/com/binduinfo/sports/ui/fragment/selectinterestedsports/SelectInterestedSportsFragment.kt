@@ -15,6 +15,8 @@ import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity
+import com.binduinfo.sports.util.Constant.Companion.SELECT_SPORTS
+import com.binduinfo.sports.util.Constant.Companion.SELECT_SPORTS_KEY
 import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
 import com.example.mvvmsample.util.Coroutines
@@ -56,12 +58,12 @@ class SelectInterestedSportsFragment() : BaseFragment(), KodeinAware, SelectSpor
     private fun onUIHandle() {
         select_spots_btn.setOnClickListener {
             val intent = Intent(requireActivity(), SelectInterestedSportActivity::class.java)
-            intent.putExtra("SELECT_SPORTS_ACTIVITY", selectSport);
+            intent.putExtra(SELECT_SPORTS_KEY, SELECT_SPORTS)
             requireActivity().startActivityForResult(intent, SELECT_SPORTS_ACTIVITY)
-            Timber.d("infrag${selectSport.toString()}")
-
         }
     }
+
+   // private val select = 1;
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

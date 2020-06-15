@@ -19,27 +19,27 @@ class SelectInterestedSportsViewModel(val repository: SportsRepository) : ViewMo
 
     }
 
-    val sports by lazyDeferred{
-        repository.getSports()
-    }
-
-    fun sportType(sportType: String): Lazy<Deferred<LiveData<List<Sport>>>> {
-        return lazyDeferred {
-            repository.selectBySportType(sportType)
-        }
-    }
-
-    fun sportType(): Lazy<Deferred<LiveData<List<Sport>>>> {
-        return lazyDeferred {
-            repository.allSport()
-        }
-    }
-
-    fun updateItem(_id: String, isSelected: Boolean){
-        Coroutines.io {
-            repository.updateItem(_id, isSelected)
-        }
-    }
+//    val sports by lazyDeferred{
+//        repository.getSports()
+//    }
+//
+//    fun sportType(sportType: String): Lazy<Deferred<LiveData<List<Sport>>>> {
+//        return lazyDeferred {
+//            repository.selectBySportType(sportType)
+//        }
+//    }
+//
+//    fun sportType(): Lazy<Deferred<LiveData<List<Sport>>>> {
+//        return lazyDeferred {
+//            repository.allSport()
+//        }
+//    }
+//
+//    fun updateItem(_id: String, isSelected: Boolean){
+//        Coroutines.io {
+//            repository.updateItem(_id, isSelected)
+//        }
+//    }
 
     suspend fun sendSelectedSportList(){
         try {

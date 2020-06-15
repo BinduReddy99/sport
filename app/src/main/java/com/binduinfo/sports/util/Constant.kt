@@ -5,10 +5,8 @@ import android.content.Context
 
 class Constant {
     companion object {
-        fun calculateNoOfColumns(context: Context): Int {
-            val displayMetrics = context.resources.displayMetrics
-            val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-            return (dpWidth / 180).toInt()
-        }
+        const val SELECT_SPORTS_KEY = "SELECT_SPORTS_KEY"
+        const val SELECT_SPORTS = "SELECT_SPORTS"
+        const val REQUEST_SPORTS = "REQUEST_SPORTS"
     }
 }
