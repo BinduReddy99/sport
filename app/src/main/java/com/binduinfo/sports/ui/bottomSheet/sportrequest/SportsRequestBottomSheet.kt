@@ -100,7 +100,7 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
                             val intent =
                                 Intent(requireContext(), UserPlaceSelectActivity::class.java)
                             requireActivity().startActivityForResult(intent, LOCATION_REQUEST_CODE)
-                            Log.d("activity==========", intent.toString())
+                            Log.d("activi==", intent.toString())
                         } else {
                             Toast.makeText(
                                 requireContext(),

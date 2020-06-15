@@ -27,7 +27,7 @@ import timber.log.Timber
 const val SELECT_SPORTS_ACTIVITY = 10001
 const val SELECT_SPORT_CONSTANT = 10101
 
-class SelectInterestedSportsFragment(override var selectSport: String?) : BaseFragment(), KodeinAware, SelectSportsInterface {
+class SelectInterestedSportsFragment() : BaseFragment(), KodeinAware, SelectSportsInterface {
 
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
