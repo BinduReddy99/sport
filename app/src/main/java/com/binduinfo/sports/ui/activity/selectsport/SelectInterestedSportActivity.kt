@@ -56,14 +56,14 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         super.onCreate(savedInstanceState)
         hideToolbar()
         setContentView(R.layout.activity_select_interested_sport)
-        if (selectSport.!isInitialized) {
-            if (selectSport.isNotEmpty()) {
+        if (!::selectSport.isInitialized)
+             {
                 selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
               //  requestSport = intent.getStringExtra(SELECT_SPORTS_KEY)
                 Timber.d("=========== select==== ${selectSport}")
               //  Timber.d("=========== request==== ${requestSport}")
             }
-        }
+
         viewModel =
             ViewModelProvider(
                 this,
