@@ -21,6 +21,7 @@ import com.binduinfo.sports.ui.activity.ADDRESS
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
 import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity
 import com.binduinfo.sports.ui.fragment.signupfetchlocation.LOCATION_REQUEST_CODE
+import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.map.MapSupport
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
@@ -34,12 +35,10 @@ import com.karumi.dexter.PermissionToken
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import kotlinx.android.synthetic.main.bottom_sheet_sport_request.*
-import kotlinx.android.synthetic.main.instruct_location_fetch_fragment.*
 import kotlinx.android.synthetic.main.user_profile_layout.view.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 const val ERROR_DIALOG_REQUEST = 9001
 
@@ -149,7 +148,9 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
 
     override fun selectSport() {
         val intent = Intent(requireContext(), SelectInterestedSportActivity::class.java)
+        intent.putExtra(Constant.SELECT_SPORTS_KEY, Constant.REQUEST_SPORTS)
         startActivity(intent)
+
     }
 }
 

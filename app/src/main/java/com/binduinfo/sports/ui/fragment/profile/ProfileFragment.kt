@@ -28,6 +28,7 @@ import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
 import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivity
 import com.binduinfo.sports.ui.dialog.AlertDialogue
 import com.binduinfo.sports.ui.fragment.profile.adapter.SportSelectedItem
+import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.cropimage.CropImage
 import com.binduinfo.sports.util.cropimage.CropImageView
 import com.bumptech.glide.Glide
@@ -184,6 +185,7 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     override fun selectSport() {
         //findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
         val intent = Intent(requireContext(), SelectInterestedSportActivity::class.java)
+        intent.putExtra(Constant.SELECT_SPORTS_KEY, Constant.SELECT_SPORTS)
         startActivity(intent)
     }
 

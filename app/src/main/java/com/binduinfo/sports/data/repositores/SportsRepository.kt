@@ -9,9 +9,11 @@ import com.binduinfo.sports.util.network.model.Sport
 import com.example.mvvmsample.util.Coroutines
 import com.binduinfo.sports.data.network.mvvm.MyApi
 import com.binduinfo.sports.data.network.mvvm.SafeAPIRequest
+import com.binduinfo.sports.util.network.model.SportRequestEvent
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class SportsRepository(private val api: MyApi, private val db: AppDataBase): SafeAPIRequest() {
     private val sports = MutableLiveData<List<Sport>>()
@@ -22,6 +24,7 @@ class SportsRepository(private val api: MyApi, private val db: AppDataBase): Saf
     }
     suspend fun getSports(): LiveData<List<Sport>> {
         return withContext(IO){
+            fetchSportRequestEvent()
             fetchSports()
             db.getUserSport().getSports()
         }
@@ -77,4 +80,15 @@ class SportsRepository(private val api: MyApi, private val db: AppDataBase): Saf
           db.getUserSport().selectSelectedSports()
         }
     }
+    private suspend fun fetchSportRequestEvent() {
+        val responseEvent = apiRequest { api.requestSportEvent() }
+       sports.postValue(responseEvent.sports)
+        Timber.d("=====repository======${responseEvent}")
+    }
+}
+
+
+
+private fun <T> MutableLiveData<T>.postValue(sports: List<SportRequestEvent>) {
+
 }

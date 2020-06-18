@@ -46,7 +46,9 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
     private lateinit var sportsAdapter: SportsListAdapter
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var sportList: List<Sport>
-    private lateinit var  selectSport:String
+    private lateinit var selectSport: String
+    private  var temp: Boolean = false
+
     override fun uiHandle() {
     }
 
@@ -54,8 +56,14 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         super.onCreate(savedInstanceState)
         hideToolbar()
         setContentView(R.layout.activity_select_interested_sport)
-        selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
-        Timber.d("=========== ohhh==== $selectSport")
+        if (selectSport.!isInitialized) {
+            if (selectSport.isNotEmpty()) {
+                selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
+              //  requestSport = intent.getStringExtra(SELECT_SPORTS_KEY)
+                Timber.d("=========== select==== ${selectSport}")
+              //  Timber.d("=========== request==== ${requestSport}")
+            }
+        }
         viewModel =
             ViewModelProvider(
                 this,
@@ -82,18 +90,19 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
             sports_recycler_view.adapter = sportsAdapter
         }
     }
-
+    //Lateint value is not recognized as the internal command Adapter is not get initialized
     private fun onUIHandle() {
         sports_list_layout.visibility = View.GONE
         selected_item.visibility = View.GONE
         sports_list_progress_bar.show()
         CoroutineScope(Dispatchers.Main).launch {
-            if(selectSport == Constant.SELECT_SPORTS) {
+
+            if (selectSport == Constant.SELECT_SPORTS) {
                 viewModel.sports.await().observe(this@SelectInterestedSportActivity, Observer {
                     if (sportType == "")
                         sports(it)
                 })
-            }else if(selectSport == Constant.REQUEST_SPORTS){
+            } else if (selectSport == Constant.REQUEST_SPORTS) {
 
             }
         }
