@@ -48,11 +48,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         }
 
     }
-//    fun updateAboutInProfile(view: View,profile: Profile){
-//        profile.run{
-//            profileHandler?.updateAboutInProfile(About(about))
-//        }
-   // }
+
     fun editLocation(view: View){
         profileHandler?.profileLocationEdit()
     //edit_location.setOnClickListener()

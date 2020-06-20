@@ -43,7 +43,6 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
         if(sportType.isNullOrEmpty()) {
             sport.run {
                 holder.gameName.text = name
-                //Glide.with(context).load(imagePath).into(holder.gameImageView)
                 if (isSeleted) {
                     holder.gameName.background =
                         ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
@@ -83,6 +82,7 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
                 }
                 holder.rootClick.setOnClickListener {
                     isSeleted = !isSeleted
+
                     clickable.updateItem(_id, isSeleted)
                 }
             }

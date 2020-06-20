@@ -24,10 +24,21 @@ class SportsRepository(private val api: MyApi, private val db: AppDataBase): Saf
     }
     suspend fun getSports(): LiveData<List<Sport>> {
         return withContext(IO){
-            fetchSportRequestEvent()
             fetchSports()
             db.getUserSport().getSports()
         }
+    }
+
+    suspend fun getRequestSportsList(): LiveData<List<Sport>>{
+        return withContext(IO){
+            fetchSportsRequestList()
+            db.getUserSport().getSports()
+        }
+    }
+
+    suspend fun fetchSportsRequestList(){
+        val response = apiRequest { api.getRequestSportsList() }
+        sports.postValue(response.sports)
     }
 
     private suspend fun fetchSports(){
@@ -80,11 +91,11 @@ class SportsRepository(private val api: MyApi, private val db: AppDataBase): Saf
           db.getUserSport().selectSelectedSports()
         }
     }
-    private suspend fun fetchSportRequestEvent() {
-        val responseEvent = apiRequest { api.requestSportEvent() }
-       sports.postValue(responseEvent.sports)
-        Timber.d("=====repository======${responseEvent}")
-    }
+//    private suspend fun fetchSportRequestEvent() {
+//        val responseEvent = apiRequest { api.requestSportEvent() }
+//       sports.postValue(responseEvent.sports)
+//        Timber.d("=====repository======${responseEvent}")
+//    }
 }
 
 

@@ -14,10 +14,8 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.generic.instance
 
-class
-ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
+class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
     override val kodein by kodein()
-
     private val factory: ProfileEditFactory by instance<ProfileEditFactory>()
     private lateinit var viewModel: ProfileEditViewModel
     private val args: ProfileEditFragmentArgs by navArgs()
@@ -28,26 +26,18 @@ ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
     ): View? {
         viewModel = ViewModelProvider(this, factory).get(ProfileEditViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)
-        //binding = DataBindingUtil.inflate(inflater, R.layout.profile_descrip_lay_edt, container, false)
-        //DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         binding.viewModel = viewModel
-      //  binding.viewModel =
         viewModel.editProfileHandler = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val updateInfo = args.updateProfile
-   //     val aboutInfo =args.about
         if(updateInfo != null) {
           //  binding.userInfo = updateInfo
             viewModel.setData(updateInfo)
        }
-//        if(aboutInfo !=null){
-//           viewModel.setAbout(aboutInfo)
-//       }
 
 
     }

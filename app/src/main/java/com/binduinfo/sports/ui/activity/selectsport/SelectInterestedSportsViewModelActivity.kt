@@ -22,6 +22,10 @@ class SelectInterestedSportsViewModelActivity(val repository: SportsRepository) 
         repository.getSports()
     }
 
+    val reqSportSelectList by lazyDeferred {
+        repository.getRequestSportsList()
+    }
+
     fun sportType(sportType: String): Lazy<Deferred<LiveData<List<Sport>>>> {
         return lazyDeferred {
             repository.selectBySportType(sportType)

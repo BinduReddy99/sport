@@ -183,7 +183,6 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun selectSport() {
-        //findNavController().navigate(R.id.action_navigation_profile_to_selectInterestedSportsFragment)
         val intent = Intent(requireContext(), SelectInterestedSportActivity::class.java)
         intent.putExtra(Constant.SELECT_SPORTS_KEY, Constant.SELECT_SPORTS)
         startActivity(intent)

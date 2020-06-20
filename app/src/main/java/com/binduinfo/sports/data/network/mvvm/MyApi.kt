@@ -25,6 +25,9 @@ interface MyApi {
     @GET("user/sport")
     suspend fun getSportsList(): Response<SportsListResponse>
 
+    @GET("user/req-sport-list")
+    suspend fun getRequestSportsList(): Response<SportsListResponse>
+
     @Multipart
     @PUT("user/profile-pic")
     suspend fun uploadProfilePic(@Part file: MultipartBody.Part?): Response<BasicModel>
@@ -41,8 +44,8 @@ interface MyApi {
     @PUT("user/profile")
     suspend fun updatePersonalInfo(@Body updateEditPersonalInfo: UpdateEditPersonalInfo):Response<BasicModel>
 
-    @GET("user/request-sport")
-    suspend fun requestSportEvent():Response<SportRequestEventResponse>
+//    @GET("user/request-sport")
+//    suspend fun requestSportEvent():Response<SportRequestEventResponse>
 
     companion object {
         operator fun invoke(

@@ -103,7 +103,10 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                         sports(it)
                 })
             } else if (selectSport == Constant.REQUEST_SPORTS) {
-
+                viewModel.reqSportSelectList.await().observe(this@SelectInterestedSportActivity, Observer {
+                    if(sportType == "")
+                        sports(it)
+                })
             }
         }
         selected_item.setOnClickListener {
