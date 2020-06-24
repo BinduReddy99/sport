@@ -27,6 +27,8 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
     }
     var sportsList: List<Sport> = arrayListOf()
     var sportFilterList: List<Sport> = arrayListOf<Sport>()
+    private var checkedPosition = -1
+    private var newPosition = -1
     init {
         sportFilterList = sportsList
     }
@@ -37,6 +39,8 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
         this.sportFilterList = sportsList
         notifyDataSetChanged()
     }
+
+    
     private var sportType = ""
     override fun onBindViewHolder(holder: SportsHolder, position: Int) {
         val sport = sportFilterList[position]
@@ -59,6 +63,7 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
                 }
                 holder.rootClick.setOnClickListener {
                     isSeleted = !isSeleted
+
                     clickable.updateItem(_id, isSeleted)
                 }
             }
@@ -83,11 +88,24 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
                 holder.rootClick.setOnClickListener {
                     isSeleted = !isSeleted
 
+                    fun onclick(view: View){
+                        
+
+                    }
+
+//                    if (checkedPosition != mAdapterHelper) {
+//                        notifyItemChanged(checkedPosition)
+//                        checkedPosition = mAdapterHelper
+//                    }
+//                    else{
                     clickable.updateItem(_id, isSeleted)
                 }
             }
         }
 
+
+//
+//                    }
 
     }
 
@@ -127,7 +145,8 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
 
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 sportFilterList = results?.values as ArrayList<Sport>
-                notifyDataSetChanged()            }
+                notifyDataSetChanged()
+            }
         }
     }
 

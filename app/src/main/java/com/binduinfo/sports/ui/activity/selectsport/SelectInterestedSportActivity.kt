@@ -86,6 +86,8 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                 SportsListAdapter(
                     this,
                     this
+               // private val sel1 =sel1
+
                 )
             sports_recycler_view.adapter = sportsAdapter
         }

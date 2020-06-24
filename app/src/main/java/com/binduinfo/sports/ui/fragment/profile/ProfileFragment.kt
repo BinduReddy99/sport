@@ -45,12 +45,14 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickable, OnMapReadyCallback, KodeinAware {
+class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickable,
+    OnMapReadyCallback, KodeinAware {
     override val kodein by kodein()
 
 
@@ -65,18 +67,31 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_profile,
+            container,
+            false
+        )//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
         profileViewModel =
             ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         profileViewModel.profileHandler = this
         binding.lifecycleOwner = this
-        binding.profileViewModel =  profileViewModel
+        binding.profileViewModel = profileViewModel
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadPersonInformation()
+
+        back_press.setOnClickListener {
+            if (getParentFragmentManager()?.getBackStackEntryCount() != 0) {
+                getParentFragmentManager()?.popBackStack()
+
+            }
+        }
+
 
     }
 
@@ -92,11 +107,12 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     //Transformation
-    private fun List<Sport>.toSportItem(): List<SportSelectedItem>{
+    private fun List<Sport>.toSportItem(): List<SportSelectedItem> {
         return this.map {
             SportSelectedItem(it)
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("requestCode", requestCode.toString())
@@ -118,10 +134,12 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         Coroutines.main {
             profileViewModel.uploadImage(context, uri)
             profileViewModel.progMutable.value = false
-           // Log.d("done========", "done")
+            // Log.d("done========", "done")
         }
 
     }
+
+
     private fun initRecyclerView(sports: List<SportSelectedItem>) {
         val mLayoutManager = FlexboxLayoutManager(requireContext())
         mLayoutManager.flexDirection = FlexDirection.ROW
@@ -152,8 +170,9 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
                                 requireActivity(),
                                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE
                             )
-                    }else{
-                        Toast.makeText(requireContext(), "Enable Permission", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(requireContext(), "Enable Permission", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             }
@@ -175,9 +194,15 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun logout() {
-        if(dialogue == null)
-        dialogue =
-            AlertDialogue(context = requireContext(), negativeButton = "NO", positiveButton = "YES", message = "Would you like logout from app ?", alertClick = this)
+        if (dialogue == null)
+            dialogue =
+                AlertDialogue(
+                    context = requireContext(),
+                    negativeButton = "NO",
+                    positiveButton = "YES",
+                    message = "Would you like logout from app ?",
+                    alertClick = this
+                )
 
         dialogue?.showdialogue()
     }
@@ -189,20 +214,20 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     }
 
     override fun updateProfileInfo(updateProfileInfo: UpdateProfile) {
-        
-        val action = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateProfileInfo)
+
+        val action =
+            ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateProfileInfo)
         findNavController().navigate(action)
     }
 
 
-
-   override fun updateAboutInProfile(updateAboutInProfile:About) {
+    override fun updateAboutInProfile(updateAboutInProfile: About) {
 //        val action = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateAboutInProfile)
 //        findNavController().navigate(action)
     }
 
     override fun profileLocationEdit() {
-       // findNavController().navigate(R.id.action_navigation_profile_to_instructLocationFetch2)
+        // findNavController().navigate(R.id.action_navigation_profile_to_instructLocationFetch2)
         val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
         startActivity(intent)
     }
@@ -212,14 +237,14 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.let {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            requireActivity().startActivity(it, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+            requireActivity().startActivity(
+                it,
+                ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle()
+            )
         }
     }
 
     override fun onMapReady(p0: GoogleMap?) {
 
     }
-
-
-
 }
