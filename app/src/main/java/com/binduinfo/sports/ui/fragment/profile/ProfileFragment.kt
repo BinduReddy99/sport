@@ -13,11 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.binduinfo.sports.R
+import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.Sport
 import com.binduinfo.sports.data.model.UpdateProfile
@@ -46,14 +46,12 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.profile_edt_toolbar.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
-class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickable,
+class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertClickable,
     OnMapReadyCallback, KodeinAware {
     override val kodein by kodein()
 
@@ -74,7 +72,7 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
             R.layout.fragment_profile,
             container,
             false
-        )//DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false)
+        )
         profileViewModel =
             ViewModelProvider(this, factory).get(ProfileViewModel::class.java)
         profileViewModel.profileHandler = this
@@ -86,16 +84,9 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadPersonInformation()
-
-        back_press.setOnClickListener {
-            if (getParentFragmentManager()?.getBackStackEntryCount() != 0) {
-                getParentFragmentManager()?.popBackStack()
-                Timber.d("=========== select==== ${back}")
-
-            }
+        back.setOnClickListener {
+            backPress(requireActivity())
         }
-
-
     }
 
     private fun loadPersonInformation() {
@@ -105,8 +96,6 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
             profileViewModel.serverRequest.value = false
             initRecyclerView(it.profile.sports.toSportItem())
         })
-
-//           binding.userInfo = profileViewModel.profileInfo.value
     }
 
     //Transformation

@@ -12,26 +12,29 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.binduinfo.sports.R
+import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.network.model.Sport
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.sport_user_select_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SportsListAdapter(private val context: Context, private val clickable: ItemClickable): RecyclerView.Adapter<SportsListAdapter.SportsHolder>(),
+class SportsListAdapter(private val context: Context, private val clickable: ItemClickable, private val selectSport: String):
+    RecyclerView.Adapter<SportsListAdapter.SportsHolder>(),
     Filterable {
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SportsHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         return SportsHolder(layoutInflater.inflate(R.layout.sport_user_select_item, parent, false))
     }
     var sportsList: List<Sport> = arrayListOf()
     var sportFilterList: List<Sport> = arrayListOf<Sport>()
-    private var checkedPosition = -1
-    private var newPosition = -1
+
     init {
         sportFilterList = sportsList
     }
+
+    private var previousId: String = ""
+    private var currentId: String = ""
     override fun getItemCount() = sportFilterList.size
 
     fun setSports(sportsList: List<Sport>){
@@ -40,7 +43,7 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
         notifyDataSetChanged()
     }
 
-    
+
     private var sportType = ""
     override fun onBindViewHolder(holder: SportsHolder, position: Int) {
         val sport = sportFilterList[position]
@@ -62,46 +65,43 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
                     )
                 }
                 holder.rootClick.setOnClickListener {
-                    isSeleted = !isSeleted
-
-                    clickable.updateItem(_id, isSeleted)
-                }
-            }
-        }else if(sport.sportType == sportType){
-            sport.run {
-                holder.gameName.text = name
-                //Glide.with(context).load(imagePath).into(holder.gameImageView)
-                if (isSeleted) {
-                    holder.gameName.background =
-                        ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
-                    holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.white))
-                } else {
-                    holder.gameName.background =
-                        ContextCompat.getDrawable(context, R.drawable.sport_unselect_bg)
-                    holder.gameName.setTextColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.colorAccent
-                        )
-                    )
-                }
-                holder.rootClick.setOnClickListener {
-                    isSeleted = !isSeleted
-
-                    fun onclick(view: View){
-                        
+                  //  isSeleted = !isSeleted
+                    if(selectSport == Constant.SELECT_SPORTS)
+                    clickable.updateItem(_id, !isSeleted)
+                    else{
 
                     }
-
-//                    if (checkedPosition != mAdapterHelper) {
-//                        notifyItemChanged(checkedPosition)
-//                        checkedPosition = mAdapterHelper
-//                    }
-//                    else{
-                    clickable.updateItem(_id, isSeleted)
                 }
             }
         }
+//        else if(sport.sportType == sportType){
+//            sport.run {
+//                holder.gameName.text = name
+//                //Glide.with(context).load(imagePath).into(holder.gameImageView)
+//                if (isSeleted) {
+//                    holder.gameName.background =
+//                        ContextCompat.getDrawable(context, R.drawable.sport_select_bg)
+//                    holder.gameName.setTextColor(ContextCompat.getColor(context, R.color.white))
+//                } else {
+//                    holder.gameName.background =
+//                        ContextCompat.getDrawable(context, R.drawable.sport_unselect_bg)
+//                    holder.gameName.setTextColor(
+//                        ContextCompat.getColor(
+//                            context,
+//                            R.color.colorAccent
+//                        )
+//                    )
+//                }
+//                holder.rootClick.setOnClickListener {
+//                   // isSeleted = !isSeleted
+//                    if(selectSport == Constant.SELECT_SPORTS)
+//                    clickable.updateItem(_id, !isSeleted)
+//                    else{
+//
+//                    }
+//                }
+//            }
+//        }
 
 
 //

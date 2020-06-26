@@ -58,9 +58,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         setContentView(R.layout.activity_select_interested_sport)
         if (!::selectSport.isInitialized) {
             selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
-            //  requestSport = intent.getStringExtra(SELECT_SPORTS_KEY)
             Timber.d("=========== select==== ${selectSport}")
-            //  Timber.d("=========== request==== ${requestSport}")
         }
 
         viewModel =
@@ -70,8 +68,6 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
             ).get(SelectInterestedSportsViewModelActivity::class.java)
         viewModel.recyleListFetchListener = this
         recyclerViewInit()
-
-
         onUIHandle()
     }
 
@@ -84,15 +80,13 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
             sportsAdapter =
                 SportsListAdapter(
                     this,
-                    this
-                    // private val sel1 =sel1
-
+                    this,
+                    selectSport
                 )
             sports_recycler_view.adapter = sportsAdapter
         }
     }
 
-    //Lateint value is not recognized as the internal command Adapter is not get initialized
     private fun onUIHandle() {
         sports_list_layout.visibility = View.GONE
         selected_item.visibility = View.GONE
@@ -139,8 +133,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                     sportType = ""
                     Coroutines.main {
                         viewModel.sportType().value.await().observe(this, Observer {
-                            Log.d("working123--======", it.toString())
-                            if (sportType.isNullOrEmpty())
+                            if (sportType.isEmpty())
                                 sports(it)
                         })
                     }
@@ -151,7 +144,6 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                     Coroutines.main {
                         viewModel.sportType("indoor").value.await()
                             .observe(this, Observer {
-                                Log.d("working123-i======", it.toString())
                                 if (sportType == "indoor")
                                     sports(it)
                             })
@@ -163,7 +155,6 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                     Coroutines.main {
                         viewModel.sportType("outdoor").value.await()
                             .observe(this, Observer {
-                                Log.d("working123-o======", it.toString())
                                 if (sportType == "outdoor")
                                     sports(it)
                             })
@@ -182,7 +173,6 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
     }
 
     override fun throwable(throwable: Throwable) {
-
         var message = ""
         throwable.let {
             message = it.message!!
@@ -202,7 +192,6 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
 
     override fun sportSelectedUpdate() {
         Coroutines.main {
-
             val intent = Intent()
             // intent.putExtra("SELECT_SPORT_CONSTANT", selectSport)
             setResult(Activity.RESULT_OK, intent)

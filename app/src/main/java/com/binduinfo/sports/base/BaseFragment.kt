@@ -61,10 +61,14 @@ abstract class BaseFragment : Fragment() {
         return true
     }
 
+    fun backPress(activity: Activity) {
+        activity.onBackPressed()
+    }
+
     protected fun emailValidate(email: String, errorText: TextInputLayout): Boolean {
         if (email.isEmpty() || !isValidEmail(email)) {
             errorText.error = "Enter valid email id"
-           // requestFocus(errorText)
+            // requestFocus(errorText)
             return false
         }
         errorText.isErrorEnabled = false
@@ -75,16 +79,16 @@ abstract class BaseFragment : Fragment() {
         return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    protected fun hideKeyBoard(activity: Activity){
-        val view = activity?.currentFocus?: View(activity)
+    protected fun hideKeyBoard(activity: Activity) {
+        val view = activity?.currentFocus ?: View(activity)
         val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
 
     }
 
-    protected fun hideKeyBoard(){
+    protected fun hideKeyBoard() {
         val imm = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-            if (imm.isAcceptingText)
+        if (imm.isAcceptingText)
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
     }
 
