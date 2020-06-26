@@ -6,10 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.data.repositores.SportsRequestRepository
 import com.binduinfo.sports.ui.fragment.profile.ProfileHandler
+import com.binduinfo.sports.util.network.model.SportRequest
 
 class SportRequestBottomViewModel(private val repository: SportsRequestRepository) : ViewModel() {
     val serverRequest: MutableLiveData<Boolean> = MutableLiveData()
-    val address: MutableLiveData<AddressRequest> = MutableLiveData()
+    val address: MutableLiveData<SportRequest> = MutableLiveData()
     var sportRequestListener: SportRequestListener? = null
     var tempSport: Boolean = false
 
@@ -19,5 +20,12 @@ class SportRequestBottomViewModel(private val repository: SportsRequestRepositor
 
     fun selectOneSport(view: View) {
         sportRequestListener?.selectSport()
+
+    }
+    fun selectDate(view: View){
+        sportRequestListener?.selectDate()
+    }
+    fun selectTime(view: View){
+        sportRequestListener?.selectEventTime()
     }
 }

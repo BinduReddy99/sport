@@ -46,10 +46,12 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.profile_edt_toolbar.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import timber.log.Timber
 
 class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickable,
     OnMapReadyCallback, KodeinAware {
@@ -88,6 +90,7 @@ class ProfileFragment() : Fragment(), ProfileHandler, AlertDialogue.AlertClickab
         back_press.setOnClickListener {
             if (getParentFragmentManager()?.getBackStackEntryCount() != 0) {
                 getParentFragmentManager()?.popBackStack()
+                Timber.d("=========== select==== ${back}")
 
             }
         }

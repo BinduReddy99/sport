@@ -3,6 +3,7 @@ package com.binduinfo.sports.util.network.retrofit
 import android.util.Base64
 import com.binduinfo.sports.BuildConfig
 import com.binduinfo.sports.app.BaseApplication
+import com.binduinfo.sports.data.network.mvvm.MyApi.Companion.logsInterceptor
 import com.binduinfo.sports.util.network.model.*
 import com.binduinfo.sports.data.preference.LOGIN_TOKEN
 import com.binduinfo.sports.data.preference.PreferenceProvider
@@ -33,6 +34,9 @@ interface NetworkInterFace {
     @POST("anonymous/login")
     fun signIn(): Observable<LoginResponse>
 
+    @POST("user/sports-request")
+    fun requestSportEvent(@Body sportRequest: SportRequest):Observable<SportRequestEventResponse>
+
     @GET("user/sport/{page}/{type}")
     fun getSportsList(@Path(value = "page") page: Int, @Path(value = "type") type: String): Observable<SportsListResponse>
 
@@ -55,7 +59,7 @@ interface NetworkInterFace {
                 .build()
         }
 
-        fun retrofitConnection(userName: String, password: String) : Retrofit{
+        fun retrofitConnection(userName: String, password: String): Retrofit {
             val credinational = "$userName:$password"
             val basic =
                 "Basic " + Base64.encodeToString(credinational.toByteArray(), Base64.NO_WRAP)
@@ -67,8 +71,7 @@ interface NetworkInterFace {
                 chain.proceed(builder.build())
             }.addInterceptor(logsInterceptor())
                 .addInterceptor(logsInterceptor())
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS).connectTimeout(60, TimeUnit.SECONDS)
                 .writeTimeout(60, TimeUnit.SECONDS)
                 .build()
 
@@ -79,6 +82,22 @@ interface NetworkInterFace {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
         }
+
+        // fun retrofitConnection(){
+//        val httpClient = OkHttpClient.Builder()
+//            .addInterceptor(logsInterceptor())
+//            .readTimeout(60, TimeUnit.SECONDS)
+//            .connectTimeout(60, TimeUnit.SECONDS)
+//            .writeTimeout(60, TimeUnit.SECONDS)
+//            .build()
+//
+//        return Retrofit.Builder()
+//        .baseUrl(BASE_URL)
+//        .client(httpClient)
+//        .addConverterFactory(GsonConverterFactory.create())//{"success": 1}
+//        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+//        .build()
+//    }
 
         fun retrofitConnectionWithToken(preferenceProvider: PreferenceProvider) : Retrofit{
             val token: String? = preferenceProvider.getSharedString(LOGIN_TOKEN)

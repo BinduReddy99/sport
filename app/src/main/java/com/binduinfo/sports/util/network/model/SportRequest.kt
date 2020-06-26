@@ -1,5 +1,9 @@
 package com.binduinfo.sports.util.network.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class SportRequest(
     val address: String,
     val area: String,
@@ -12,4 +16,4 @@ data class SportRequest(
     val pincode: String,
     val sport: String,
     val state: String
-)
+) : Parcelable

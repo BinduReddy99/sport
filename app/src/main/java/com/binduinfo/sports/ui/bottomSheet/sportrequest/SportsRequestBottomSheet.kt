@@ -4,6 +4,8 @@ package com.binduinfo.sports.ui.bottomSheet.sportrequest
 
 import android.Manifest
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
+import com.binduinfo.sports.base.BaseActivity
+import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.databinding.BottomSheetSportRequestBinding
 import com.binduinfo.sports.ui.activity.ADDRESS
@@ -23,6 +27,7 @@ import com.binduinfo.sports.ui.activity.selectsport.SelectInterestedSportActivit
 import com.binduinfo.sports.ui.fragment.signupfetchlocation.LOCATION_REQUEST_CODE
 import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.map.MapSupport
+import com.binduinfo.sports.util.network.model.SportRequest
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -39,6 +44,8 @@ import kotlinx.android.synthetic.main.user_profile_layout.view.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import java.text.SimpleDateFormat
+import java.util.*
 
 const val ERROR_DIALOG_REQUEST = 9001
 
@@ -47,6 +54,10 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
 
     private lateinit var binding: BottomSheetSportRequestBinding
     private lateinit var viewModel: SportRequestBottomViewModel
+    var format = SimpleDateFormat("EEE, MMM d, ''yy", Locale.US)
+    var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
+    val now = Calendar.getInstance()
+    val selectedDate = Calendar.getInstance()
 
     private val factory: SportRequestBottomFactory by instance<SportRequestBottomFactory>()
     override fun onCreateView(
@@ -61,6 +72,9 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
         binding.lifecycleOwner = this
         viewModel.sportRequestListener = this
 
+
+        // }
+
         return binding.root
     }
 
@@ -72,9 +86,9 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        select_location.setOnClickListener {
-//            checkLocationPermission()
-//        }
+        //  select_date_and_time.setOnClickListener {
+        //  if (isInitilized) {
+
 
     }
 
@@ -127,15 +141,23 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == LOCATION_REQUEST_CODE) {
-                val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
+                val address = data?.getParcelableExtra<SportRequest>(ADDRESS)
                 if (address != null)
                     viewModel.address.value = address
             }
         }
     }
 
-    override fun cancel() {
+    private fun sportRequestNetwork(){
 
+    }
+
+    override fun cancel() {
+//        tvDisplayDate.setText(
+//            StringBuilder().append(mmonth + 1)
+//                .append("-").append(mday).append("-").append(myear)
+//                .append(" ")
+//        )
     }
 
     override fun submit() {
@@ -152,6 +174,49 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
         startActivity(intent)
 
     }
+
+    override fun selectDate() {
+        val datePicker = DatePickerDialog(
+            requireContext(),
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+
+                selectedDate.set(Calendar.YEAR, year)
+                selectedDate.set(Calendar.MONTH, month)
+                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val date = format.format(selectedDate.time)
+                Toast.makeText(
+                    requireContext(),
+                    "Date :" + format.format(selectedDate.time),
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            now.get(Calendar.YEAR),
+            now.get(Calendar.MONTH),
+            now.get(Calendar.DAY_OF_MONTH)
+        )
+        datePicker.show()
+
+
+    }
+
+    override fun selectEventTime() {
+        val timePicker = TimePickerDialog(
+            requireContext(),
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                selectedDate.set(Calendar.MINUTE, minute)
+                Toast.makeText(
+                    requireContext(),
+                    "time :" + timeFormat.format(selectedDate.time),
+                    Toast.LENGTH_SHORT
+                ).show()
+            },
+            now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false
+        )
+        timePicker.show()
+    }
+
+
 }
 
 @BindingAdapter("location")

@@ -1,8 +1,9 @@
 package com.binduinfo.sports.ui.fragment.login
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,18 +18,23 @@ import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
 import com.binduinfo.sports.util.network.model.LoginResponse
 import com.binduinfo.sports.util.network.retrofit.NetworkInterFace
-import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.SignInButton
+import com.google.android.gms.tasks.Task
 import com.google.android.material.textfield.TextInputLayout
+import com.miziontrix.kmo.utils.exception.ApiException
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_login.*
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
+const val RC_SIGN_IN =123
 class LoginFragment() : BaseFragment(), TextLayoutViewErrorHandle, KodeinAware {
     override val kodein by kodein()
     private  var mobileNumber: String = ""
@@ -37,8 +43,17 @@ class LoginFragment() : BaseFragment(), TextLayoutViewErrorHandle, KodeinAware {
     private val sharedPreference: PreferenceProvider by instance<PreferenceProvider>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val gso =
+//            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//                .requestEmail()
+//                .build()
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        //val mGoogleSignInClient = GoogleSignIn.getClient(requireContext(), gso);
+
 
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +62,7 @@ class LoginFragment() : BaseFragment(), TextLayoutViewErrorHandle, KodeinAware {
         //uiHandle()
 
         return inflater.inflate(R.layout.fragment_login, container, false)
+
     }
 
     override fun onResume() {
@@ -64,6 +80,16 @@ class LoginFragment() : BaseFragment(), TextLayoutViewErrorHandle, KodeinAware {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         uiHandle()
+
+
+
+        // Check for existing Google Sign In account, if the user is already signed in
+// the GoogleSignInAccount will be non-null.
+
+        // Check for existing Google Sign In account, if the user is already signed in
+// the GoogleSignInAccount will be non-null.
+//        val account = GoogleSignIn.getLastSignedInAccount(requireContext())
+//        updateUI(account)
     }
 
     private fun uiHandle() {
@@ -92,9 +118,9 @@ class LoginFragment() : BaseFragment(), TextLayoutViewErrorHandle, KodeinAware {
         login_sign_up_btn.setOnClickListener {
 
             findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
-        }
+       }
 
-    }
+   }
 
     private fun login(){
         hideKeyBoard(requireActivity())

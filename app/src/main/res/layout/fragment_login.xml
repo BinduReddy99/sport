@@ -51,12 +51,22 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="451dp"
                 android:paddingBottom="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
+<!--                <com.google.android.gms.common.SignInButton-->
+<!--                    android:id="@+id/sign_in_button"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/login_sign_up_btn"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/login_sign_up_btn"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/login_sign_up_btn"-->
+<!--                    tools:ignore="MissingConstraints" />-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/login_sign_up_btn"
@@ -87,9 +97,9 @@
                         android:id="@+id/login_edt_mob_num"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:hint="@string/enter_mobile_number"
                         android:imeOptions="actionNext"
-                        android:background="@color/white"
                         android:inputType="number"
                         android:maxLength="10" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -109,37 +119,40 @@
                         android:id="@+id/login_edt_password"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/white"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                         android:hint="@string/password_hint"
                         android:imeOptions="actionDone"
-                        android:background="@color/white"
                         android:inputType="textPassword"
                         android:maxLength="8"
                         android:singleLine="true" />
+
                 </com.google.android.material.textfield.TextInputLayout>
 
 
                 <TextView
                     android:id="@+id/login_text_view_forgot_pass"
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="8dp"
                     android:gravity="center"
                     android:text="Forgot password?"
                     android:textSize="15sp"
                     app:layout_constraintEnd_toEndOf="@+id/sign_in"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="@+id/sign_in"
                     app:layout_constraintTop_toBottomOf="@+id/sign_in" />
 
                 <TextView
                     android:id="@+id/text_view_new_useer"
-                    android:layout_width="123dp"
-                    android:layout_height="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="sans-serif-condensed-medium"
                     android:text="@string/are_you_a_anew_user"
                     android:textStyle="italic"
                     app:layout_constraintEnd_toEndOf="@+id/login_sign_up_btn"
+                    app:layout_constraintHorizontal_bias="0.03"
                     app:layout_constraintStart_toStartOf="@+id/login_sign_up_btn"
                     app:layout_constraintTop_toBottomOf="@+id/login_text_view_forgot_pass"
                     tools:ignore="MissingConstraints" />

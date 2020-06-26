@@ -47,7 +47,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
     private lateinit var mLayoutManager: LinearLayoutManager
     private lateinit var sportList: List<Sport>
     private lateinit var selectSport: String
-    private  var temp: Boolean = false
+    private var temp: Boolean = false
 
     override fun uiHandle() {
     }
@@ -56,13 +56,12 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         super.onCreate(savedInstanceState)
         hideToolbar()
         setContentView(R.layout.activity_select_interested_sport)
-        if (!::selectSport.isInitialized)
-             {
-                selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
-              //  requestSport = intent.getStringExtra(SELECT_SPORTS_KEY)
-                Timber.d("=========== select==== ${selectSport}")
-              //  Timber.d("=========== request==== ${requestSport}")
-            }
+        if (!::selectSport.isInitialized) {
+            selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
+            //  requestSport = intent.getStringExtra(SELECT_SPORTS_KEY)
+            Timber.d("=========== select==== ${selectSport}")
+            //  Timber.d("=========== request==== ${requestSport}")
+        }
 
         viewModel =
             ViewModelProvider(
@@ -86,12 +85,13 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                 SportsListAdapter(
                     this,
                     this
-               // private val sel1 =sel1
+                    // private val sel1 =sel1
 
                 )
             sports_recycler_view.adapter = sportsAdapter
         }
     }
+
     //Lateint value is not recognized as the internal command Adapter is not get initialized
     private fun onUIHandle() {
         sports_list_layout.visibility = View.GONE
@@ -105,10 +105,11 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
                         sports(it)
                 })
             } else if (selectSport == Constant.REQUEST_SPORTS) {
-                viewModel.reqSportSelectList.await().observe(this@SelectInterestedSportActivity, Observer {
-                    if(sportType == "")
-                        sports(it)
-                })
+                viewModel.reqSportSelectList.await()
+                    .observe(this@SelectInterestedSportActivity, Observer {
+                        if (sportType == "")
+                            sports(it)
+                    })
             }
         }
         selected_item.setOnClickListener {

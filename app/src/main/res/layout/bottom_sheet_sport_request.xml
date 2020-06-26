@@ -74,7 +74,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/sport_bottom_sheet_edit_text"
-            android:hint="@string/event_date_and_time" />
+
+            android:hint="@string/event_date_and_time"/>
+<!--            android:onClick="@={viewModel::selectDate}"/>-->
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_time_lay"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="@+id/select_date_time"
+        app:layout_constraintStart_toStartOf="@+id/select_date_time"
+        app:layout_constraintTop_toBottomOf="@+id/select_date_time">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/select_time_edit"
+            style="@style/sport_bottom_sheet_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_time" />
+<!--            android:onClick="@={Converter.dateToString(viewModel::selectTime)}"-->
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -82,8 +104,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/select_date_time"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/select_date_time"
-        app:layout_constraintTop_toBottomOf="@+id/select_date_time">
+        app:layout_constraintTop_toBottomOf="@+id/select_time_lay">
 
         <TextView
             android:id="@+id/textView8"
