@@ -75,8 +75,8 @@
             android:layout_height="wrap_content"
             style="@style/sport_bottom_sheet_edit_text"
 
-            android:hint="@string/event_date_and_time"/>
-<!--            android:onClick="@={viewModel::selectDate}"/>-->
+            android:hint="@string/event_date_and_time"
+         android:onClick="@{viewModel::selectDate}"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -94,8 +94,8 @@
             style="@style/sport_bottom_sheet_edit_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/select_time" />
-<!--            android:onClick="@={Converter.dateToString(viewModel::selectTime)}"-->
+            android:hint="@string/select_time"
+            android:onClick="@{viewModel::selectTime}"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

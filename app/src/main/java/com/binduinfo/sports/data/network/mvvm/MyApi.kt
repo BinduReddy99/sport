@@ -2,6 +2,7 @@ package com.binduinfo.sports.data.network.mvvm
 
 
 import com.binduinfo.sports.BuildConfig
+import com.binduinfo.sports.data.model.About
 import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.model.ProfileInfo
 import com.binduinfo.sports.data.model.address.AddressRequest
@@ -44,6 +45,8 @@ interface MyApi {
     @PUT("user/profile")
     suspend fun updatePersonalInfo(@Body updateEditPersonalInfo: UpdateEditPersonalInfo):Response<BasicModel>
 
+    @PUT("user/about")
+    suspend fun updateAbout(@Body updateAbout: About): Response<BasicModel>
 //    @GET("user/request-sport")
 //    suspend fun requestSportEvent():Response<SportRequestEventResponse>
 
