@@ -63,8 +63,14 @@ class SportsRepository(private val api: MyApi, private val db: AppDataBase): Saf
             db.getUserSport().getSports()
         }
     }
-    suspend fun updateItem(_id: String, isSelected: Boolean){
+     fun updateItem(_id: String, isSelected: Boolean){
         db.getUserSport().updateItem(_id, isSelected)
+    }
+
+    fun updateItem(previousId: String, currentId: String){
+        if(previousId.isNotEmpty())
+        db.getUserSport().updateItem(previousId, false)
+        db.getUserSport().updateItem(currentId, true)
     }
 
     suspend  fun sendSelectedSportList(): BasicModel{

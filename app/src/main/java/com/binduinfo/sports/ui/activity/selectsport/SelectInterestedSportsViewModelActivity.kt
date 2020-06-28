@@ -18,7 +18,7 @@ class SelectInterestedSportsViewModelActivity(val repository: SportsRepository) 
 
     }
 
-    val sports by lazyDeferred{
+    val sports by lazyDeferred {
         repository.getSports()
     }
 
@@ -38,21 +38,27 @@ class SelectInterestedSportsViewModelActivity(val repository: SportsRepository) 
         }
     }
 
-    fun updateItem(_id: String, isSelected: Boolean){
+     fun updateItem(_id: String, isSelected: Boolean) {
         Coroutines.io {
             repository.updateItem(_id, isSelected)
         }
     }
 
-    suspend fun sendSelectedSportList(){
+    fun updateItem(previousId: String, currentId: String) {
+        Coroutines.io {
+            repository.updateItem(previousId, currentId)
+        }
+    }
+
+    suspend fun sendSelectedSportList() {
         try {
             repository.isSportsSelected().let {
                 if (it)
-                recyleListFetchListener?.sportSelectedUpdate()
+                    recyleListFetchListener?.sportSelectedUpdate()
             }
-        }catch (e: CancellationException){
+        } catch (e: CancellationException) {
             recyleListFetchListener?.throwable(e)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             recyleListFetchListener?.throwable(e)
         }
 

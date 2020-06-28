@@ -7,10 +7,12 @@ import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.data.model.ProfileInfo
 import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.data.model.sport.RequestInterestSport
+import com.binduinfo.sports.util.network.model.SportRequest
 import com.binduinfo.sports.util.network.model.SportRequestEventResponse
 import com.binduinfo.sports.util.network.model.SportsListResponse
 import com.binduinfo.sports.util.network.model.UpdateEditPersonalInfo
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
+import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -44,6 +46,9 @@ interface MyApi {
 
     @PUT("user/profile")
     suspend fun updatePersonalInfo(@Body updateEditPersonalInfo: UpdateEditPersonalInfo):Response<BasicModel>
+
+    @POST("user/sports-request")
+    fun requestSportEvent(@Body sportRequest: SportRequest): Response<SportRequestEventResponse>
 
     @PUT("user/about")
     suspend fun updateAbout(@Body updateAbout: About): Response<BasicModel>

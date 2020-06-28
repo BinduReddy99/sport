@@ -1,20 +1,16 @@
 package com.binduinfo.sports.ui.activity.selectsport.recyclerAdapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.binduinfo.sports.R
 import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.network.model.Sport
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.sport_user_select_item.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -69,7 +65,11 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
                     if(selectSport == Constant.SELECT_SPORTS)
                     clickable.updateItem(_id, !isSeleted)
                     else{
-
+                        if(currentId != _id) {
+                            previousId = currentId
+                            currentId = _id
+                            clickable.updateRequest(previousId, currentId)
+                        }
                     }
                 }
             }
@@ -152,6 +152,8 @@ class SportsListAdapter(private val context: Context, private val clickable: Ite
 
     interface ItemClickable{
         fun updateItem(_id: String, isSelect: Boolean)
+
+        fun updateRequest(previousId: String, currentId: String)
     }
 
 }

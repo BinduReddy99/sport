@@ -6,7 +6,12 @@ import com.binduinfo.sports.data.network.mvvm.SafeAPIRequest
 
 
 class SportsRequestRepository(private val api: MyApi , private val db: AppDataBase): SafeAPIRequest()  {
+     suspend fun sportsRequest(){
+         apiRequest{
+             api.getRequestSportsList()
+         }
 
 
+     }
 
 }

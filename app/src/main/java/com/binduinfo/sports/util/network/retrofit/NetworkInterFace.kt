@@ -34,8 +34,7 @@ interface NetworkInterFace {
     @POST("anonymous/login")
     fun signIn(): Observable<LoginResponse>
 
-    @POST("user/sports-request")
-    fun requestSportEvent(@Body sportRequest: SportRequest):Observable<SportRequestEventResponse>
+
 
     @GET("user/sport/{page}/{type}")
     fun getSportsList(@Path(value = "page") page: Int, @Path(value = "type") type: String): Observable<SportsListResponse>

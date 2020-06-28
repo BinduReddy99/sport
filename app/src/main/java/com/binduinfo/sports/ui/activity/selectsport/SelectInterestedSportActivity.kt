@@ -48,6 +48,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
     private lateinit var sportList: List<Sport>
     private lateinit var selectSport: String
     private var temp: Boolean = false
+    private var selecteId: String = ""
 
     override fun uiHandle() {
     }
@@ -209,8 +210,18 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         sports_search.setQuery("", false)
         sports_search.clearFocus()
         Coroutines.main {
-            sports_search
+          //  sports_search
             viewModel.updateItem(_id, isSelect)
+        }
+    }
+
+    override fun updateRequest(previousId: String, currentId: String) {
+        selecteId = currentId
+        sports_list_progress_bar.show()
+        sports_search.setQuery("", false)
+        sports_search.clearFocus()
+        Coroutines.main {
+            viewModel.updateItem(previousId, currentId)
         }
     }
 
