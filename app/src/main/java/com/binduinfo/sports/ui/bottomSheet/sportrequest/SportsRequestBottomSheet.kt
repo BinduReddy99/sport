@@ -8,7 +8,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +16,6 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
-import com.binduinfo.sports.base.BaseActivity
-import com.binduinfo.sports.base.BaseFragment
-import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.databinding.BottomSheetSportRequestBinding
 import com.binduinfo.sports.ui.activity.ADDRESS
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
@@ -44,20 +40,24 @@ import kotlinx.android.synthetic.main.user_profile_layout.view.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 
 const val ERROR_DIALOG_REQUEST = 9001
 
-class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestListener, KodeinAware {
+class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListener, KodeinAware {
     override val kodein by kodein()
 
     private lateinit var binding: BottomSheetSportRequestBinding
     private lateinit var viewModel: SportRequestBottomViewModel
-    var format = SimpleDateFormat("EEE, MMM d, ''yy", Locale.US)
-    var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-    val now = Calendar.getInstance()
-    val selectedDate = Calendar.getInstance()
+    private var format = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    private var timeFormat = SimpleDateFormat("HH:mm:ss", Locale.US)
+    private val now: Calendar? = Calendar.getInstance()
+    private val selectedDate: Calendar? = Calendar.getInstance()
+    private var date: String = ""
+    private var time: String = ""
+    var dateTime = "$date $time"
 
     private val factory: SportRequestBottomFactory by instance<SportRequestBottomFactory>()
     override fun onCreateView(
@@ -80,24 +80,16 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
 
     private fun loadSportEventRequest() {
         viewModel.serverRequest.value = true
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        //  select_date_and_time.setOnClickListener {
-        //  if (isInitilized) {
-
-
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         team_mate_number_picker.minValue = 1
         team_mate_number_picker.maxValue = 20
-
-
     }
 
     private fun checkLocationPermission() {
@@ -113,7 +105,7 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
                             val intent =
                                 Intent(requireContext(), UserPlaceSelectActivity::class.java)
                             requireActivity().startActivityForResult(intent, LOCATION_REQUEST_CODE)
-                            Log.d("activi==", intent.toString())
+                            Timber.d(intent.toString())
                         } else {
                             Toast.makeText(
                                 requireContext(),
@@ -148,16 +140,11 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
         }
     }
 
-    private fun sportRequestNetwork(){
+    private fun sportRequestNetwork() {
 
     }
 
     override fun cancel() {
-//        tvDisplayDate.setText(
-//            StringBuilder().append(mmonth + 1)
-//                .append("-").append(mday).append("-").append(myear)
-//                .append(" ")
-//        )
     }
 
     override fun submit() {
@@ -173,47 +160,60 @@ class SportsRequestBottomSheet() : BottomSheetDialogFragment(), SportRequestList
         intent.putExtra(Constant.SELECT_SPORTS_KEY, Constant.REQUEST_SPORTS)
         startActivity(intent)
 
+
     }
 
     override fun selectDate() {
-        val datePicker = DatePickerDialog(
-            requireContext(),
-            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+        val datePicker = now?.get(Calendar.YEAR)?.let {
+            DatePickerDialog(
+                requireContext(),
+                DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
 
-                selectedDate.set(Calendar.YEAR, year)
-                selectedDate.set(Calendar.MONTH, month)
-                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                val date = format.format(selectedDate.time)
-                Toast.makeText(
-                    requireContext(),
-                    "Date :" + format.format(selectedDate.time),
-                    Toast.LENGTH_SHORT
-                ).show()
-            },
-            now.get(Calendar.YEAR),
-            now.get(Calendar.MONTH),
-            now.get(Calendar.DAY_OF_MONTH)
-        )
-        datePicker.show()
+                    selectedDate?.set(Calendar.YEAR, year)
+                    selectedDate?.set(Calendar.MONTH, month)
+                    selectedDate?.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                    date = format.format(selectedDate?.time)
+
+                    select_date_and_time.setText(date)
+
+                },
+                it,
+                now.get(Calendar.MONTH),
+                now.get(Calendar.DAY_OF_MONTH)
+
+            )
+        }
+
+        if (datePicker != null) {
+            datePicker.datePicker.minDate = System.currentTimeMillis() - 1000
+        }
+        datePicker?.show()
 
 
     }
 
     override fun selectEventTime() {
-        val timePicker = TimePickerDialog(
-            requireContext(),
-            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                selectedDate.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                selectedDate.set(Calendar.MINUTE, minute)
-                Toast.makeText(
-                    requireContext(),
-                    "time :" + timeFormat.format(selectedDate.time),
-                    Toast.LENGTH_SHORT
-                ).show()
-            },
-            now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE), false
-        )
-        timePicker.show()
+
+        now?.get(Calendar.HOUR_OF_DAY)?.let {
+            TimePickerDialog(
+                requireContext(),
+                TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                    selectedDate?.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    selectedDate?.set(Calendar.MINUTE, minute)
+                    time = timeFormat.format(selectedDate?.time)
+                    if (selectedDate?.timeInMillis!! >= System.currentTimeMillis() - 1000) {
+                        hourOfDay % 12
+                        select_time_edit.setText(time)
+                    } else {
+                        Toast.makeText(requireContext(), "Invalid Time", Toast.LENGTH_LONG).show()
+                    }
+
+
+                },
+                it, now.get(Calendar.MINUTE), false
+            )
+        }?.show()
+
     }
 
 

@@ -1,16 +1,10 @@
 package com.binduinfo.sports.ui.fragment.selectinterestedsports
 
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.data.repositores.SportsRepository
-import com.binduinfo.sports.util.network.model.Sport
-import com.example.mvvmsample.util.Coroutines
-import com.example.mvvmsample.util.lazyDeferred
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Deferred
-import java.lang.Exception
 
 class SelectInterestedSportsViewModel(val repository: SportsRepository) : ViewModel() {
     var selectSportInterface: SelectSportsInterface? = null

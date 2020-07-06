@@ -76,7 +76,8 @@
             style="@style/sport_bottom_sheet_edit_text"
 
             android:hint="@string/event_date_and_time"
-         android:onClick="@{viewModel::selectDate}"/>
+         android:onClick="@{viewModel::selectDate}"
+            android:text="@{viewModel.address.dateTime}"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

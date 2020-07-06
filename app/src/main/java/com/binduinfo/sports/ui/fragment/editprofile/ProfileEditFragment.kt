@@ -24,7 +24,7 @@ class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(this, factory).get(ProfileEditViewModel::class.java)
+        this.viewModel = ViewModelProvider(this, factory).get(ProfileEditViewModel::class.java)
         binding = DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)
         binding.viewModel = viewModel
         viewModel.editProfileHandler = this
@@ -34,10 +34,7 @@ class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val updateInfo = args.updateProfile
-        if(updateInfo != null) {
-          //  binding.userInfo = updateInfo
-            viewModel.setData(updateInfo)
-       }
+        viewModel.setData(updateInfo)
 
 
     }

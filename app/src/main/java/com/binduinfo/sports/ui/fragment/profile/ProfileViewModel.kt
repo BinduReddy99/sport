@@ -17,9 +17,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.user_profile_layout.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -30,47 +33,50 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
     val progMutable: MutableLiveData<Boolean> = MutableLiveData()
     val serverRequest: MutableLiveData<Boolean> = MutableLiveData()
     var profileHandler: ProfileHandler? = null
-    var profileInfo: MutableLiveData<ProfileInfo> =  MutableLiveData<ProfileInfo>().apply {
+    var profileInfo: MutableLiveData<ProfileInfo> = MutableLiveData<ProfileInfo>().apply {
         CoroutineScope(Main).launch {
-           value = repository.loadInfo()
-
-
-
+            value = repository.loadInfo()
         }
     }
-    fun imageSelect(view: View){
+
+    fun imageSelect(view: View) {
         profileHandler?.profilePic()
     }
 
-    fun uploadProfileInfo(view: View, profile: Profile){
+    fun uploadProfileInfo(view: View, profile: Profile) {
         profile.run {
             profileHandler?.updateProfileInfo(UpdateProfile(email, gender, mobileNumber, name))
         }
-
     }
 
-    fun editLocation(view: View){
+
+    fun updateAboutInProfile(view: View, profile: Profile) {
+        profile.run {
+            profileHandler?.updateAboutInProfile(About(about))
+        }
+    }
+
+    fun editLocation(view: View) {
         profileHandler?.profileLocationEdit()
-    //edit_location.setOnClickListener()
     }
 
 
-    fun editSelectedSport(view: View){
+    fun editSelectedSport(view: View) {
         profileHandler?.selectSport()
     }
 
-    fun logout(view: View){
+    fun logout(view: View) {
         profileHandler?.logout()
     }
 
-    suspend fun uploadImage(context: Context, uri: Uri): BasicModel{
+    suspend fun uploadImage(context: Context, uri: Uri): BasicModel {
         progMutable.value = true
         return withContext(IO) {
             val compressFile = async {
                 imageCompressing(context, uri)
             }.await()
 
-           withContext(IO) {
+            withContext(IO) {
                 imageUploadToServer(compressFile)
             }
 
@@ -79,18 +85,20 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
     }
 
 
-    suspend fun imageUploadToServer(compressFile: File): BasicModel{
-        return withContext(IO){
+    private suspend fun imageUploadToServer(compressFile: File): BasicModel {
+
+        return withContext(IO) {
             Log.d("image ====", compressFile.toString())
-           val multiPart =  MultipartBody.Part.createFormData(
+            val multiPart = MultipartBody.Part.createFormData(
                 "image", compressFile.name, compressFile
-                    .asRequestBody("image/*".toMediaTypeOrNull()))
+                    .asRequestBody("image/*".toMediaTypeOrNull())
+            )
             repository.imageUpload(multiPart)
         }
     }
 
-    suspend fun imageCompressing(context: Context, uri: Uri): File{
-        return withContext(IO){
+    private suspend fun imageCompressing(context: Context, uri: Uri): File {
+        return withContext(IO) {
             var file = File(uri.path)
             Compressor(context, Compressor.PROFILE_PIC)
                 .compressToFile(file)
@@ -100,7 +108,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
 }
 
 @BindingAdapter("location")
-fun MapView.setLocation( location:List<Double>?){
+fun MapView.setLocation(location: List<Double>?) {
     mapView?.onCreate(Bundle())
     mapView?.getMapAsync { mMap -> // Add a marker
         mMap.uiSettings.setAllGesturesEnabled(false)
@@ -111,8 +119,9 @@ fun MapView.setLocation( location:List<Double>?){
             mMap.clear()
             val location = CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 15f)
             mMap.animateCamera(location)
-            val options: MarkerOptions = MarkerOptions().position(LatLng(latitude, longitude)).title("Your Location")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+            val options: MarkerOptions =
+                MarkerOptions().position(LatLng(latitude, longitude)).title("Your Location")
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
             mMap.addMarker(options)
         }
     }

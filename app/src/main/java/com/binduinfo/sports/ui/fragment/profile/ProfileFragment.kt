@@ -45,13 +45,10 @@ import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.profile_edt_toolbar.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertClickable,
     OnMapReadyCallback, KodeinAware {
@@ -226,10 +223,10 @@ class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertCli
     override fun updateAboutInProfile(updateAboutInProfile: About) {
 //        val action = ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateAboutInProfile)
 //        findNavController().navigate(action)
+
     }
 
     override fun profileLocationEdit() {
-        // findNavController().navigate(R.id.action_navigation_profile_to_instructLocationFetch2)
         val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
         startActivity(intent)
     }

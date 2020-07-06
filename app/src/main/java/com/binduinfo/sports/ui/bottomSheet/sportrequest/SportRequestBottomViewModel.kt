@@ -3,9 +3,7 @@ package com.binduinfo.sports.ui.bottomSheet.sportrequest
 import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.binduinfo.sports.data.model.address.AddressRequest
 import com.binduinfo.sports.data.repositores.SportsRequestRepository
-import com.binduinfo.sports.ui.fragment.profile.ProfileHandler
 import com.binduinfo.sports.util.network.model.SportRequest
 
 class SportRequestBottomViewModel(private val repository: SportsRequestRepository) : ViewModel() {
@@ -22,10 +20,10 @@ class SportRequestBottomViewModel(private val repository: SportsRequestRepositor
         sportRequestListener?.selectSport()
 
     }
-    fun selectDate(view: View){
-        sportRequestListener?.selectDate()
-    }
     fun selectTime(view: View){
         sportRequestListener?.selectEventTime()
+    }
+    fun selectDate(view: View){
+        sportRequestListener?.selectDate()
     }
 }
