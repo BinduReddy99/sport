@@ -83,17 +83,15 @@ class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertCli
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadPersonInformation()
-      //  back.setOnClickListener {
+        //  back.setOnClickListener {
         //    backPress(requireActivity())
 
 //        back_press.setOnClickListener {
 //            activity?.onBackPressed()
 //
 //            }
-      //  }
+        //  }
     }
-
-
 
 
     private fun loadPersonInformation() {
