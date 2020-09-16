@@ -50,7 +50,7 @@ class BaseApplication() : Application(), KodeinAware {
          * Sports post
          */
         bind() from singleton { SportsRequestListFactory() }
-       // bind() from singleton { SportsRequestBottomSheet() }
+        bind() from singleton { SportsRequestBottomSheet() }
         bind() from provider { SportsRequestRepository(instance(), instance()) }
         bind() from provider { SportRequestBottomFactory(instance()) }
 
