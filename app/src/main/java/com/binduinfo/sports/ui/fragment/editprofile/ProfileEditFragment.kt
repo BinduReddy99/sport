@@ -10,8 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.binduinfo.sports.R
 import com.binduinfo.sports.base.BaseFragment
 import com.binduinfo.sports.databinding.ProfileEditFragmentBinding
-import org.kodein.di.android.x.kodein
 import org.kodein.di.KodeinAware
+import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
@@ -25,7 +25,8 @@ class ProfileEditFragment : BaseFragment(), KodeinAware, EditProfileHandler {
         savedInstanceState: Bundle?
     ): View? {
         this.viewModel = ViewModelProvider(this, factory).get(ProfileEditViewModel::class.java)
-        binding = DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.profile_edit_fragment, container, false)
         binding.viewModel = viewModel
         viewModel.editProfileHandler = this
         return binding.root

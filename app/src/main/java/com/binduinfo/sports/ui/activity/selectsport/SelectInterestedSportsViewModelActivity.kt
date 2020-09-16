@@ -6,17 +6,12 @@ import androidx.lifecycle.ViewModel
 import com.binduinfo.sports.data.repositores.SportsRepository
 import com.binduinfo.sports.util.network.model.Sport
 import com.example.mvvmsample.util.Coroutines
-import com.example.mvvmsample.util.lazyDeferred
+import com.binduinfo.sports.util.coroutine.lazyDeferred
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Deferred
-import java.lang.Exception
 
 class SelectInterestedSportsViewModelActivity(val repository: SportsRepository) : ViewModel() {
     var recyleListFetchListener: RecyleListFetchListener? = null
-
-    val mutableLiveData: MutableLiveData<String> = MutableLiveData<String>().apply {
-
-    }
 
     val sports by lazyDeferred {
         repository.getSports()
@@ -24,6 +19,7 @@ class SelectInterestedSportsViewModelActivity(val repository: SportsRepository) 
 
     val reqSportSelectList by lazyDeferred {
         repository.getRequestSportsList()
+
     }
 
     fun sportType(sportType: String): Lazy<Deferred<LiveData<List<Sport>>>> {
@@ -38,7 +34,7 @@ class SelectInterestedSportsViewModelActivity(val repository: SportsRepository) 
         }
     }
 
-     fun updateItem(_id: String, isSelected: Boolean) {
+    fun updateItem(_id: String, isSelected: Boolean) {
         Coroutines.io {
             repository.updateItem(_id, isSelected)
         }

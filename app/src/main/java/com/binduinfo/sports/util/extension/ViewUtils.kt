@@ -28,10 +28,10 @@ fun View.hideKeyboard() {
     inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
 }
 
-fun BottomNavigationView.hide(){
+fun BottomNavigationView.hide() {
     visibility = View.GONE
 }
 
-fun BottomNavigationView.show(){
+fun BottomNavigationView.show() {
     visibility = View.VISIBLE
 }

@@ -14,7 +14,10 @@ import com.binduinfo.sports.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.otp.*
 
-class BottomSheetOtp(val signUpFragmentInteraction: SignUpFragmentInteraction,val mobilNumber: String):BottomSheetDialogFragment() {
+class BottomSheetOtp(
+    val signUpFragmentInteraction: SignUpFragmentInteraction,
+    val mobilNumber: String
+) : BottomSheetDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +40,7 @@ class BottomSheetOtp(val signUpFragmentInteraction: SignUpFragmentInteraction,va
 
         // conccat use $ symbol
         textView2.text = "${resources.getString(R.string.otp_will_receive_to)} $mobilNumber"
-        otpTextView.otpListener = object : OTPListener{
+        otpTextView.otpListener = object : OTPListener {
             override fun onOTPComplete(otp: String?) {
                 otpStr = otp
                 signUpFragmentInteraction.hideKey(requireActivity())
@@ -58,14 +61,25 @@ class BottomSheetOtp(val signUpFragmentInteraction: SignUpFragmentInteraction,va
         }
         dialog_verify_otp.setOnClickListener {
 
-            signUpFragmentInteraction.clickable(otpStr!!, progress_bar, dialog_verify_otp, error_text)
+            signUpFragmentInteraction.clickable(
+                otpStr!!,
+                progress_bar,
+                dialog_verify_otp,
+                error_text
+            )
         }
 
     }
 
 
-    interface SignUpFragmentInteraction{
-        fun clickable(otp: String, progress: ProgressBar, button: AppCompatButton, error_text: TextView)
+    interface SignUpFragmentInteraction {
+        fun clickable(
+            otp: String,
+            progress: ProgressBar,
+            button: AppCompatButton,
+            error_text: TextView
+        )
+
         fun hideKey(activity: Activity)
         fun disposalClose()
     }

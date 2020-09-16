@@ -13,4 +13,4 @@ data class AddressRequest(
     val longitude: Double,
     val pincode: String,
     val state: String
-): Parcelable
+) : Parcelable

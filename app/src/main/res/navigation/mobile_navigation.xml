@@ -21,7 +21,7 @@
         android:id="@+id/navigation_profile"
         android:name="com.binduinfo.sports.ui.fragment.profile.ProfileFragment"
         android:label="@string/title_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
 
         <action
             android:id="@+id/action_navigation_profile_to_instructLocationFetch2"
@@ -43,7 +43,7 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -58,7 +58,7 @@
     <fragment
         android:id="@+id/profileEditFragment"
         android:name="com.binduinfo.sports.ui.fragment.editprofile.ProfileEditFragment"
-        android:label="ProfileEditFragment" >
+        android:label="ProfileEditFragment">
         <argument
             android:name="update_profile"
             app:argType="com.binduinfo.sports.data.model.UpdateProfile" />

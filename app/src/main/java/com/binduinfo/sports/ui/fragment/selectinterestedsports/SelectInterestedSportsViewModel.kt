@@ -35,14 +35,14 @@ class SelectInterestedSportsViewModel(val repository: SportsRepository) : ViewMo
 //        }
 //    }
 
-    suspend fun sendSelectedSportList(){
+    suspend fun sendSelectedSportList() {
         try {
             repository.sendSelectedSportList().let {
                 selectSportInterface?.sportSelectedUpdate(it)
             }
-        }catch (e: CancellationException){
+        } catch (e: CancellationException) {
             selectSportInterface?.throwable(e)
-        }catch (e: Exception){
+        } catch (e: Exception) {
             selectSportInterface?.throwable(e)
         }
 

@@ -10,7 +10,7 @@ import android.view.WindowManager
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 
-abstract class BaseDialog(open val context: Context, val center:Boolean = true) {
+abstract class BaseDialog(open val context: Context, val center: Boolean = true) {
     private lateinit var dialog: Dialog
     private lateinit var inflater: LayoutInflater
 
@@ -23,8 +23,8 @@ abstract class BaseDialog(open val context: Context, val center:Boolean = true) 
         dialog.setCanceledOnTouchOutside(false)
         inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         dialog.setContentView(layoutResouceId())
-        if(center)
-        this.setLayoutParameters()
+        if (center)
+            this.setLayoutParameters()
         else
             this.setLayoutParametersNoCenter()
         handleUi(dialog)
@@ -42,6 +42,7 @@ abstract class BaseDialog(open val context: Context, val center:Boolean = true) 
         layoutParameters?.height = RelativeLayout.LayoutParams.MATCH_PARENT
 
     }
+
     private fun setLayoutParameters() {
         val layoutParameters = dialog.window?.attributes
         layoutParameters?.width = RelativeLayout.LayoutParams.MATCH_PARENT
@@ -59,7 +60,7 @@ abstract class BaseDialog(open val context: Context, val center:Boolean = true) 
     }
 
     fun hiddeDialogue() {
-         if (dialog.isShowing)
-        dialog.dismiss()
+        if (dialog.isShowing)
+            dialog.dismiss()
     }
 }

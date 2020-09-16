@@ -33,6 +33,7 @@ import org.kodein.di.generic.instance
 
 const val LOCATION_REQUEST_CODE = 0x001
 private val ERROR_DIALOG_REQUEST = 9001
+
 class InstructLocationFetch : BaseFragment(), KodeinAware {
     override val kodein by kodein()
     private val preference: PreferenceProvider by instance<PreferenceProvider>()
@@ -62,27 +63,32 @@ class InstructLocationFetch : BaseFragment(), KodeinAware {
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_NETWORK_STATE
             ).withListener(object : MultiplePermissionsListener {
-            override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
-                report?.let {
-                    if (it.areAllPermissionsGranted()) {
-                        val intent = Intent(requireContext(), UserPlaceSelectActivity::class.java)
-                        requireActivity().startActivityForResult(intent, LOCATION_REQUEST_CODE)
-                    }else{
-                        Toast.makeText(requireContext(), "Enable Permission", Toast.LENGTH_SHORT).show()
+                override fun onPermissionsChecked(report: MultiplePermissionsReport?) {
+                    report?.let {
+                        if (it.areAllPermissionsGranted()) {
+                            val intent =
+                                Intent(requireContext(), UserPlaceSelectActivity::class.java)
+                            requireActivity().startActivityForResult(intent, LOCATION_REQUEST_CODE)
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Enable Permission",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
-            }
 
-            override fun onPermissionRationaleShouldBeShown(
-                permissions: MutableList<PermissionRequest>?,
-                token: PermissionToken?
-            ) {
-                token?.let {
-                    token.continuePermissionRequest()
+                override fun onPermissionRationaleShouldBeShown(
+                    permissions: MutableList<PermissionRequest>?,
+                    token: PermissionToken?
+                ) {
+                    token?.let {
+                        token.continuePermissionRequest()
+                    }
                 }
-            }
 
-        }).check()
+            }).check()
 
     }
 
@@ -93,24 +99,26 @@ class InstructLocationFetch : BaseFragment(), KodeinAware {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         Log.d("err====", requestCode.toString())
-        if (resultCode == Activity.RESULT_OK){
-            if (requestCode == LOCATION_REQUEST_CODE){
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == LOCATION_REQUEST_CODE) {
                 Log.d("err====", requestCode.toString())
                 val address = data?.getParcelableExtra<AddressRequest>(ADDRESS)
-                if(address is AddressRequest){
+                if (address is AddressRequest) {
                     address_load_progress.visibility = View.VISIBLE
                     get_my_location.visibility = View.GONE
                     Coroutines.main {
                         viewModel.updateLocation(address).value.await().run {
-                            if (success == 1){
+                            if (success == 1) {
                                 preference?.storeValue(
-                                    ADD_ADDRESS, true)
+                                    ADD_ADDRESS, true
+                                )
                                 val intent = Intent(requireContext(), HomeActivity::class.java)
                                 intent.let {
-                                    it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    it.flags =
+                                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                     requireActivity().startActivity(it)
                                 }
-                            }else{
+                            } else {
                                 showToast(message)
                             }
                             address_load_progress.visibility = View.GONE

@@ -278,7 +278,7 @@ class SignUpFragment : BaseFragment(), TextLayoutViewErrorHandle,
 
     override fun onResume() {
         super.onResume()
-     //   activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        //   activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
 //    override fun onPause() {

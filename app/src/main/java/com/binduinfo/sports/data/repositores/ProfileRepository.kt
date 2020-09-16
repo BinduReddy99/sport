@@ -8,19 +8,16 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 
-class ProfileRepository(private val api: MyApi): SafeAPIRequest() {
+class ProfileRepository(private val api: MyApi) : SafeAPIRequest() {
 
-    suspend fun imageUpload(profilePic: MultipartBody.Part): BasicModel{
-        return  withContext(IO){
+    suspend fun imageUpload(profilePic: MultipartBody.Part): BasicModel {
+        return withContext(IO) {
             apiRequest { api.uploadProfilePic(profilePic) }
         }
     }
-
-
-
-    suspend fun loadInfo():ProfileInfo{
-        return withContext(IO){
-            apiRequest {  api.getUserInfo() }
+    suspend fun loadInfo(): ProfileInfo {
+        return withContext(IO) {
+            apiRequest { api.getUserInfo() }
         }
     }
 }

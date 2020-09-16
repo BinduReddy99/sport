@@ -10,7 +10,8 @@ import com.miziontrix.kmo.utils.exception.NoInternetException
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class NetworkConnectionInterceptor(context: Context, val preferenceHelper: PreferenceProvider): Interceptor {
+class NetworkConnectionInterceptor(context: Context, val preferenceHelper: PreferenceProvider) :
+    Interceptor {
     private val applicationContext = context.applicationContext
     override fun intercept(chain: Interceptor.Chain): Response {
         if (!isInternetAvailable())
@@ -23,9 +24,10 @@ class NetworkConnectionInterceptor(context: Context, val preferenceHelper: Prefe
         return chain.proceed(builder.build())
     }
 
-    private fun isInternetAvailable(): Boolean{
-        var result:Boolean = false
-        val connectivityManager = applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    private fun isInternetAvailable(): Boolean {
+        var result: Boolean = false
+        val connectivityManager =
+            applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val networkCapabilities = connectivityManager.activeNetwork ?: return false
             val actNw =

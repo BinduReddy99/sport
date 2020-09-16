@@ -34,33 +34,35 @@ class SplashScreenFragment : BaseFragment(), KodeinAware {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       // hideKeyBoard()
+        // hideKeyBoard()
         //hideKeyBoard(activity = requireActivity())
 
     }
 
     private suspend fun handleFragments() {
         delay(3000)
-        if(preference.getsharedBoolean(IS_LOGGED_IN)){
+        if (preference.getsharedBoolean(IS_LOGGED_IN)) {
             when {
                 !preference.getsharedBoolean(
-                    ADD_INTERESTED_SPORT) -> {
+                    ADD_INTERESTED_SPORT
+                ) -> {
                     findNavController().navigate(R.id.action_splashScreenFragment_to_selectInterestedSports)
                 }
                 !preference.getsharedBoolean(
-                    ADD_ADDRESS) -> {
+                    ADD_ADDRESS
+                ) -> {
                     findNavController().navigate(R.id.action_splashScreenFragment_to_instructLocationFetch)
                 }
                 else -> {
                     intent()
                 }
             }
-        }else{
+        } else {
             findNavController().navigate(R.id.action_splashScreenFragment_to_loginFragment)
         }
     }
 
-    private fun intent(){
+    private fun intent() {
         val intent = Intent(requireContext(), HomeActivity::class.java)
         intent.let {
             it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -71,12 +73,12 @@ class SplashScreenFragment : BaseFragment(), KodeinAware {
     override fun onResume() {
         super.onResume()
         if (job == null)
-         job = Coroutines.main {
-            handleFragments()
-        }
+            job = Coroutines.main {
+                handleFragments()
+            }
 
         //}
-       // activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        // activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
     override fun onPause() {

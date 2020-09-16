@@ -25,8 +25,8 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
     private lateinit var viewModel: SportsRequestListViewModel
     private lateinit var binding: FragmentSportsRequestListBinding
 
-    private val factory: SportsRequestListFactory by instance<SportsRequestListFactory>()
-    private val bottomSheet: SportsRequestBottomSheet by instance<SportsRequestBottomSheet>()
+    private val factory: SportsRequestListFactory by instance()
+    private val bottomSheet: SportsRequestBottomSheet by instance()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,7 +59,9 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
     }
 
     override fun showBottomSheet() {
+        Log.d("Bottom Sheet Added","======Bottom Sheet Added")
         if (!(bottomSheet.isAdded))
+            Log.d(" after if Statement","======after if Statement")
             bottomSheet.show(
                 requireActivity().supportFragmentManager,
                 SportsRequestListFragment::class.java.simpleName
@@ -69,7 +71,7 @@ class SportsRequestListFragment : BaseFragment(), KodeinAware, SportsRequestList
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == LOCATION_REQUEST_CODE){
+            if (requestCode == LOCATION_REQUEST_CODE) {
                 bottomSheet.onActivityResult(requestCode, resultCode, data)
             }
         }

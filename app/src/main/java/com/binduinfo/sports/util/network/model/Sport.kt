@@ -10,5 +10,5 @@ data class Sport(
     val imagePath: String,
     val name: String,
     val sportType: String,
-    var isSeleted: Boolean = false
+    var isSelected: Boolean = false
 )

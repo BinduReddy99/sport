@@ -2,16 +2,12 @@ package com.binduinfo.sports.util.network.retrofit
 
 import android.util.Base64
 import com.binduinfo.sports.BuildConfig
-import com.binduinfo.sports.app.BaseApplication
-import com.binduinfo.sports.data.network.mvvm.MyApi.Companion.logsInterceptor
-import com.binduinfo.sports.util.network.model.*
 import com.binduinfo.sports.data.preference.LOGIN_TOKEN
 import com.binduinfo.sports.data.preference.PreferenceProvider
+import com.binduinfo.sports.util.network.model.*
 import io.reactivex.Observable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.kodein.di.KodeinAware
-import org.kodein.di.generic.instance
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -35,9 +31,11 @@ interface NetworkInterFace {
     fun signIn(): Observable<LoginResponse>
 
 
-
     @GET("user/sport/{page}/{type}")
-    fun getSportsList(@Path(value = "page") page: Int, @Path(value = "type") type: String): Observable<SportsListResponse>
+    fun getSportsList(
+        @Path(value = "page") page: Int,
+        @Path(value = "type") type: String
+    ): Observable<SportsListResponse>
 
 
     companion object {
@@ -98,7 +96,7 @@ interface NetworkInterFace {
 //        .build()
 //    }
 
-        fun retrofitConnectionWithToken(preferenceProvider: PreferenceProvider) : Retrofit{
+        fun retrofitConnectionWithToken(preferenceProvider: PreferenceProvider): Retrofit {
             val token: String? = preferenceProvider.getSharedString(LOGIN_TOKEN)
             val httpClient = OkHttpClient.Builder()
             httpClient.addInterceptor { chain ->

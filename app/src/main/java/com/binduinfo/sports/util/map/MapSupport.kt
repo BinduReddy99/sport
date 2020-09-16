@@ -1,13 +1,12 @@
 package com.binduinfo.sports.util.map
 
 import android.app.Activity
-import android.content.Context
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 
 object MapSupport {
-     fun isServiceOk(context: Activity, ERROR_DIALOG_REQUEST:Int): Boolean {
+    fun isServiceOk(context: Activity, ERROR_DIALOG_REQUEST: Int): Boolean {
         val available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(context)
         when {
             available == ConnectionResult.SUCCESS -> {

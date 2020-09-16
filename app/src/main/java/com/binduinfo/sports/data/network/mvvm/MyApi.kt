@@ -12,7 +12,6 @@ import com.binduinfo.sports.util.network.model.SportRequestEventResponse
 import com.binduinfo.sports.util.network.model.SportsListResponse
 import com.binduinfo.sports.util.network.model.UpdateEditPersonalInfo
 import com.miziontrix.kmo.data.network.api.mvvm.NetworkConnectionInterceptor
-import io.reactivex.Observable
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -45,15 +44,13 @@ interface MyApi {
     suspend fun updateAddress(@Body addressRequest: AddressRequest): Response<BasicModel>
 
     @PUT("user/profile")
-    suspend fun updatePersonalInfo(@Body updateEditPersonalInfo: UpdateEditPersonalInfo):Response<BasicModel>
+    suspend fun updatePersonalInfo(@Body updateEditPersonalInfo: UpdateEditPersonalInfo): Response<BasicModel>
 
     @POST("user/sports-request")
     fun requestSportEvent(@Body sportRequest: SportRequest): Response<SportRequestEventResponse>
 
     @PUT("user/about")
     suspend fun updateAbout(@Body updateAbout: About): Response<BasicModel>
-//    @GET("user/request-sport")
-//    suspend fun requestSportEvent():Response<SportRequestEventResponse>
 
     companion object {
         operator fun invoke(

@@ -10,12 +10,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.location.Address
 import android.location.Geocoder
-import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -36,8 +34,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FetchPlaceRequest
@@ -52,6 +48,7 @@ import java.util.*
 
 const val LOCATION_SETTINGS_REQUEST = 0x001
 const val ADDRESS = "address"
+
 class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
     AdapterView.OnItemClickListener, GoogleMap.OnMarkerClickListener, AlertDialogue.AlertClickable {
     private lateinit var adapter: AutoCompleteAdapter
@@ -366,7 +363,8 @@ class UserPlaceSelectActivity : BaseActivity(), OnMapReadyCallback,
             if (address[0].postalCode != null)
                 pincode = address[0].postalCode
 
-            addressRequest = AddressRequest(addressStr, area, city, country, latitude, longtited, pincode, state)
+            addressRequest =
+                AddressRequest(addressStr, area, city, country, latitude, longtited, pincode, state)
 
         } catch (e: Exception) {
 

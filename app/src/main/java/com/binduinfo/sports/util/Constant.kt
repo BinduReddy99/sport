@@ -1,7 +1,5 @@
 package com.binduinfo.sports.util
 
-import android.content.Context
-
 
 class Constant {
     companion object {

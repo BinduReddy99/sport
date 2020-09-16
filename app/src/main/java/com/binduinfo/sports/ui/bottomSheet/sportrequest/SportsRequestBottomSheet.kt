@@ -59,7 +59,7 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
     private var time: String = ""
     var dateTime = "$date $time"
 
-    private val factory: SportRequestBottomFactory by instance<SportRequestBottomFactory>()
+    private val factory: SportRequestBottomFactory by instance()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -132,22 +132,26 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == LOCATION_REQUEST_CODE) {
+            if (requestCode == LOCATION_REQUEST_CODE && data != null && data.getData() != null) {
                 val address = data?.getParcelableExtra<SportRequest>(ADDRESS)
                 if (address != null)
+                    //if (requestCode == LOCATION_REQUEST_CODE && data != null && data.getData() != null)
                     viewModel.address.value = address
             }
         }
     }
 
     private fun sportRequestNetwork() {
+       
 
     }
 
     override fun cancel() {
+
     }
 
     override fun submit() {
+        
 
     }
 
@@ -159,6 +163,7 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
         val intent = Intent(requireContext(), SelectInterestedSportActivity::class.java)
         intent.putExtra(Constant.SELECT_SPORTS_KEY, Constant.REQUEST_SPORTS)
         startActivity(intent)
+        //Timber.d(intent.toString())
 
 
     }
@@ -213,9 +218,11 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
                 it, now.get(Calendar.MINUTE), false
             )
         }?.show()
-
     }
 
+    override fun confirmRequest() {
+        Timber.d("====requestsent==")
+    }
 
 }
 

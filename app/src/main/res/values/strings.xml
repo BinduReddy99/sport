@@ -69,5 +69,9 @@
     <string name="event_date_and_time">Select Event date </string>
     <string name="select_number_of_team_mates">Select number of team-mates</string>
     <string name="select_time">"Select Event Time "</string>
+    <string name="signin">signin</string>
+    <string name="why_location_needed">Why location needed?</string>
+    <string name="need_of_location">The local tribe would like to access\n your location,with a little bit of magic.\n Your details will be protected and prefilled</string>
+    <string name="confirm">Confirm</string>
 
 </resources>

@@ -9,4 +9,4 @@ data class UpdateProfile(
     var gender: String,
     val mobileNumber: String,
     val name: String
-): Parcelable
+) : Parcelable

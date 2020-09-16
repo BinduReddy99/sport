@@ -1,9 +1,9 @@
 package com.binduinfo.sports.ui.activity.selectsport
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -59,7 +59,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         setContentView(R.layout.activity_select_interested_sport)
         if (!::selectSport.isInitialized) {
             selectSport = intent.getStringExtra(SELECT_SPORTS_KEY)
-            Timber.d("=========== select==== ${selectSport}")
+            Timber.d("=========== select==== $selectSport")
         }
 
         viewModel =
@@ -88,6 +88,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         }
     }
 
+    @SuppressLint("TimberArgCount")
     private fun onUIHandle() {
         sports_list_layout.visibility = View.GONE
         selected_item.visibility = View.GONE
@@ -108,6 +109,8 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
             }
         }
         selected_item.setOnClickListener {
+            Timber.d({selected_item}.toString())
+            Timber.d("=========== selected==== ${selected_item.toString()}")
             sports_list_layout.visibility = View.GONE
             selected_item.visibility = View.GONE
             sports_list_progress_bar.visibility = View.VISIBLE
@@ -210,7 +213,7 @@ class SelectInterestedSportActivity() : BaseActivity(), RecyleListFetchListener,
         sports_search.setQuery("", false)
         sports_search.clearFocus()
         Coroutines.main {
-          //  sports_search
+            //  sports_search
             viewModel.updateItem(_id, isSelect)
         }
     }

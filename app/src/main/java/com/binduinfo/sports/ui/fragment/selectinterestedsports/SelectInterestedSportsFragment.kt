@@ -3,7 +3,6 @@ package com.binduinfo.sports.ui.fragment.selectinterestedsports
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ import kotlinx.android.synthetic.main.select_interested_sports_fragment.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import timber.log.Timber
 
 const val SELECT_SPORTS_ACTIVITY = 10001
 const val SELECT_SPORT_CONSTANT = 10101
@@ -63,7 +61,7 @@ class SelectInterestedSportsFragment() : BaseFragment(), KodeinAware, SelectSpor
         }
     }
 
-   // private val select = 1;
+    // private val select = 1;
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

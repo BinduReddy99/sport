@@ -26,6 +26,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import timber.log.Timber
 import java.io.File
 
 class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() {
@@ -88,7 +89,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
     private suspend fun imageUploadToServer(compressFile: File): BasicModel {
 
         return withContext(IO) {
-            Log.d("image ====", compressFile.toString())
+           Timber.d(compressFile.toString())
             val multiPart = MultipartBody.Part.createFormData(
                 "image", compressFile.name, compressFile
                     .asRequestBody("image/*".toMediaTypeOrNull())
@@ -99,7 +100,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
 
     private suspend fun imageCompressing(context: Context, uri: Uri): File {
         return withContext(IO) {
-            var file = File(uri.path)
+            val file = File(uri.path)
             Compressor(context, Compressor.PROFILE_PIC)
                 .compressToFile(file)
         }
@@ -108,6 +109,7 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
 }
 
 @BindingAdapter("location")
+
 fun MapView.setLocation(location: List<Double>?) {
     mapView?.onCreate(Bundle())
     mapView?.getMapAsync { mMap -> // Add a marker

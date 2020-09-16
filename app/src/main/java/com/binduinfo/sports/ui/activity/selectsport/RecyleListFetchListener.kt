@@ -1,6 +1,5 @@
 package com.binduinfo.sports.ui.activity.selectsport
 
-import com.binduinfo.sports.data.model.BasicModel
 import com.binduinfo.sports.util.network.model.Sport
 
 interface RecyleListFetchListener {

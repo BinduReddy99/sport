@@ -4,6 +4,6 @@ data class LoginResponse(
     val message: String = "",
     val success: Int,
     val token: String?,
-    val isLocationAvailablr: Boolean,
+    val isLocationAvailable: Boolean,
     val isInterestedSport: Boolean
 )

@@ -23,9 +23,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.selectsport.SelectInterestedSportActivity"
-            android:screenOrientation="portrait"
-            android:label="Sports">
+        <activity
+            android:name=".ui.activity.selectsport.SelectInterestedSportActivity"
+            android:label="Sports"
+            android:screenOrientation="portrait">
 
         </activity>
         <!--
@@ -42,7 +43,9 @@
 
         <activity
             android:name=".ui.activity.UserPlaceSelectActivity"
-            android:label="@string/title_activity_user_place_select"></activity>
+            android:label="@string/title_activity_user_place_select">
+
+        </activity>
         <activity
             android:name=".ui.activity.HomeActivity"
             android:label="@string/title_activity_home" />

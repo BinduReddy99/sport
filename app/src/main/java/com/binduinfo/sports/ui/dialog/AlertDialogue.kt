@@ -23,7 +23,7 @@ class AlertDialogue(
         dialog.lay_dia_confirm.text = positiveButton
 
         dialog.lay_dia_cancel.setOnClickListener {
-                dialog.dismiss()
+            dialog.dismiss()
         }
 
         dialog.lay_dia_confirm.setOnClickListener {

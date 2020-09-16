@@ -8,24 +8,30 @@ const val LOGIN_TOKEN = "login_token"
 const val IS_LOGGED_IN = "is_logged_in"
 const val ADD_ADDRESS = "is_address_added"
 const val ADD_INTERESTED_SPORT = "is_interested_sport_added"
+
 class PreferenceProvider(private val context: Context) {
     private val appContext = context.applicationContext
 
-    private val preference: SharedPreferences get() = PreferenceManager.getDefaultSharedPreferences(appContext)
+    private val preference: SharedPreferences
+        get() = PreferenceManager.getDefaultSharedPreferences(
+            appContext
+        )
 
-    fun storeValue(key: String, value: String){
+    fun storeValue(key: String, value: String) {
         preference.edit().putString(key, value).apply()
     }
 
-    fun storeValue(key: String, value: Boolean){
+    fun storeValue(key: String, value: Boolean) {
         preference.edit().putBoolean(key, value).apply()
     }
 
-    fun getsharedBoolean(key: String): Boolean = preference.getBoolean(key, false)
+    fun getsharedBoolean(key: String): Boolean = preference.getBoolean(key, false);
+
 
     fun getSharedString(key: String): String = preference.getString(key, "")!!
 
-    fun clearAllData(){
+    fun clearAllData()
+    {
         preference.edit().clear().apply()
     }
 

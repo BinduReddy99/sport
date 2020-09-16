@@ -11,16 +11,16 @@ import java.util.concurrent.Callable;
 import io.reactivex.Flowable;
 
 public class Compressor {
+    public static final int PROFILE_PIC = 0x0010;
+    public static final int TRAVELS_IMAGES = 0x0011;
+    public static final File BASIC_PATH = new File(Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data");
+    public static String childPath = "";
     //max width and height values of the compressed image is taken as 612x816
     private int maxWidth = 612;
     private int maxHeight = 816;
     private Bitmap.CompressFormat compressFormat = Bitmap.CompressFormat.JPEG;
     private int quality = 80;
     private String destinationDirectoryPath;
-    public static final int PROFILE_PIC = 0x0010;
-    public static final int TRAVELS_IMAGES = 0x0011;
-    public static String childPath = "";
-    public static final File BASIC_PATH = new File(Environment.getExternalStorageDirectory() + File.separator + "Android" + File.separator + "data");
 
     public Compressor(Context context, int from) {
         switch (from) {

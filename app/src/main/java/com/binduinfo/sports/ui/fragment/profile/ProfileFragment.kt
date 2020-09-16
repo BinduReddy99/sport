@@ -49,14 +49,15 @@ import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import timber.log.Timber
 
 class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertClickable,
     OnMapReadyCallback, KodeinAware {
     override val kodein by kodein()
 
 
-    private val preference: PreferenceProvider by instance<PreferenceProvider>()
-    private val factory: ProfileViewModelFactory by instance<ProfileViewModelFactory>()
+    private val preference: PreferenceProvider by instance()
+    private val factory: ProfileViewModelFactory by instance()
     private lateinit var profileViewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
     private var dialogue: AlertDialogue? = null
@@ -112,8 +113,8 @@ class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertCli
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        Log.d("requestCode", requestCode.toString())
-        Log.d("data", data.toString())
+        Timber.d(requestCode.toString())
+        Timber.d(data.toString())
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE -> {

@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SportRequest(
+
     val address: String,
     val area: String,
     val city: String,

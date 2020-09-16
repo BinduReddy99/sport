@@ -5,10 +5,13 @@
 
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="profileViewModel"
             type="com.binduinfo.sports.ui.fragment.profile.ProfileViewModel" />
+
         <variable
             name="userInfo"
             type="com.binduinfo.sports.data.model.ProfileInfo" />
@@ -305,8 +308,8 @@
                         <TextView
                             android:id="@+id/profile_name_value_text"
                             style="@style/rhs_text_name"
-                            android:layout_width="1dp"
-                            android:layout_height="16dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:text="@{userInfo.profile.name}"
                             app:layout_constraintBottom_toBottomOf="@+id/profile_name_text_view"
@@ -453,10 +456,10 @@
 
                         <TextView
                             android:id="@+id/selected_spot_head"
+                            style="@style/heading_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/selected_sports"
-                            style="@style/heading_text"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.05"
                             app:layout_constraintStart_toStartOf="parent"
@@ -464,9 +467,9 @@
 
                         <View
                             android:id="@+id/view3"
+                            style="@style/view"
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            style="@style/view"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
                             app:layout_constraintStart_toStartOf="parent"
@@ -518,19 +521,19 @@
 
                         <View
                             android:id="@+id/view4"
+                            style="@style/view"
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            style="@style/view"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                         <TextView
                             android:id="@+id/textView6"
+                            style="@style/heading_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/description"
-                            style="@style/heading_text"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.05"
                             app:layout_constraintStart_toStartOf="parent"
@@ -589,14 +592,14 @@
 
                         <TextView
                             android:id="@+id/logout_button"
+                            style="@style/heading_text"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:drawableEnd="@drawable/ic_exit"
+                            android:onClick="@{profileViewModel.logout}"
                             android:padding="8dp"
                             android:text="@string/logout"
                             android:textColor="@color/colorPrimaryDark"
-                            style="@style/heading_text"
-                            android:onClick="@{profileViewModel.logout}"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.0"
@@ -622,10 +625,10 @@
 
                         <TextView
                             android:id="@+id/map_view_title"
+                            style="@style/heading_text"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/location"
-                            style="@style/heading_text"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintHorizontal_bias="0.05"
                             app:layout_constraintStart_toStartOf="parent"
@@ -633,25 +636,25 @@
 
                         <View
                             android:id="@+id/view6"
+                            style="@style/view"
                             android:layout_width="0dp"
                             android:layout_height="1dp"
-                            style="@style/view"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/map_view_title" />
 
                         <com.google.android.gms.maps.MapView
                             android:id="@+id/mapView"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             android:layout_marginTop="8dp"
                             android:apiKey="@string/google_maps_key"
-                            app:location="@{userInfo.profile.address.location}"
-                            android:name="com.google.android.gms.maps.SupportMapFragment"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@+id/view6" />
+                            app:layout_constraintTop_toBottomOf="@+id/view6"
+                            app:location="@{userInfo.profile.address.location}" />
 
                         <ImageView
                             android:id="@+id/edit_location"

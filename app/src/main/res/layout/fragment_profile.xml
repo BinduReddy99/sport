@@ -1,68 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="profileViewModel"
             type="com.binduinfo.sports.ui.fragment.profile.ProfileViewModel" />
+
         <variable
             name="userInfo"
             type="com.binduinfo.sports.data.model.ProfileInfo" />
     </data>
 
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background"
-    tools:context=".ui.fragment.profile.ProfileFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        tools:context=".ui.fragment.profile.ProfileFragment">
 
-    <FrameLayout
-        android:id="@+id/profile_fram_toolbar"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_arrow_back_black_24dp" />
-    </FrameLayout>
-
-    <include
-        android:id="@+id/profile_screen"
-        layout="@layout/user_profile_layout"
-        android:layout_width="0dp"
-        android:visibility="@{profileViewModel.serverRequest ? View.GONE: View.VISIBLE}"
-        android:layout_height="0dp"
-        bind:userInfo = "@{userInfo}"
-        bind:profileViewModel = "@{profileViewModel}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_fram_toolbar" />
-
-    <include
-        android:id="@+id/load_spinner_lay"
-        layout="@layout/load_request_spinner"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:visibility="@{profileViewModel.serverRequest ? View.VISIBLE: View.GONE}"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_fram_toolbar" />
+        <FrameLayout
+            android:id="@+id/profile_fram_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:background="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:src="@drawable/ic_arrow_back_black_24dp" />
+        </FrameLayout>
+
+        <include
+            android:id="@+id/profile_screen"
+            layout="@layout/user_profile_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{profileViewModel.serverRequest ? View.GONE: View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fram_toolbar"
+            bind:profileViewModel="@{profileViewModel}"
+            bind:userInfo="@{userInfo}" />
+
+        <include
+            android:id="@+id/load_spinner_lay"
+            layout="@layout/load_request_spinner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{profileViewModel.serverRequest ? View.VISIBLE: View.GONE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_fram_toolbar" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

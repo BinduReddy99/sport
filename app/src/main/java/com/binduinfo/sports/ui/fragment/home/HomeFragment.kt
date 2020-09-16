@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.binduinfo.sports.R
-import com.binduinfo.sports.app.BaseApplication
 import com.binduinfo.sports.data.preference.LOGIN_TOKEN
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import org.kodein.di.KodeinAware
