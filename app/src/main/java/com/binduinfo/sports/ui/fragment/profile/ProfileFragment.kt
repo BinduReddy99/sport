@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,7 @@ import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.cropimage.CropImage
 import com.binduinfo.sports.util.cropimage.CropImageView
 import com.bumptech.glide.Glide
-import com.example.mvvmsample.util.Coroutines
+import com.binduinfo.sports.util.coroutine.Coroutines
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent
@@ -212,7 +211,6 @@ class ProfileFragment() : BaseFragment(), ProfileHandler, AlertDialogue.AlertCli
     }
 
     override fun updateProfileInfo(updateProfileInfo: UpdateProfile) {
-
         val action =
             ProfileFragmentDirections.actionNavigationProfileToProfileEditFragment(updateProfileInfo)
         findNavController().navigate(action)

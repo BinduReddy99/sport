@@ -18,7 +18,7 @@ import com.binduinfo.sports.util.Constant.Companion.SELECT_SPORTS
 import com.binduinfo.sports.util.Constant.Companion.SELECT_SPORTS_KEY
 import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
-import com.example.mvvmsample.util.Coroutines
+import com.binduinfo.sports.util.coroutine.Coroutines
 import kotlinx.android.synthetic.main.select_interested_sports_fragment.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein

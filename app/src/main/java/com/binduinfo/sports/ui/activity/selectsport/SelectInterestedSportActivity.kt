@@ -18,7 +18,7 @@ import com.binduinfo.sports.util.Constant.Companion.SELECT_SPORTS_KEY
 import com.binduinfo.sports.util.extension.hide
 import com.binduinfo.sports.util.extension.show
 import com.binduinfo.sports.util.network.model.Sport
-import com.example.mvvmsample.util.Coroutines
+import com.binduinfo.sports.util.coroutine.Coroutines
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.flexbox.JustifyContent

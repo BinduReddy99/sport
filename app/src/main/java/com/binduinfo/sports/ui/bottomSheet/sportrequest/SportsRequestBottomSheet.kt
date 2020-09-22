@@ -25,6 +25,7 @@ import com.binduinfo.sports.util.Constant
 import com.binduinfo.sports.util.map.MapSupport
 import com.binduinfo.sports.util.network.model.SportRequest
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
@@ -57,7 +58,7 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
     private val selectedDate: Calendar? = Calendar.getInstance()
     private var date: String = ""
     private var time: String = ""
-    var dateTime = "$date $time"
+    var dateTime = "$date+$time"
 
     private val factory: SportRequestBottomFactory by instance()
     override fun onCreateView(
@@ -68,7 +69,7 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
         binding =
             DataBindingUtil.inflate(inflater, R.layout.bottom_sheet_sport_request, container, false)
         viewModel = ViewModelProvider(this, factory).get(SportRequestBottomViewModel::class.java)
-        binding.viewModel = viewModel
+//        binding.viewModel1 = viewModel
         binding.lifecycleOwner = this
         viewModel.sportRequestListener = this
 
@@ -135,14 +136,14 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
             if (requestCode == LOCATION_REQUEST_CODE && data != null && data.getData() != null) {
                 val address = data?.getParcelableExtra<SportRequest>(ADDRESS)
                 if (address != null)
-                    //if (requestCode == LOCATION_REQUEST_CODE && data != null && data.getData() != null)
+                //if (requestCode == LOCATION_REQUEST_CODE && data != null && data.getData() != null)
                     viewModel.address.value = address
             }
         }
     }
 
     private fun sportRequestNetwork() {
-       
+
 
     }
 
@@ -151,7 +152,7 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
     }
 
     override fun submit() {
-        
+
 
     }
 
@@ -224,24 +225,29 @@ class SportsRequestBottomSheet : BottomSheetDialogFragment(), SportRequestListen
         Timber.d("====requestsent==")
     }
 
+
+//    @BindingAdapter("location")
+//    fun MapView.setLocation(location: List<Double>?) {
+//        mapView?.onCreate(Bundle())
+//        mapView?.getMapAsync { mMap -> // Add a marker
+//            mMap.uiSettings.setAllGesturesEnabled(false)
+//            if (location != null) {
+//                mapView?.onResume()
+//                val latitude = location[0]
+//                val longitude = location[1]
+//                mMap.clear()
+//                val location = CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 15f)
+//                mMap.animateCamera(location)
+//                val options: MarkerOptions =
+//                    MarkerOptions().position(LatLng(latitude, longitude)).title("Your Location")
+//                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
+//                mMap.addMarker(options)
+//            }
+//        }
+//    }
+//
+//    fun onMapReady(p0: GoogleMap?) {
+//
+//    }
 }
 
-@BindingAdapter("location")
-fun MapView.setLocation(location: List<Double>?) {
-    mapView?.onCreate(Bundle())
-    mapView?.getMapAsync { mMap -> // Add a marker
-        mMap.uiSettings.setAllGesturesEnabled(false)
-        if (location != null) {
-            mapView?.onResume()
-            val latitude = location[0]
-            val longitude = location[1]
-            mMap.clear()
-            val location = CameraUpdateFactory.newLatLngZoom(LatLng(latitude, longitude), 15f)
-            mMap.animateCamera(location)
-            val options: MarkerOptions =
-                MarkerOptions().position(LatLng(latitude, longitude)).title("Your Location")
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-            mMap.addMarker(options)
-        }
-    }
-}

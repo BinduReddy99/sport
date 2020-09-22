@@ -9,7 +9,7 @@ import com.binduinfo.sports.util.network.model.Sport
 
 private const val DATA_BASE = "Sports.db"
 
-@Database(entities = [Sport::class], version = 1)
+@Database(entities = [Sport::class], version = 1,exportSchema = false)
 abstract class AppDataBase : RoomDatabase() {
     abstract fun getUserSport(): SportsDao
 

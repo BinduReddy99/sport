@@ -78,7 +78,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
-                    android:onCheckedChanged="@{viewModel.onSplitTypeChanged}"
+                    android:onCheckedChanged="@{viewModel::onSplitTypeChanged}"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="@+id/profile_lay_name"
                     app:layout_constraintStart_toStartOf="@+id/profile_lay_name"

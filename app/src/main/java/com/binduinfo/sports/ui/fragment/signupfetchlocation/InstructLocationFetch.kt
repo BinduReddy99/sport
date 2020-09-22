@@ -20,7 +20,7 @@ import com.binduinfo.sports.ui.activity.ADDRESS
 import com.binduinfo.sports.ui.activity.HomeActivity
 import com.binduinfo.sports.ui.activity.UserPlaceSelectActivity
 import com.binduinfo.sports.util.map.MapSupport.isServiceOk
-import com.example.mvvmsample.util.Coroutines
+import com.binduinfo.sports.util.coroutine.Coroutines
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.MultiplePermissionsReport
 import com.karumi.dexter.PermissionToken

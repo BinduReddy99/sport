@@ -106,10 +106,10 @@ class ProfileViewModel(private val repository: ProfileRepository) : ViewModel() 
         }
     }
 
-}
+
+
 
 @BindingAdapter("location")
-
 fun MapView.setLocation(location: List<Double>?) {
     mapView?.onCreate(Bundle())
     mapView?.getMapAsync { mMap -> // Add a marker
@@ -128,4 +128,4 @@ fun MapView.setLocation(location: List<Double>?) {
         }
     }
 
-}
+}}

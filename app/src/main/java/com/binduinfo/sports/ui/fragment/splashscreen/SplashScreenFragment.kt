@@ -13,7 +13,7 @@ import com.binduinfo.sports.data.preference.ADD_INTERESTED_SPORT
 import com.binduinfo.sports.data.preference.IS_LOGGED_IN
 import com.binduinfo.sports.data.preference.PreferenceProvider
 import com.binduinfo.sports.ui.activity.HomeActivity
-import com.example.mvvmsample.util.Coroutines
+import com.binduinfo.sports.util.coroutine.Coroutines
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import org.kodein.di.KodeinAware

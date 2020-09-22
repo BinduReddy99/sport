@@ -48,7 +48,7 @@ class SportsListAdapter(
     private var sportType = ""
     override fun onBindViewHolder(holder: SportsHolder, position: Int) {
         val sport = sportFilterList[position]
-        if (sportType.isNullOrEmpty()) {
+        if (sportType.isEmpty()) {
             sport.run {
                 holder.gameName.text = name
                 if (isSelected) {

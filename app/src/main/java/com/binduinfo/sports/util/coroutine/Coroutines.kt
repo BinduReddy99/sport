@@ -1,4 +1,4 @@
-package com.example.mvvmsample.util
+package com.binduinfo.sports.util.coroutine
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

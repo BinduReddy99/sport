@@ -9,7 +9,7 @@ import com.binduinfo.sports.data.network.mvvm.MyApi
 import com.binduinfo.sports.data.network.mvvm.SafeAPIRequest
 import com.binduinfo.sports.util.network.model.Sport
 import com.binduinfo.sports.util.network.model.SportRequestEvent
-import com.example.mvvmsample.util.Coroutines
+import com.binduinfo.sports.util.coroutine.Coroutines
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
